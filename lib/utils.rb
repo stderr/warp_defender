@@ -1,5 +1,5 @@
 module Utils
   module ZOrder
-    Background, Stars, Player, UI = *0..3
+    Background, UI, Debris, Meteors, Player, Explosion, Stars, Warps = *0..7 
   end
 end
