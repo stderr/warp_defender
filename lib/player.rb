@@ -1,6 +1,6 @@
 class Player
   attr_reader :score, :dead_x, :dead_y, :deaths
-  attr_accessor :dead, :respawn_time
+  attr_accessor :dead, :respawn_time, :vel_x, :vel_y
 
   def initialize(window)
     @image = Gosu::Image.new(window, "media/fighter.png", false)
@@ -9,10 +9,13 @@ class Player
     @applause = Gosu::Sample.new(window, "media/applause.wav")
     @warp = Gosu::Sample.new(window, "media/warp.wav")
     @meteor = Gosu::Sample.new(window, "media/meteor.wav")
+    @laser = Gosu::Sample.new(window, "media/laser_sound.mp3")
 
+    @window = window
+    
     @deaths = 0
     @dead = false
-    @respawn_time = 20
+    @respawn_time = 125
 
     @animation = Gosu::Image::load_tiles(window, "media/spaceship.png", 49, 49, false)
 
@@ -49,19 +52,25 @@ class Player
   end
 
   def draw
-   # img = @animation[Gosu::milliseconds / 100 % @animation.size]
-  #  img.draw(@x - img.width / 2.0, @y - img.height / 2.0, Utils::ZOrder::Player, @angle, @angle)
-    @image.draw_rot(@x, @y, 1, @angle)
+    img = @animation[Gosu::milliseconds / 100 % @animation.size]
+    img.draw_rot(@x, @y, Utils::ZOrder::Player, @angle)
   end
 
   def check_warps(warps)
     warps.each do |warp|
-      if Gosu::distance(@x, @y, warp.x, warp.y) < 30
+      if Gosu::distance(@x, @y, warp.x, warp.y) < 40
         @warp.play
+        #warp(warps[rand(warps.size)].x + 50, warps[rand(warps.size)].y - 50)
+
         warp(rand * 1600, rand * 1200)
       end
     end
         
+  end
+
+  def shoot
+    @laser.play
+    Bullet.new(@window, @angle, @x, @y)
   end
 
   def die!

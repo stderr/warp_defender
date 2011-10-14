@@ -10,6 +10,7 @@ require 'lib/debris'
 require 'lib/warp'
 require 'lib/meteor'
 require 'lib/explosion'
+require 'lib/bullet'
 
 w = GameWindow.new
 w.show

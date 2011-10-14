@@ -22,8 +22,9 @@ class GameWindow < Gosu::Window
 
     @explosion_animation = Gosu::Image::load_tiles(self, "media/explosion.png", 63, 63, false)
 
+    @bullets = []
 
-    @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
+    @font = Gosu::Font.new(self, 'media/font.ttf', 32)
   end
 
   def update
@@ -40,21 +41,31 @@ class GameWindow < Gosu::Window
         @player.accelerate
       end
 
+      if button_down?(Gosu::KbSpace)
+        @bullets << @player.shoot
+      end
+
       @player.move
       @player.collect_stars(@stars)
       @player.check_warps(@warps)
       @player.check_meteors(@meteors)
     else
-      @explosion = Explosion.new(@explosion_animation, @player.dead_x, @player.dead_y) if @player.respawn_time == 20
+      @explosion ||= Explosion.new(@explosion_animation, @player.dead_x, @player.dead_y)
       @explosion.draw
       
       @player.respawn_time -= 1
       if @player.respawn_time.zero?
-        @player.respawn_time = 20
+        @explosion = nil
+        @player.respawn_time = 125
         @player.dead = false
+        @player.vel_x = 0
+        @player.vel_y = 0
         @player.warp(800, 600)
       end
     end
+    
+    @bullets.reject! { |bullet| bullet.off_screen? }
+    @bullets.each { |bullet| bullet.move }
 
     @meteors.each { |meteor| meteor.move }
     @debris.each { |debris| debris.move }
@@ -63,7 +74,7 @@ class GameWindow < Gosu::Window
       @stars.push(Star.new(@star_animation))
     end
     
-    if rand(100) < 4 and @debris.size < 25
+    if rand(100) < 4 and @debris.size < 20
       @debris.push(Debris.new(@debris_animation))
     end
     
@@ -86,6 +97,7 @@ class GameWindow < Gosu::Window
     @debris.each { |debris| debris.draw }
     @warps.each { |warp| warp.draw }
     @meteors.each { |meteor| meteor.draw }
+    @bullets.each { |bullet| bullet.draw }
 
     @font.draw("Score: #{@player.score}", 10, 10, Utils::ZOrder::UI, 1.0, 1.0, 0xffffff00)
     @font.draw("Deaths: #{@player.deaths}", 10, 30, Utils::ZOrder::UI, 1.0, 1.0, 0xffffff00)
