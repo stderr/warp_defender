@@ -4,7 +4,7 @@ module Entities
     
     def initialize(window, target)
       super(window, target)
-      @behavior = Behaviors::Beeline.new(self)
+      @behavior = Behaviors::Hunt.new(self)
     end
 
     def spawn

@@ -13,7 +13,7 @@ class Game < Gosu::Window
     @fonts = {}
     @sounds = {}
     @animations = {}
-
+    
     load_images
     load_fonts
     load_sounds

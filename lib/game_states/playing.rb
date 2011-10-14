@@ -4,13 +4,16 @@ module GameStates
     
     def initialize(window, game_engine)
       super(window, game_engine)
-      @player = Player.new(window)
+      @player = Player.new(@window)
       @player.move_to(600, 600)
 
-      @warp = Warp.new(window, rand(1600), rand(1200))
+      @warp = Warp.new(@window, 800, 600)
 
-      @grunt = Entities::Grunt.new(window, @warp)
-      @grunt.spawn
+      @entities = []
+      grunt = Entities::Grunt.new(@window, @warp)
+      grunt.spawn
+      
+      @entities << grunt
 
       @bullets = []
       @entities = []
@@ -31,15 +34,23 @@ module GameStates
         @player.accelerate
       end
       
+      if(@timer.time_passed?(50)) 
+        grunt = Entities::Grunt.new(@window, @player)
+        grunt.spawn
+        
+        @entities << grunt
+      end
+
       @player.move
-      @grunt.move
+      @entities.each { |e| e.move }
     end
 
     def draw
       @window.images[:background].draw(0, 0, Utils::ZOrder::Background)
       
       @player.draw
-      @grunt.draw
+      
+      @entities.each { |e| e.draw }
       @warp.draw
     end
 

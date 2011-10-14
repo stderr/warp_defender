@@ -12,7 +12,7 @@ module Utils
       new_time = Gosu::milliseconds
       
       if (new_time - @last_time > ms)
-        @last_time - new_time
+        @last_time = new_time
         return true
       else
         return false

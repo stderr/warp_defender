@@ -13,6 +13,7 @@ require 'lib/game_states/credits'
 
 require 'lib/behaviors/behavior'
 require 'lib/behaviors/beeline'
+require 'lib/behaviors/hunt' 
 
 require 'lib/entities/entity'
 require 'lib/entities/grunt'
