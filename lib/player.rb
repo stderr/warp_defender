@@ -3,27 +3,16 @@ class Player
   attr_accessor :dead, :respawn_time, :vel_x, :vel_y
 
   def initialize(window)
-    @image = Gosu::Image.new(window, "media/fighter.png", false)
-
-    @beep = Gosu::Sample.new(window, "media/beep.wav")
-    @applause = Gosu::Sample.new(window, "media/applause.wav")
-    @warp = Gosu::Sample.new(window, "media/warp.wav")
-    @meteor = Gosu::Sample.new(window, "media/meteor.wav")
-    @laser = Gosu::Sample.new(window, "media/laser_sound.mp3")
-
     @window = window
-    
     @deaths = 0
     @dead = false
     @respawn_time = 125
-
-    @animation = Gosu::Image::load_tiles(window, "media/spaceship.png", 49, 49, false)
 
     @x = @y = @vel_x = @vel_y = @angle = 0.0
     @score = 0
   end
 
-  def warp(x, y)
+  def move_to(x, y)
     @x, @y = x, y
   end
 
@@ -36,6 +25,7 @@ class Player
   end
 
   def accelerate
+    puts "in accelerate"
     @vel_x += Gosu::offset_x(@angle, 0.5)
     @vel_y += Gosu::offset_y(@angle, 0.5)
   end
@@ -52,24 +42,12 @@ class Player
   end
 
   def draw
-    img = @animation[Gosu::milliseconds / 100 % @animation.size]
+    img = @window.animations[:player][Gosu::milliseconds / 100 % @window.animations[:player].size]
     img.draw_rot(@x, @y, Utils::ZOrder::Player, @angle)
   end
 
-  def check_warps(warps)
-    warps.each do |warp|
-      if Gosu::distance(@x, @y, warp.x, warp.y) < 40
-        @warp.play
-        #warp(warps[rand(warps.size)].x + 50, warps[rand(warps.size)].y - 50)
-
-        warp(rand * 1600, rand * 1200)
-      end
-    end
-        
-  end
-
   def shoot
-    @laser.play
+    @window.sounds[:laser].play
     Bullet.new(@window, @angle, @x, @y)
   end
 
@@ -80,32 +58,13 @@ class Player
   def check_meteors(meteors)
     meteors.each do |meteor|
       if Gosu::distance(@x, @y, meteor.x, meteor.y) < 30
-        @meteor.play
+        @window.sounds[:meteor].play
         @dead = true
         @dead_x = @x
         @dead_y = @y
         @deaths += 1
       end
     end
-  end
-
-  def collect_stars(stars)
-    stars.reject! do |star|
-      if Gosu::distance(@x, @y, star.x, star.y) < 35
-        @score += 10
-        
-        if (@score >= 100 && @score % 100 == 0)
-          @applause.play
-        else
-          @beep.play
-        end
-
-        true
-      else
-        false
-      end
-    end
-
   end
 
 end
