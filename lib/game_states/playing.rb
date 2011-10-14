@@ -5,7 +5,12 @@ module GameStates
     def initialize(window, game_engine)
       super(window, game_engine)
       @player = Player.new(window)
-      @player.move_to(800, 600)
+      @player.move_to(600, 600)
+
+      @warp = Warp.new(window, rand(1600), rand(1200))
+
+      @grunt = Entities::Grunt.new(window, @warp)
+      @grunt.spawn
 
       @bullets = []
       @entities = []
@@ -25,15 +30,17 @@ module GameStates
       if @window.button_down?(Gosu::KbUp)
         @player.accelerate
       end
-
+      
       @player.move
+      @grunt.move
     end
 
     def draw
       @window.images[:background].draw(0, 0, Utils::ZOrder::Background)
       
       @player.draw
-
+      @grunt.draw
+      @warp.draw
     end
 
     def button_down(id)

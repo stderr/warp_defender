@@ -25,7 +25,6 @@ class Player
   end
 
   def accelerate
-    puts "in accelerate"
     @vel_x += Gosu::offset_x(@angle, 0.5)
     @vel_y += Gosu::offset_y(@angle, 0.5)
   end

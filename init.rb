@@ -11,6 +11,12 @@ require 'lib/game_states/options'
 require 'lib/game_states/playing'
 require 'lib/game_states/credits'
 
+require 'lib/behaviors/behavior'
+require 'lib/behaviors/beeline'
+
+require 'lib/entities/entity'
+require 'lib/entities/grunt'
+
 require 'lib/utils'
 require 'lib/player'
 require 'lib/star'
