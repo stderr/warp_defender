@@ -4,6 +4,7 @@ module GameStates
 
     def initialize(window, game_engine)
       @window = window
+      @game_engine = game_engine
     end
 
     def update

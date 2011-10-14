@@ -1,6 +1,6 @@
 class Game < Gosu::Window
 
-  attr_accessor :fonts
+  attr_accessor :fonts, :images
 
   def initialize
     super(1600, 1200, false)
@@ -12,6 +12,7 @@ class Game < Gosu::Window
     @images = {}
     @fonts = {}
     @sounds = {}
+    @animations = {}
 
     load_images
     load_fonts
@@ -35,6 +36,8 @@ class Game < Gosu::Window
   end
 
   def load_images
+    @images[:background] = Gosu::Image.new(self, "media/space.jpg", true)
+    @images[:player] = Gosu::Image.new(self, "media/fighter.png", false)
   end
 
   def load_fonts
@@ -42,6 +45,12 @@ class Game < Gosu::Window
   end
 
   def load_sounds
+  end
+
+  def load_animations
+    @animations[:debris] = Gosu::Image::load_tiles(self, "media/debris.png", 50, 40, false)
+    @animations[:warp] = Gosu::Image::load_tiles(self, "media/warp.png", 98, 96, false)
+    @animations[:meteor] = Gosu::Image::load_tiles(self, "media/meteor.png", 72, 72, false)
   end
 
 end

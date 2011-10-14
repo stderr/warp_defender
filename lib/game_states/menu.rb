@@ -30,11 +30,13 @@ module GameStates
     end
 
     def draw
+      @window.images[:background].draw(0,0,0)
+      
       @window.fonts[:menu].draw_rel("Main Menu", 800, 300, 0, 0.5, 1, 2, 2)
 
       @menu_items.each_index do |i|
         if i == @selected_item
-          @window.fonts[:menu].draw_rel(@menu_items[i], 800, 380+i*40, 0, 0.5, 1, 1, 1, Gosu::Color::RED)
+          @window.fonts[:menu].draw_rel(@menu_items[i], 800, 380+i*40, 0, 0.5, 1, 1, 1, Gosu::Color::GREEN)
         else
           @window.fonts[:menu].draw_rel(@menu_items[i], 800, 380+i*40, 0, 0.5, 1)
         end
