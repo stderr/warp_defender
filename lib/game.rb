@@ -59,6 +59,7 @@ class Game < Gosu::Window
     @animations[:meteor] = Gosu::Image::load_tiles(self, "media/meteor.png", 72, 72, false)
     @animations[:player] = Gosu::Image::load_tiles(self, "media/spaceship.png", 49, 49, false)
     @animations[:grunt] = Gosu::Image::load_tiles(self, "media/grunt.png", 23, 28, false)
+    @animations[:bullet] = Gosu::Image::load_tiles(self, "media/bullet.png", 11, 13, false)
   end
 
 end

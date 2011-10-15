@@ -43,6 +43,7 @@ module GameStates
 
       @player.move
       @entities.each { |e| e.move }
+      @bullets.each { |b| b.move }
     end
 
     def draw
@@ -51,12 +52,15 @@ module GameStates
       @player.draw
       
       @entities.each { |e| e.draw }
+      @bullets.each { |b| b.draw }
       @warp.draw
     end
 
     def button_down(id)
        case id
          when Gosu::KbEscape then @game_engine.state = GameStates::Menu.new(@window, @game_engine)
+         when Gosu::KbSpace 
+         @bullets << @player.shoot
        end
     end
 
