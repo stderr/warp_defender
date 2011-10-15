@@ -3,7 +3,7 @@ class Game < Gosu::Window
   attr_accessor :fonts, :images, :animations, :sounds
 
   def initialize
-    super(1600, 1200, false)
+    super(Gosu::screen_width, Gosu::screen_height, true)
     self.caption = 'Warp Defender'
 
     @game_engine = GameEngine.new(self)
@@ -58,6 +58,7 @@ class Game < Gosu::Window
     @animations[:warp] = Gosu::Image::load_tiles(self, "media/warp.png", 98, 96, false)
     @animations[:meteor] = Gosu::Image::load_tiles(self, "media/meteor.png", 72, 72, false)
     @animations[:player] = Gosu::Image::load_tiles(self, "media/spaceship.png", 49, 49, false)
+    @animations[:grunt] = Gosu::Image::load_tiles(self, "media/grunt.png", 23, 28, false)
   end
 
 end

@@ -19,7 +19,7 @@ module Entities
     end
 
     def draw
-      img = @window.animations[:player][Gosu::milliseconds / 100 % @window.animations[:player].size]
+      img = @window.animations[:grunt][Gosu::milliseconds / 100 % @window.animations[:grunt].size]
       img.draw_rot(@x, @y, Utils::ZOrder::Player, @angle)
     end
 

@@ -7,7 +7,7 @@ module GameStates
       @player = Player.new(@window)
       @player.move_to(600, 600)
 
-      @warp = Warp.new(@window, 800, 600)
+      @warp = Warp.new(@window, Gosu::screen_width/2, Gosu::screen_height/2)
 
       @entities = []
       grunt = Entities::Grunt.new(@window, @warp)
@@ -34,7 +34,7 @@ module GameStates
         @player.accelerate
       end
       
-      if(@timer.time_passed?(50)) 
+      if(@timer.time_passed?(5000)) 
         grunt = Entities::Grunt.new(@window, @player)
         grunt.spawn
         
