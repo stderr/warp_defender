@@ -7,15 +7,21 @@ module Behaviors
     end
 
     def spawn
-      case rand(3)
-        when 0 then @entity.x = 0 && @entity.y = rand(Gosu::screen_height)
-        when 1 then @entity.x = Gosu::screen_width && @entity.y = rand(Gosu::screen_height)
-        when 2 then @entity.x = rand(Gosu::screen_width) && @entity.y = 0
-        when 3 then @entity.x = rand(Gosu::screen_width) && @entity.y = Gosu::screen_height
+      case rand(4)
+        when 0 then @entity.x = 0 && @entity.y = Gosu::screen_height
+        when 1 then @entity.x = 0 && @entity.y = 0
+        when 2 then @entity.x = Gosu::screen_width && @entity.y = 0
+        when 3 then @entity.x = Gosu::screen_width && @entity.y = Gosu::screen_height
       end
     end
 
-    def move
+    def position
+    end
+
+    def velocity
+    end
+
+    def angle
     end
 
   end

@@ -12,6 +12,10 @@ module Behaviors
     def position
     end
 
+    def velocity
+      Gosu::random(1, 3)
+    end
+
     def angle
       distance_x = (@entity.target.x - @entity.x)
       distance_y = (@entity.target.y - @entity.y)

@@ -13,9 +13,10 @@ module Entities
 
     def move
       @angle = @behavior.angle
+      @velocity = @behavior.velocity
 
-      @x += Gosu::offset_x(@angle, 2.5)
-      @y += Gosu::offset_y(@angle, 2.5)
+      @x += Gosu::offset_x(@angle, @velocity)
+      @y += Gosu::offset_y(@angle, @velocity)
     end
 
     def draw
