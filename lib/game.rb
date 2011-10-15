@@ -1,6 +1,6 @@
 class Game < Gosu::Window
 
-  attr_accessor :fonts, :images, :animations, :sounds
+  attr_accessor :fonts, :images, :animations, :sounds, :music
 
   def initialize
     super(Gosu::screen_width, Gosu::screen_height, true)
@@ -13,11 +13,13 @@ class Game < Gosu::Window
     @fonts = {}
     @sounds = {}
     @animations = {}
-    
+    @music = {}
+
     load_images
     load_fonts
     load_sounds
     load_animations
+    load_music
   end
 
   def update
@@ -51,6 +53,10 @@ class Game < Gosu::Window
     @sounds[:warp] = Gosu::Sample.new(self, "media/warp.wav")
     @sounds[:meteor] = Gosu::Sample.new(self, "media/meteor.wav")
     @sounds[:laser] = Gosu::Sample.new(self, "media/laser_sound.mp3")
+  end
+
+  def load_music
+    @music[:theme] = Gosu::Song.new(self, "media/theme.mp3")
   end
 
   def load_animations

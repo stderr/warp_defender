@@ -18,7 +18,10 @@ module GameStates
       @bullets = []
       @entities = []
       @explosions = []
+      
       @timer = Utils::Timer.new
+      
+      play_theme_song
     end
 
     def update
@@ -58,10 +61,22 @@ module GameStates
 
     def button_down(id)
        case id
-         when Gosu::KbEscape then @game_engine.state = GameStates::Menu.new(@window, @game_engine)
-         when Gosu::KbSpace 
+       
+       when Gosu::KbEscape
+         stop_theme_song
+         @game_engine.state = GameStates::Menu.new(@window, @game_engine)
+       
+       when Gosu::KbSpace 
          @bullets << @player.shoot
        end
+    end
+
+    def play_theme_song
+      @window.music[:theme].play(true)
+    end
+
+    def stop_theme_song
+      @window.music[:theme].stop
     end
 
   end
