@@ -4,6 +4,9 @@ require 'gosu'
 
 require 'lib/game'
 require 'lib/game_engine'
+require 'lib/sprite'
+require 'lib/utils'
+require 'lib/player'
 
 require 'lib/game_states/game_state'
 require 'lib/game_states/menu'
@@ -18,7 +21,6 @@ require 'lib/behaviors/hunt'
 require 'lib/entities/entity'
 require 'lib/entities/grunt'
 
-require 'lib/utils'
 require 'lib/player'
 require 'lib/star'
 require 'lib/debris'

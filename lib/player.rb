@@ -1,6 +1,7 @@
 class Player
   attr_reader :score, :dead_x, :dead_y, :deaths
   attr_accessor :dead, :respawn_time, :vel_x, :vel_y, :x, :y
+  include Sprite
 
   def initialize(window)
     @window = window
@@ -41,8 +42,7 @@ class Player
   end
 
   def draw
-    img = @window.animations[:player][Gosu::milliseconds / 100 % @window.animations[:player].size]
-    img.draw_rot(@x, @y, Utils::ZOrder::Player, @angle)
+    draw_animation(:player, Utils::ZOrder::Player)
   end
 
   def shoot

@@ -1,13 +1,14 @@
 class Warp
   attr_reader :x, :y
-  
+  include Sprite
+
   def initialize(window, x, y)
     @window = window
 
     @x = x
     @y = y
   end
-
+  
   def draw
     img = @window.animations[:warp][Gosu::milliseconds / 100 % @window.animations[:warp].size]
     
