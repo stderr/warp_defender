@@ -1,20 +1,32 @@
 class Explosion
   attr_reader :x, :y
   
-  def initialize(animation, x, y)
-    @animation = animation
-    @animation_counter = 0
+  def initialize(window, x, y)
+    @window = window
+    
+    @animation = window.animations[:explosion]
+
+    @lifetime = @animation.size
+
     @x = x
     @y = y
+    
+    @dead = false
   end
-
+  
   def draw
-    @index = @animation_counter / 5
+    
+    @lifetime -= 1
+    
+    kill if @lifetime < 0
 
-    unless @index >= @animation.size
-      img = @animation[@index]
-      img.draw(@x - img.width / 2.0, @y - img.height / 2.0, Utils::ZOrder::Explosion, 1, 1)
-      @animation_counter += 1
-    end
+    @image = @animation[@lifetime]
+
+    @image.draw(@x, @y, Utils::ZOrder::Explosion) if !@dead
   end
+
+  def kill
+    @dead = true
+  end
+
 end

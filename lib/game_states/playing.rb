@@ -44,9 +44,26 @@ module GameStates
         @entities << grunt
       end
 
+      @bullets.reject! { |b| b.dead? }
+      @entities.reject! { |e| e.dead? }
+
       @player.move
       @entities.each { |e| e.move }
       @bullets.each { |b| b.move }
+
+      @bullets.each do |bullet| 
+        @entities.each do |entity|
+         
+          if bullet.collides_with?(entity)
+            bullet.kill
+            entity.kill
+            @window.sounds[:explosion].play
+            @explosions << Explosion.new(@window, entity.x, entity.y)
+          end
+       
+        end
+      end
+
     end
 
     def draw
@@ -55,8 +72,14 @@ module GameStates
       @player.draw
       
       @entities.each { |e| e.draw }
-      @bullets.each { |b| b.draw }
+
+      @bullets.each do |b| 
+         b.draw 
+      end
+
       @warp.draw
+
+      @explosions.each { |e| e.draw }
     end
 
     def button_down(id)

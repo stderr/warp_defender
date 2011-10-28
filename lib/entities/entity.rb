@@ -9,6 +9,8 @@ module Entities
 
       @behavior = Behaviors::Behavior.new(self)
       @angle = 0.0
+      
+      @dead = false
     end
 
     def spawn
@@ -20,6 +22,20 @@ module Entities
     end
 
     def draw
+    end
+
+    def width
+    end
+
+    def height
+    end
+
+    def kill
+      @dead = true
+    end
+
+    def dead?
+      @dead
     end
 
   end

@@ -7,6 +7,11 @@ class Bullet
     @x = x
     @y = y
     @window = window
+
+    @animation =  @window.animations[:bullet]
+    @image = @animation.first
+
+    @dead = false
   end
 
   def move
@@ -15,12 +20,34 @@ class Bullet
   end
 
   def draw
-    img = @window.animations[:bullet][Gosu::milliseconds / 100 % @window.animations[:grunt].size]
-    img.draw_rot(@x, @y, Utils::ZOrder::Player, @angle)
+    @image.draw_rot(@x, @y, Utils::ZOrder::Player, @angle) if !@dead
+   
+    @image = @animation[Gosu::milliseconds / 100 % @animation.size]
+  end
+
+  def width
+    @image.width
+  end
+
+  def height
+    @image.height
+  end
+  
+  def collides_with?(other)
+    @x + width > other.x and @x < other.x + other.width and
+      ((@y+height > other.y and @y < other.y+other.height) or (@y < other.y+other.height and @y+height > other.y))
   end
 
   def off_screen?
-    @x > 1600 || @y > 1200 
+    @x > Gosu::screen_width || @x < 0 || @y < 0 || @y > Gosu::screen_height 
+  end
+
+  def kill
+    @dead = true
+  end
+
+  def dead?
+    @dead
   end
 
 end

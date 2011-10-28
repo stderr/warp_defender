@@ -53,6 +53,7 @@ class Game < Gosu::Window
     @sounds[:warp] = Gosu::Sample.new(self, "media/warp.wav")
     @sounds[:meteor] = Gosu::Sample.new(self, "media/meteor.wav")
     @sounds[:laser] = Gosu::Sample.new(self, "media/laser_sound.mp3")
+    @sounds[:explosion] = Gosu::Sample.new(self, "media/explosion.wav")
   end
 
   def load_music
@@ -66,6 +67,7 @@ class Game < Gosu::Window
     @animations[:player] = Gosu::Image::load_tiles(self, "media/spaceship.png", 49, 49, false)
     @animations[:grunt] = Gosu::Image::load_tiles(self, "media/grunt.png", 23, 28, false)
     @animations[:bullet] = Gosu::Image::load_tiles(self, "media/bullet.png", 11, 13, false)
+    @animations[:explosion] = Gosu::Image::load_tiles(self, "media/explosion.png", 32, 32, false)
   end
 
 end
