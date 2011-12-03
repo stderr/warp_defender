@@ -23,11 +23,14 @@ module GameStates
       when Gosu::KbReturn
         case @selected_item
         when 0 
-          @game_engine.state = GameStates::Playing.new(@window, @game_engine)
+          leave
+          @game_engine.states.push(GameStates::Playing.new(@window, @game_engine))
         when 1
-          @game_engine.state = GameStates::Options.new(@window, @game_engine)
+          leave
+          @game_engine.state.push(GameStates::Options.new(@window, @game_engine))
         when 2
-          @game_engine.state = GameStates::Credits.new(@window, @game_engine)
+          leave
+          @game_engine.state.push(GameStates::Credits.new(@window, @game_engine))
         end
       end
     end

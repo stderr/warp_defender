@@ -87,7 +87,7 @@ module GameStates
        
        when Gosu::KbEscape
          stop_theme_song
-         @game_engine.state = GameStates::Menu.new(@window, @game_engine)
+         @game_engine.states.push(GameStates::Menu.new(@window, @game_engine))
        
        when Gosu::KbSpace 
          @bullets << @player.shoot
