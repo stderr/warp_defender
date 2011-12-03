@@ -64,6 +64,14 @@ module GameStates
         end
       end
 
+      @entities.each do |entity|
+        if @warp.collides_with?(entity)
+          #warp.warp_it(entity)
+          entity.kill
+        end
+
+      end
+
     end
 
     def draw

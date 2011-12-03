@@ -38,6 +38,12 @@ module Entities
       @dead
     end
 
+  def collides_with?(other)
+    @x + width > other.x and @x < other.x + other.width and
+      ((@y+height > other.y and @y < other.y+other.height) or (@y < other.y+other.height and @y+height > other.y))
+  end
+
+
   end
 
 end
