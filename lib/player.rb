@@ -34,8 +34,8 @@ class Player
     @x += @vel_x
     @y += @vel_y
 
-    @x %= 1600
-    @y %= 1200
+    @x %= @window.width
+    @y %= @window.height
 
     @vel_x *= 0.95
     @vel_y *= 0.95

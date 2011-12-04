@@ -8,6 +8,8 @@ class Explosion
 
     @lifetime = @animation.size
 
+    @width = @window.animations[:explosion].first.width
+    @height = @window.animations[:explosion].first.height
     @x = x
     @y = y
     
@@ -22,7 +24,7 @@ class Explosion
 
     @image = @animation[@lifetime]
 
-    @image.draw(@x, @y, Utils::ZOrder::Explosion) if !@dead
+    @image.draw(@x - @width/2.0, @y - @height/2.0, Utils::ZOrder::Explosion) if !@dead
   end
 
   def kill

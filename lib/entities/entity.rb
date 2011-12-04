@@ -11,10 +11,11 @@ module Entities
       @angle = 0.0
       
       @dead = false
+      @warping = false
     end
 
-    def spawn
-      @behavior.spawn
+    def spawn(width, height)
+      @behavior.spawn(width, height)
     end
 
     def move 
@@ -38,11 +39,16 @@ module Entities
       @dead
     end
 
-  def collides_with?(other)
-    @x + width > other.x and @x < other.x + other.width and
-      ((@y+height > other.y and @y < other.y+other.height) or (@y < other.y+other.height and @y+height > other.y))
-  end
+    def warp(warp)
+    end
 
+    def collides_with?(other)
+      dx = other.x - @x
+      dy = other.y - @y
+      dr = other.width/2.0 + @width/2.0
+
+      dx**2 + dy**2 < dr**2
+    end
 
   end
 

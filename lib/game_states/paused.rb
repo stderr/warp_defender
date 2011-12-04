@@ -25,6 +25,9 @@ module GameStates
     def button_down(id)
       if id == Gosu::KbEscape
         leave
+      elsif id == Gosu::KbQ
+        # temporary until we have a menu in the pause screen
+        Process.exit
       end
     end
   end

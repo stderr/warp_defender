@@ -5,13 +5,13 @@ module GameStates
     def initialize(window, game_engine)
       super(window, game_engine)
       @player = Player.new(@window)
-      @player.move_to(600, 600)
+      @player.move_to(@window.width/2, @window.height/2 + 80)
 
-      @warp = Warp.new(@window, Gosu::screen_width/2, Gosu::screen_height/2)
+      @warp = Warp.new(@window, @window.width/2, @window.height/2)
 
       @entities = []
       grunt = Entities::Grunt.new(@window, @warp)
-      grunt.spawn
+      grunt.spawn(@window.width, @window.height)
       
       @entities << grunt
 
@@ -39,7 +39,7 @@ module GameStates
       
       if(@timer.time_passed?(5000)) 
         grunt = Entities::Grunt.new(@window, @player)
-        grunt.spawn
+        grunt.spawn(@window.width, @window.height)
         
         @entities << grunt
       end
@@ -66,8 +66,7 @@ module GameStates
 
       @entities.each do |entity|
         if @warp.collides_with?(entity)
-          #warp.warp_it(entity)
-          entity.kill
+          entity.warp(@warp)
         end
 
       end

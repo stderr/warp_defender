@@ -9,8 +9,8 @@ module GameStates
 
       @selected_item = 0
       
-      @position_x = Gosu::screen_width / 2
-      @position_y = Gosu::screen_height / 2
+      @position_x = @window.width / 2
+      @position_y = @window.height / 2
     end
 
     def button_down(id)
@@ -30,7 +30,8 @@ module GameStates
           @game_engine.state.push(GameStates::Options.new(@window, @game_engine))
         when 2
           leave
-          @game_engine.state.push(GameStates::Credits.new(@window, @game_engine))
+          #@game_engine.state.push(GameStates::Credits.new(@window, @game_engine))
+          Process.exit
         end
       end
     end

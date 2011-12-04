@@ -10,6 +10,8 @@ class Bullet
 
     @animation =  @window.animations[:bullet]
     @image = @animation.first
+    @width = @image.width
+    @height = @image.height
 
     @dead = false
   end
@@ -34,12 +36,15 @@ class Bullet
   end
   
   def collides_with?(other)
-    @x + width > other.x and @x < other.x + other.width and
-      ((@y+height > other.y and @y < other.y+other.height) or (@y < other.y+other.height and @y+height > other.y))
+    dx = other.x - @x
+    dy = other.y - @y
+    dr = other.width/2.0 + @width/2.0
+
+    dx**2 + dy**2 < dr**2
   end
 
   def off_screen?
-    @x > Gosu::screen_width || @x < 0 || @y < 0 || @y > Gosu::screen_height 
+    @x > @window.width || @x < 0 || @y < 0 || @y > @window.height 
   end
 
   def kill

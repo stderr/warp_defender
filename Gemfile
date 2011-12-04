@@ -1,4 +1,4 @@
 source :rubygems
 
-gem 'gosu'
+gem "gosu", "~> 0.7.40"
 gem 'ruby-debug19'

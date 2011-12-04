@@ -5,8 +5,8 @@ module Behaviors
       super(entity)
     end
 
-    def spawn
-      super
+    def spawn(width, height)
+      super(width, height)
     end
 
     def position

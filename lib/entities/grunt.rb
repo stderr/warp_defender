@@ -7,10 +7,13 @@ module Entities
       super(window, target)
       @behavior = Behaviors::Hunt.new(self)
       @image = @window.animations[:grunt].first
+
+      @width = @window.animations[:warp].first.width
+      @height = @window.animations[:warp].first.height
     end
 
-    def spawn
-      super
+    def spawn(width, height)
+      super(width, height)
     end
 
     def move
@@ -30,9 +33,15 @@ module Entities
     end
 
     def draw
-#      img = @window.animations[:grunt][Gosu::milliseconds / 100 % @window.animations[:grunt].size]
-#      img.draw_rot(@x, @y, Utils::ZOrder::Player, @angle)
-      draw_animation(:grunt, Utils::ZOrder::Player) unless dead?
+      if not dead?
+        frame = animation_frame(:grunt)
+        frame.draw_rot(@x, @y, Utils::ZOrder::Player, @angle)
+      end
+    end
+
+    def warp(warp)
+      @window.sounds[:warp].play
+      kill
     end
 
   end
