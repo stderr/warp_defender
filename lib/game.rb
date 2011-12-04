@@ -62,9 +62,9 @@ class Game < Gosu::Window
 
   def load_animations
     @animations[:debris] = Gosu::Image::load_tiles(self, "media/debris.png", 50, 40, false)
-    @animations[:warp] = Gosu::Image::load_tiles(self, "media/warp.png", 98, 96, false)
+    @animations[:warp] = Gosu::Image::load_tiles(self, "media/warp.png", 96, 98, false)
     @animations[:meteor] = Gosu::Image::load_tiles(self, "media/meteor.png", 72, 72, false)
-    @animations[:player] = Gosu::Image::load_tiles(self, "media/spaceship.png", 49, 49, false)
+    @animations[:player] = Gosu::Image::load_tiles(self, "media/spaceship.png", 48, 49, false)
     @animations[:grunt] = Gosu::Image::load_tiles(self, "media/grunt.png", 23, 28, false)
     @animations[:bullet] = Gosu::Image::load_tiles(self, "media/bullet.png", 11, 13, false)
     @animations[:explosion] = Gosu::Image::load_tiles(self, "media/explosion.png", 32, 32, false)
