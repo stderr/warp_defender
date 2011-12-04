@@ -3,8 +3,8 @@ class Game < Gosu::Window
   attr_accessor :fonts, :images, :animations, :sounds, :music
 
   def initialize
-    super(Gosu::screen_width, Gosu::screen_height, true)
-    #super(1066, 600, false)
+    #super(Gosu::screen_width, Gosu::screen_height, true)
+    super(1066, 600, false)
     self.caption = 'Warp Defender'
 
     @game_engine = GameEngine.new(self)
