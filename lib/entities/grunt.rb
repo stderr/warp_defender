@@ -6,10 +6,9 @@ module Entities
     def initialize(window, target)
       super(window, target)
       @behavior = Behaviors::Hunt.new(self)
-      @image = @window.animations[:grunt].first
 
-      @width = @window.animations[:warp].first.width
-      @height = @window.animations[:warp].first.height
+      @width = @window.animations[:grunt].first.width
+      @height = @window.animations[:grunt].first.height
       @z_order = Utils::ZOrder::Player
 
       animate(:grunt, :loop, 100)
@@ -20,19 +19,25 @@ module Entities
     end
 
     def move
-      @angle = @behavior.angle
+      new_angle = @behavior.angle
+      if new_angle < 0
+      	new_angle = 360 - new_angle.abs
+      end
+
+      if @angle > new_angle
+      	@angle -= 5
+      elsif @angle < new_angle
+      	@angle += 5
+      end
+
+      if @angle < 0
+      	@angle = 360 - @angle.abs
+      end
+
       @velocity = @behavior.velocity
 
       @x += Gosu::offset_x(@angle, @velocity)
       @y += Gosu::offset_y(@angle, @velocity)
-    end
-
-    def width
-      @image.width
-    end
-
-    def height
-      @image.height
     end
 
   end
