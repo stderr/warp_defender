@@ -33,7 +33,7 @@ module GameStates
         @player.turn_right
       end
 
-      if @window.button_down?(Gosu::KbUp)
+      if @window.button_down?(Gosu::KbUp) || @window.button_down?(Gosu::GpUp)
         @player.accelerate
       end
       
@@ -92,11 +92,11 @@ module GameStates
     def button_down(id)
        case id
        
-       when Gosu::KbEscape
+       when Gosu::KbEscape, Gosu::GpButton9
          stop_theme_song
          @game_engine.states.push(GameStates::Paused.new(@window, @game_engine))
        
-       when Gosu::KbSpace 
+       when Gosu::KbSpace, Gosu::GpButton2 
          @bullets << @player.shoot
        end
     end

@@ -15,12 +15,12 @@ module GameStates
 
     def button_down(id)
       case id
-      when Gosu::KbDown
+      when Gosu::KbDown, Gosu::GpDown
         @selected_item = [(@selected_item + 1), 2].min
       when
-        Gosu::KbUp
+        Gosu::KbUp, Gosu::GpUp
         @selected_item = [(@selected_item - 1), 0].max
-      when Gosu::KbReturn
+      when Gosu::KbReturn, Gosu::GpButton2
         case @selected_item
         when 0 
           leave
