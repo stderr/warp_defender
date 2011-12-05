@@ -1,6 +1,6 @@
 class Player
   attr_reader :score, :dead_x, :dead_y, :deaths
-  attr_accessor :dead, :respawn_time, :vel_x, :vel_y, :x, :y
+  attr_accessor :dead, :respawn_time, :vel_x, :vel_y
   include Sprite
 
   def initialize(window)

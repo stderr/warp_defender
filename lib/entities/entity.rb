@@ -42,14 +42,6 @@ module Entities
     def warp(warp)
     end
 
-    def collides_with?(other)
-      dx = other.x - @x
-      dy = other.y - @y
-      dr = other.width/2.0 + @width/2.0
-
-      dx**2 + dy**2 < dr**2
-    end
-
   end
 
 end

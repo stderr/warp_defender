@@ -1,5 +1,4 @@
 class Warp
-  attr_reader :x, :y, :width, :height
   include Sprite
 
   def initialize(window, x, y)
@@ -15,14 +14,6 @@ class Warp
     img = @window.animations[:warp][Gosu::milliseconds / 100 % @window.animations[:warp].size]
 
     img.draw(@x - @width/2.0, @y - @height/2.0, Utils::ZOrder::Warps, 1, 1)
-  end
-
-  def collides_with?(other)
-    dx = other.x - @x
-    dy = other.y - @y
-    dr = other.width/2.0 + @width/2.0
-
-    dx**2 + dy**2 < dr**2
   end
 
 end

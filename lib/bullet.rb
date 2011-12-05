@@ -1,6 +1,5 @@
 class Bullet
-
-  attr_accessor :angle
+  include Sprite
 
   def initialize(window, angle, x, y)
     @angle = angle
@@ -35,14 +34,6 @@ class Bullet
     @image.height
   end
   
-  def collides_with?(other)
-    dx = other.x - @x
-    dy = other.y - @y
-    dr = other.width/2.0 + @width/2.0
-
-    dx**2 + dy**2 < dr**2
-  end
-
   def off_screen?
     @x > @window.width || @x < 0 || @y < 0 || @y > @window.height 
   end

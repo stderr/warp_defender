@@ -1,5 +1,5 @@
 class Explosion
-  attr_reader :x, :y
+  include Sprite
   
   def initialize(window, x, y)
     @window = window

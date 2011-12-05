@@ -1,5 +1,5 @@
 class Star
-  attr_reader :x, :y
+  include Sprite
   
   def initialize(animation)
     @animation = animation
