@@ -8,12 +8,17 @@ class Warp
     @height = @window.animations[:warp].first.height
     @x = x
     @y = y
+    @angle = 0
+    @z_order = Utils::ZOrder::Warps
+
+    draw_frame(:warp, 0)
+  end
+
+  def warp(entity)
+    @window.sounds[:warp].play
+    animate(:warp, :once, 100,
+            lambda { self.animate(:warp, :once_reverse, 100) })
+    entity.kill
   end
   
-  def draw
-    img = @window.animations[:warp][Gosu::milliseconds / 100 % @window.animations[:warp].size]
-
-    img.draw(@x - @width/2.0, @y - @height/2.0, Utils::ZOrder::Warps, 1, 1)
-  end
-
 end

@@ -4,27 +4,23 @@ class Explosion
   def initialize(window, x, y)
     @window = window
     
-    @animation = window.animations[:explosion]
-
-    @lifetime = @animation.size
-
-    @width = @window.animations[:explosion].first.width
-    @height = @window.animations[:explosion].first.height
     @x = x
     @y = y
+    @width = @window.animations[:explosion].first.width
+    @height = @window.animations[:explosion].first.height
+    @angle = 0
+    @z_order = Utils::ZOrder::Explosion
     
     @dead = false
+
+    # play forward, then backward, then kill
+    animate(:explosion, :once, 20,
+            lambda { animate(:explosion, :once_reverse, 15,
+                             lambda { kill })})
   end
   
-  def draw
-    
-    @lifetime -= 1
-    
-    kill if @lifetime < 0
-
-    @image = @animation[@lifetime]
-
-    @image.draw(@x - @width/2.0, @y - @height/2.0, Utils::ZOrder::Explosion) if !@dead
+  def dead?
+    @dead
   end
 
   def kill

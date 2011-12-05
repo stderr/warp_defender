@@ -10,6 +10,9 @@ module Entities
 
       @width = @window.animations[:warp].first.width
       @height = @window.animations[:warp].first.height
+      @z_order = Utils::ZOrder::Player
+
+      animate(:grunt, :loop, 100)
     end
 
     def spawn(width, height)
@@ -30,18 +33,6 @@ module Entities
 
     def height
       @image.height
-    end
-
-    def draw
-      if not dead?
-        frame = animation_frame(:grunt)
-        frame.draw_rot(@x, @y, Utils::ZOrder::Player, @angle)
-      end
-    end
-
-    def warp(warp)
-      @window.sounds[:warp].play
-      kill
     end
 
   end

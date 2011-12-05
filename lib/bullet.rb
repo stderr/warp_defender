@@ -2,17 +2,18 @@ class Bullet
   include Sprite
 
   def initialize(window, angle, x, y)
-    @angle = angle
-    @x = x
-    @y = y
     @window = window
 
-    @animation =  @window.animations[:bullet]
-    @image = @animation.first
-    @width = @image.width
-    @height = @image.height
+    @x = x
+    @y = y
+    @width = @window.animations[:grunt].first.width
+    @height = @window.animations[:grunt].first.height
+    @angle = angle
+    @z_order = Utils::ZOrder::Player
 
     @dead = false
+
+    animate(:bullet, :loop, 100)
   end
 
   def move
@@ -20,20 +21,6 @@ class Bullet
     @y += Gosu::offset_y(@angle, 10.00)
   end
 
-  def draw
-    @image.draw_rot(@x, @y, Utils::ZOrder::Player, @angle) if !@dead
-   
-    @image = @animation[Gosu::milliseconds / 100 % @animation.size]
-  end
-
-  def width
-    @image.width
-  end
-
-  def height
-    @image.height
-  end
-  
   def off_screen?
     @x > @window.width || @x < 0 || @y < 0 || @y > @window.height 
   end

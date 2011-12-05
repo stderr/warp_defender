@@ -46,6 +46,7 @@ module GameStates
 
       @bullets.reject! { |b| b.dead? }
       @entities.reject! { |e| e.dead? }
+      @explosions.reject! { |e| e.dead? }
 
       @player.move
       @entities.each { |e| e.move }
@@ -66,7 +67,7 @@ module GameStates
 
       @entities.each do |entity|
         if @warp.collides_with?(entity)
-          entity.warp(@warp)
+          @warp.warp(entity)
         end
 
       end

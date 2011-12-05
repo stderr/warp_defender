@@ -10,7 +10,10 @@ class Player
     @respawn_time = 125
 
     @x = @y = @vel_x = @vel_y = @angle = 0.0
+    @z_order = Utils::ZOrder::Player
     @score = 0
+
+    draw_frame(:player, 0)
   end
 
   def move_to(x, y)
@@ -28,6 +31,7 @@ class Player
   def accelerate
     @vel_x += Gosu::offset_x(@angle, 0.5)
     @vel_y += Gosu::offset_y(@angle, 0.5)
+    animate(:player, :once, 100)
   end
 
   def move
@@ -39,10 +43,6 @@ class Player
 
     @vel_x *= 0.95
     @vel_y *= 0.95
-  end
-
-  def draw
-    draw_animation(:player, Utils::ZOrder::Player)
   end
 
   def shoot
