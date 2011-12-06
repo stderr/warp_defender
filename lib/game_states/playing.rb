@@ -22,7 +22,7 @@ module GameStates
       
       @timer = Utils::Timer.new
       
-      play_theme_song
+      @window.music[:theme].play(true)
     end
 
     def update
@@ -95,20 +95,12 @@ module GameStates
        case id
        
        when Gosu::KbEscape, Gosu::GpButton9
-         stop_theme_song
+         @window.music[:theme].pause
          @game_engine.states.push(GameStates::Paused.new(@window, @game_engine))
        
        when Gosu::KbSpace, Gosu::GpButton2 
          @bullets << @player.shoot
        end
-    end
-
-    def play_theme_song
-      @window.music[:theme].play(true)
-    end
-
-    def stop_theme_song
-      @window.music[:theme].stop
     end
 
   end
