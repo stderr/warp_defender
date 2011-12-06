@@ -32,6 +32,7 @@ module GameStates
       @window.fonts[:menu].draw_rel(@title, @x, @y - 40, 0, 0.5, 1, 2, 2)
       
       @menu_items.each_index do |i|
+        
         if i == @selected_item
           @window.fonts[:menu].draw_rel(@menu_items[i].name, @x, @y+i*@spacing, 0, 0.5, 1, 1, 1, Gosu::Color::GREEN)
         else
@@ -41,10 +42,6 @@ module GameStates
       
     end
     
-    def activate
-      @on_activate.call
-    end
-
   end
   
   class MenuItem
