@@ -21,8 +21,9 @@ module GameStates
       when Gosu::KbUp, Gosu::GpUp
         @selected_item = [(@selected_item - 1), 0].max
       when Gosu::KbReturn, Gosu::GpButton2
-        @game_engine.states.push(@menu_items[@selected_item].state.new(@window, @game_engine))
-        leave
+        @menu_items[@selected_item].activate
+        # @game_engine.states.push(@menu_items[@selected_item].state.new(@window, @game_engine))
+        # leave
       end
     end
     
@@ -40,16 +41,26 @@ module GameStates
       
     end
     
+    def activate
+      @on_activate.call
+    end
+
   end
   
   class MenuItem
     attr_reader :name, :state
     
-    def initialize(name, state)
+    def initialize(name, &on_activate)
       @name = name
       @state = state
+
+      @on_activate = on_activate if block_given?
     end
     
+    def activate
+      @on_activate.call
+    end
+
   end
 
 end
