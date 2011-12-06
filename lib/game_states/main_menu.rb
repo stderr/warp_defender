@@ -6,9 +6,9 @@ module GameStates
       super(window, game_engine)
 
       @menu_items = [
-                     MenuItem.new("Play", Playing.new(@window, @game_engine)),
-                     MenuItem.new("Options", Options.new(@window, @game_engine)),
-                     MenuItem.new("Quit", Credits.new(@window, @game_engine))
+                     MenuItem.new("Play", Playing),
+                     MenuItem.new("Options", Options),
+                     MenuItem.new("Quit", Credits)
                     ] 
 
       @title = "Main Menu"

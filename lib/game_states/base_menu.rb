@@ -21,7 +21,7 @@ module GameStates
       when Gosu::KbUp, Gosu::GpUp
         @selected_item = [(@selected_item - 1), 0].max
       when Gosu::KbReturn, Gosu::GpButton2
-        @game_engine.states.push(@menu_items[@selected_item].state)
+        @game_engine.states.push(@menu_items[@selected_item].state.new(@window, @game_engine))
         leave
       end
     end
