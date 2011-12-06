@@ -3,7 +3,7 @@ class Warp
 
   def initialize(window, x, y)
     @window = window
-
+    
     @width = @window.animations[:warp].first.width
     @height = @window.animations[:warp].first.height
     @x = x

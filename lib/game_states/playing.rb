@@ -4,11 +4,12 @@ module GameStates
     
     def initialize(window, game_engine)
       super(window, game_engine)
+
       @player = Player.new(@window)
       @player.move_to(@window.width/2, @window.height/2 + 80)
 
       @warp = Warp.new(@window, @window.width/2, @window.height/2)
-
+      
       @entities = []
       grunt = Entities::Grunt.new(@window, @warp)
       grunt.spawn(@window.width, @window.height)

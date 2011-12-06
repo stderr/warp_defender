@@ -7,8 +7,8 @@ class Game < Gosu::Window
     super(1066, 600, false)
     self.caption = 'Warp Defender'
 
-    @game_engine = GameEngine.new(self)
-    @game_engine.states.push(GameStates::Menu.new(self, @game_engine))
+    config = Configurability::Config.load(File.expand_path(File.dirname(__FILE__) +"/../config/game_data.yml"))
+    config.install
 
     @images = {}
     @fonts = {}
@@ -21,6 +21,10 @@ class Game < Gosu::Window
     load_sounds
     load_animations
     load_music
+
+    @game_engine = GameEngine.new(self)
+
+    @game_engine.states.push(GameStates::MainMenu.new(self, @game_engine))
   end
 
   def update
@@ -41,6 +45,7 @@ class Game < Gosu::Window
 
   def load_images
     @images[:background] = Gosu::Image.new(self, "media/space.jpg", true)
+    @images[:menu_background] = Gosu::Image.new(self, "media/space.jpg", true)
     @images[:player] = Gosu::Image.new(self, "media/fighter.png", false)
   end
 

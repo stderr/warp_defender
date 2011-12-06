@@ -1,7 +1,7 @@
 module GameStates
 
   class GameState
-
+ 
     def initialize(window, game_engine)
       @window = window
       @game_engine = game_engine

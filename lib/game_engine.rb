@@ -1,6 +1,11 @@
 class GameEngine
-
   attr_accessor :states
+
+  extend Configurability
+  config_key :game_engine
+
+  # class level attribute reader
+  class << self; attr_reader :config; end
 
   def initialize(window)
     @window = window
@@ -22,5 +27,5 @@ class GameEngine
   def button_up(id)
     @states.last.button_up(id)
   end
-
+  
 end

@@ -1,7 +1,10 @@
 $:.unshift File.expand_path(File.dirname(__FILE__))
-
+# Global gems
 require 'gosu'
+require 'configurability'
+require 'configurability/config'
 
+# Library files
 require 'lib/game'
 require 'lib/game_engine'
 require 'lib/sprite'
@@ -9,7 +12,8 @@ require 'lib/utils'
 require 'lib/player'
 
 require 'lib/game_states/game_state'
-require 'lib/game_states/menu'
+require 'lib/game_states/base_menu'
+require 'lib/game_states/main_menu'
 require 'lib/game_states/options'
 require 'lib/game_states/paused'
 require 'lib/game_states/playing'
