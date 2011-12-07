@@ -22,8 +22,6 @@ module GameStates
         @selected_item = [(@selected_item - 1), 0].max
       when Gosu::KbReturn, Gosu::GpButton2
         @menu_items[@selected_item].activate
-        # @game_engine.states.push(@menu_items[@selected_item].state.new(@window, @game_engine))
-        # leave
       end
     end
     
@@ -32,30 +30,43 @@ module GameStates
       @window.fonts[:menu].draw_rel(@title, @x, @y - 40, 0, 0.5, 1, 2, 2)
       
       @menu_items.each_index do |i|
-        
-        if i == @selected_item
-          @window.fonts[:menu].draw_rel(@menu_items[i].name, @x, @y+i*@spacing, 0, 0.5, 1, 1, 1, Gosu::Color::GREEN)
-        else
-          @window.fonts[:menu].draw_rel(@menu_items[i].name, @x, @y+i*@spacing, 0, 0.5, 1)
-        end
+          color = (i == @selected_item ?  Gosu::Color::GREEN : Gosu::Color::WHITE)
+          @menu_items[i].draw(@window, @x, @y+i*@spacing, color)
       end
-      
     end
     
   end
   
   class MenuItem
-    attr_reader :name, :state
+    attr_accessor :checked
+    attr_reader :name
     
-    def initialize(name, &on_activate)
+    def initialize(name, type = :parent, &on_activate)
       @name = name
-      @state = state
+      @type = type
+      @checked = false
 
       @on_activate = on_activate if block_given?
     end
     
+    def draw(window, x, y, color=1)
+      case @type 
+      when :parent
+      when :checkbox
+
+        if checked
+          window.images[:checked].draw_rot(x+100, y-18, 0, 0)
+        else
+          window.images[:unchecked].draw_rot(x+100, y-18, 0, 0)
+        end
+
+      end
+      
+      window.fonts[:menu].draw_rel(@name, x, y, 0, 0.5, 1, 1, 1, color)
+    end
+
     def activate
-      @on_activate.call
+      @on_activate.call(self)
     end
 
   end

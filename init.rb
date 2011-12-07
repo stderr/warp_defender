@@ -12,12 +12,15 @@ require 'lib/utils'
 require 'lib/player'
 
 require 'lib/game_states/game_state'
-require 'lib/game_states/base_menu'
-require 'lib/game_states/main_menu'
-require 'lib/game_states/options'
 require 'lib/game_states/paused'
 require 'lib/game_states/playing'
 require 'lib/game_states/credits'
+
+require 'lib/game_states/menu/base_menu'
+require 'lib/game_states/menu/main_menu'
+require 'lib/game_states/menu/options'
+require 'lib/game_states/menu/audio'
+require 'lib/game_states/menu/display'
 
 require 'lib/behaviors/behavior'
 require 'lib/behaviors/beeline'

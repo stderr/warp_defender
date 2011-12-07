@@ -6,11 +6,11 @@ module GameStates
       super(window, game_engine)
 
       @menu_items = [
-                     MenuItem.new("New") do 
+                     MenuItem.new("New") do
                        @game_engine.states.push(Playing.new(@window, @game_engine))
                      end,
 
-                     MenuItem.new("Options") do 
+                     MenuItem.new("Options") do
                        @game_engine.states.push(Options.new(@window, @game_engine))
                      end,
 

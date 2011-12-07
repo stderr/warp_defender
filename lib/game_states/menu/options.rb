@@ -20,13 +20,10 @@ module GameStates
                      MenuItem.new("Back") do
                        leave
                      end
-
                     ]
 
       @title = "Options"
     end
-
-
   end
 
 end
