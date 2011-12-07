@@ -14,6 +14,10 @@ class Warp
     draw_frame(:warp, 0)
   end
 
+  def update(delta)
+    @angle += 360/90*delta
+  end
+
   def warp(entity)
     @window.sounds[:warp].play
     animate(:warp, :once, 100,

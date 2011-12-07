@@ -29,9 +29,13 @@ class Explosion
     @dead = true
   end
 
-  def move
-    @x += @vel_x
-    @y += @vel_y
+  def update(delta)
+    move(delta)
+  end
+
+  def move(delta)
+    @x += @vel_x * delta
+    @y += @vel_y * delta
   end
 
 end

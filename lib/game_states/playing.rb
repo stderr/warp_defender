@@ -5,6 +5,8 @@ module GameStates
     def initialize(window, game_engine)
       super(window, game_engine)
 
+      @last_frame_ms = Gosu::milliseconds
+
       @player = Player.new(@window)
       @player.move_to(@window.width/2, @window.height/2 + 80)
 
@@ -26,19 +28,25 @@ module GameStates
     end
 
     def update
+      # frame timescaling
+      frame_ms = Gosu::milliseconds
+      delta = (frame_ms - @last_frame_ms) / 1000.0
+      @last_frame_ms = frame_ms
+
+
       if @window.button_down?(Gosu::KbLeft) || @window.button_down?(Gosu::GpLeft)
-        @player.turn_left
+        @player.turn_left(delta)
       end
 
       if @window.button_down?(Gosu::KbRight) || @window.button_down?(Gosu::GpRight)
-        @player.turn_right
+        @player.turn_right(delta)
       end
 
       if @window.button_down?(Gosu::KbUp) || @window.button_down?(Gosu::GpUp)
-        @player.accelerate
+        @player.accelerate(delta)
       end
       
-      if(@timer.time_passed?(5000)) 
+      if(@timer.time_passed?(2500)) 
         grunt = Entities::Grunt.new(@window, @player)
         grunt.spawn(@window.width, @window.height)
         
@@ -49,10 +57,11 @@ module GameStates
       @entities.reject! { |e| e.dead? }
       @explosions.reject! { |e| e.dead? }
 
-      @player.move
-      @entities.each { |e| e.move }
-      @bullets.each { |b| b.move }
-      @explosions.each { |b| b.move }
+      @player.update(delta)
+      @entities.each { |e| e.update(delta) }
+      @bullets.each { |b| b.update(delta) }
+      @explosions.each { |b| b.update(delta) }
+      @warp.update(delta)
 
       @bullets.each do |bullet| 
         @entities.each do |entity|

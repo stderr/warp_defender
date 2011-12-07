@@ -19,26 +19,31 @@ module Entities
       super(width, height)
     end
 
-    def move
+    def update(delta)
+      move(delta)
+    end
+
+    def move(delta)
       new_angle = @behavior.angle
       if new_angle < 0
       	new_angle = 360 - new_angle.abs
       end
 
+      @velocity = @behavior.velocity
+
+      # not timescaled but this is temporary code
       if @angle > new_angle
-      	@angle -= 5
+      	@angle -= 240 * ((340 - @velocity) / 240) * delta
       elsif @angle < new_angle
-      	@angle += 5
+      	@angle += 240 * ((340 - @velocity) / 240) * delta
       end
 
       if @angle < 0
       	@angle = 360 - @angle.abs
       end
 
-      @velocity = @behavior.velocity
-
-      @x += Gosu::offset_x(@angle, @velocity)
-      @y += Gosu::offset_y(@angle, @velocity)
+      @x += Gosu::offset_x(@angle, @velocity) * delta
+      @y += Gosu::offset_y(@angle, @velocity) * delta
     end
 
   end

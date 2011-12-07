@@ -1,8 +1,12 @@
 module Behaviors
 
   class Hunt < Behavior
+    attr_reader :velocity
+
     def initialize(entity)
       super(entity)
+      # distance per second to move
+      @velocity = Gosu::random(80, 240)
     end
 
     def spawn(width, height)
@@ -10,10 +14,6 @@ module Behaviors
     end
 
     def position
-    end
-
-    def velocity
-      Gosu::random(1, 3)
     end
 
     def angle

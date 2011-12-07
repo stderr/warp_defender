@@ -55,6 +55,10 @@ module Sprite
     @animsingleindex = index
   end
 
+  def update(delta)
+    # delta is the seconds since the last update for timescaling
+  end
+
   def frame_count(name)
     @window.animations[name].size
   end

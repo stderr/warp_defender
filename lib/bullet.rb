@@ -1,7 +1,7 @@
 class Bullet
   include Sprite
 
-  def initialize(window, angle, x, y)
+  def initialize(window, angle, x, y, vel_x, vel_y)
     @window = window
 
     @x = x
@@ -10,15 +10,21 @@ class Bullet
     @height = @window.animations[:grunt].first.height
     @angle = angle
     @z_order = Utils::ZOrder::Player
+    @vel_x = vel_x + Gosu::offset_x(@angle, 800.00)
+    @vel_y = vel_y + Gosu::offset_y(@angle, 800.00)
 
     @dead = false
 
     animate(:bullet, :loop, 100)
   end
 
-  def move
-    @x += Gosu::offset_x(@angle, 10.00)
-    @y += Gosu::offset_y(@angle, 10.00)
+  def update(delta)
+    move(delta)
+  end
+
+  def move(delta)
+    @x += @vel_x * delta
+    @y += @vel_y * delta
   end
 
   def off_screen?
