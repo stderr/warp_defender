@@ -2,6 +2,7 @@ module Entities
 
   class Grunt < Entity
     include Sprite
+    attr_reader :velocity
 
     def initialize(window, target)
       super(window, target)

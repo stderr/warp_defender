@@ -52,6 +52,7 @@ module GameStates
       @player.move
       @entities.each { |e| e.move }
       @bullets.each { |b| b.move }
+      @explosions.each { |b| b.move }
 
       @bullets.each do |bullet| 
         @entities.each do |entity|
@@ -60,7 +61,11 @@ module GameStates
             bullet.kill
             entity.kill
             @window.sounds[:explosion].play
-            @explosions << Explosion.new(@window, entity.x, entity.y)
+            @explosions << Explosion.new(@window, entity.x, entity.y, 
+                                         Gosu::offset_x(entity.angle,
+                                                        entity.velocity)*0.7,
+                                         Gosu::offset_y(entity.angle,
+                                                        entity.velocity)*0.7)
           end
        
         end
