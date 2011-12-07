@@ -6,10 +6,12 @@ module GameStates
       
       @menu_items = [
                      MenuItem.new("Music", :checkbox) do |item|
+                       @window.sounds[:click].play
                        item.checked = !item.checked
                      end,
                      
                      MenuItem.new("Sound", :checkbox) do |item|
+                       @window.sounds[:click].play
                        item.checked = !item.checked
                      end,
                      

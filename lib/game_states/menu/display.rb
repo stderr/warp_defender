@@ -6,6 +6,7 @@ class Display < BaseMenu
 
     @menu_items = [
                    MenuItem.new("Fullscreen", :checkbox) do |item|
+                     @window.sounds[:click].play
                      item.checked = !item.checked
                    end,
                    
