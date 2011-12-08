@@ -34,41 +34,7 @@ module GameStates
           @menu_items[i].draw(@window, @x, @y+i*@spacing, color)
       end
     end
-    
-  end
   
-  class MenuItem
-    attr_accessor :checked
-    attr_reader :name
-    
-    def initialize(name, type = :parent, &on_activate)
-      @name = name
-      @type = type
-      @checked = false
-
-      @on_activate = on_activate if block_given?
-    end
-    
-    def draw(window, x, y, color=1)
-      case @type 
-      when :parent
-      when :checkbox
-
-        if checked
-          window.images[:checked].draw_rot(x+100, y-18, 0, 0)
-        else
-          window.images[:unchecked].draw_rot(x+100, y-18, 0, 0)
-        end
-
-      end
-      
-      window.fonts[:menu].draw_rel(@name, x, y, 0, 0.5, 1, 1, 1, color)
-    end
-
-    def activate
-      @on_activate.call(self)
-    end
-
   end
 
 end
