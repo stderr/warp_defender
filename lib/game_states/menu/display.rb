@@ -5,15 +5,16 @@ class Display < BaseMenu
     super(window, game_engine)
 
     @menu_items = [
-                   CheckboxItem.new("Fullscreen") do |item|
+                   GUI::Checkbox.new(:text => "Fullscreen") do |item|
                      @window.sounds[:click].play
                      item.checked = !item.checked
                    end,
                    
-                   MenuItem.new("Back") do 
+                   GUI::Text.new(:text => "Back") do 
                      leave
                    end
                   ]
+
     @title = "Display"
   end
 end

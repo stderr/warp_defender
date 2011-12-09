@@ -5,19 +5,19 @@ module GameStates
       super(window, game_engine)
 
       @menu_items = [
-                     MenuItem.new("Controls") do
+                     GUI::Text.new(:text => "Controls") do
                        @game_engine.states.push(Controls.new(@window, @game_engine))
                      end,
                      
-                     MenuItem.new("Audio") do
+                     GUI::Text.new(:text => "Audio") do
                        @game_engine.states.push(Audio.new(@window, @game_engine))
                      end,
                      
-                     MenuItem.new("Display") do
+                     GUI::Text.new(:text => "Display") do
                        @game_engine.states.push(Display.new(@window, @game_engine))
                      end,
                      
-                     MenuItem.new("Back") do
+                     GUI::Text.new(:text => "Back") do
                        leave
                      end
                     ]

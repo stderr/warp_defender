@@ -6,15 +6,15 @@ module GameStates
       super(window, game_engine)
 
       @menu_items = [
-                     MenuItem.new("New") do
+                     GUI::Text.new(:text => "New") do
                        @game_engine.states.push(Playing.new(@window, @game_engine))
                      end,
 
-                     MenuItem.new("Options") do
+                     GUI::Text.new(:text => "Options") do
                        @game_engine.states.push(Options.new(@window, @game_engine))
                      end,
 
-                     MenuItem.new("Quit") do
+                     GUI::Text.new(:text => "Quit") do
                        Process.exit
                      end
                     ] 

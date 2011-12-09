@@ -5,17 +5,17 @@ module GameStates
       super(window, game_engine)
       
       @menu_items = [
-                     CheckboxItem.new("Music") do |item|
+                     GUI::Checkbox.new(:text => "Music") do |item|
                        @window.sounds[:click].play
                        item.checked = !item.checked
                      end,
                      
-                     CheckboxItem.new("Sound") do |item|
+                     GUI::Checkbox.new(:text => "Sound") do |item|
                        @window.sounds[:click].play
                        item.checked = !item.checked
                      end,
                      
-                     MenuItem.new("Back") do
+                     GUI::Text.new(:text => "Back") do
                        leave
                      end
                     ]

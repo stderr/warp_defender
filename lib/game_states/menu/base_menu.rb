@@ -31,7 +31,7 @@ module GameStates
       
       @menu_items.each_index do |i|
           color = (i == @selected_item ?  Gosu::Color::GREEN : Gosu::Color::WHITE)
-          @menu_items[i].draw(@window, @x, @y+i*@spacing, color)
+          @menu_items[i].draw(@window, @x, @y+i*@spacing, :color => color)
       end
     end
   
