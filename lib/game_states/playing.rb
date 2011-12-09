@@ -83,6 +83,7 @@ module GameStates
         end
       end
 
+      @game_engine.states.push(GameStates::GameOver.new(@window, @game_engine)) if @warp.current_defense <= 0
     end
 
     def draw

@@ -15,6 +15,7 @@ require 'lib/game_states/game_state'
 require 'lib/game_states/paused'
 require 'lib/game_states/playing'
 require 'lib/game_states/credits'
+require 'lib/game_states/game_over'
 
 # Menu states
 require 'lib/game_states/menu/base_menu'
