@@ -9,6 +9,7 @@ module GameStates
 
       @player = Entities::Player.new(@window)
       @player.move_to(@window.width/2, @window.height/2 + 80)
+      
       @entities << @player
 
       @warp = Entities::Warp.new(@window, @window.width/2, @window.height/2)
@@ -21,6 +22,11 @@ module GameStates
       # track the bullets explicitly until we have better collision handling
       @bullets = []
       
+      # HUD
+      @mini_map = GUI::MiniMap.new(:color => Gosu::Color.argb(0xff000000), 
+                                   :width => @window.width/10, 
+                                   :height => @window.height/10)
+
       @timer = Utils::Timer.new
       
       @last_frame_ms = Gosu::milliseconds
@@ -33,6 +39,8 @@ module GameStates
       delta = (frame_ms - @last_frame_ms) / 1000.0
       @last_frame_ms = frame_ms
 
+      puts "x: #{@player.x}"
+      puts "y: #{@player.y}"
 
       if(@timer.time_passed?(2500)) 
         grunt = Entities::Grunt.new(@window, [@warp, @player][rand(2)])
@@ -78,6 +86,8 @@ module GameStates
     def draw
       @window.images[:background].draw(0, 0, Utils::ZOrder::Background)
       @entities.each { |e| e.draw }
+
+      @mini_map.draw(@window, @window.width-110, @window.height-10, :entities => @entities)
     end
 
     def button_down(id)

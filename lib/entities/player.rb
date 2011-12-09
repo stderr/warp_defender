@@ -72,6 +72,10 @@ module Entities
       end
     end
 
+    def map_color
+      Gosu::Color::GREEN
+    end
+
   end
 
 end

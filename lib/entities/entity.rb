@@ -64,6 +64,10 @@ module Entities
       dx**2 + dy**2 < dr**2
     end
 
-  end
+    def map_color
+      Gosu::Color::RED
+    end
 
+  end
+  
 end

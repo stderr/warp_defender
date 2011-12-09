@@ -16,8 +16,7 @@ module GUI
       # needing window
 
       @options.merge!({
-        :font => window.fonts[:menu],
-        :color => 1
+        :font => window.fonts[:menu]
       }).merge!(options)
 
     end

@@ -27,6 +27,7 @@ require 'lib/game_states/menu/display'
 require 'lib/gui/base_element'
 require 'lib/gui/text'
 require 'lib/gui/checkbox'
+require 'lib/gui/mini_map'
 
 # Behaviors
 require 'lib/behaviors/behavior'

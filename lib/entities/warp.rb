@@ -23,6 +23,10 @@ module Entities
       entity.kill
     end
     
+    def map_color
+      Gosu::Color::BLUE
+    end
+
   end
 
 end
