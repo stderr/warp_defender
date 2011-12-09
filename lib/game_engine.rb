@@ -1,13 +1,9 @@
 class GameEngine
-  attr_accessor :states
-
-  extend Configurability
-  config_key :game_engine
-
-  # class level attribute reader
-  class << self; attr_reader :config; end
+  attr_accessor :states, :config
 
   def initialize(window)
+    @config = Configurability::Config.load(File.expand_path(File.dirname(__FILE__) +"/../config/game_data.yml"))
+
     @window = window
     @states = []
   end

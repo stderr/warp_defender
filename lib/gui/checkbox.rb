@@ -6,7 +6,7 @@ module GUI
     def initialize(options = {}, &on_activate)
       super(options, &on_activate)
       
-      @checked = false
+      @checked = @options[:value]
     end
     
     def draw(window, x, y, options = {})

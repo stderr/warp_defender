@@ -1,0 +1,6 @@
+---
+audio:
+  music: false
+  sound: false
+display:
+  fullscreen: false

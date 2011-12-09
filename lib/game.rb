@@ -7,9 +7,7 @@ class Game < Gosu::Window
     super(1066, 600, false)
     self.caption = 'Warp Defender'
 
-    config = Configurability::Config.load(File.expand_path(File.dirname(__FILE__) +"/../config/game_data.yml"))
-    config.install
-
+    
     @images = {}
     @fonts = {}
     @sounds = {}
