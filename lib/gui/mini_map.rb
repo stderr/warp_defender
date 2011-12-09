@@ -15,6 +15,7 @@ module GUI
 
       @options[:entities].each do |entity|
         next if entity.is_a?(Entities::Bullet) || entity.off_screen?
+
         pos_x = x+(entity.x/10)
         pos_y = (y - @options[:height]) + (entity.y/10)
 
@@ -23,7 +24,6 @@ module GUI
                          pos_x+2, pos_y-2, entity.map_color,
                          pos_x, pos_y-2, entity.map_color,
                          Utils::ZOrder::MapEntity)
-                         
       end
 
     end
