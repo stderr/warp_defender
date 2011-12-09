@@ -14,7 +14,7 @@ module GUI
                        Utils::ZOrder::HUD)
 
       @options[:entities].each do |entity|
-        next if entity.is_a?(Entities::Bullet)
+        next if entity.is_a?(Entities::Bullet) || entity.off_screen?
         pos_x = x+(entity.x/10)
         pos_y = (y - @options[:height]) + (entity.y/10)
 
