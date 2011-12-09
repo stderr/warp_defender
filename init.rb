@@ -15,11 +15,13 @@ require 'lib/game_states/paused'
 require 'lib/game_states/playing'
 require 'lib/game_states/credits'
 
+# Menu states
 require 'lib/game_states/menu/base_menu'
 require 'lib/game_states/menu/main_menu'
 require 'lib/game_states/menu/options'
 require 'lib/game_states/menu/audio'
 require 'lib/game_states/menu/display'
+require 'lib/game_states/menu/menu_item'
 
 require 'lib/behaviors/behavior'
 require 'lib/behaviors/beeline'
