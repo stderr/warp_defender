@@ -1,6 +1,7 @@
 module GUI
 
   class MiniMap < BaseElement
+
     def initialize(options = {}, &on_activate)
       super(options, &on_activate)
     end
@@ -23,7 +24,7 @@ module GUI
                          pos_x+2, pos_y, entity.map_color,
                          pos_x+2, pos_y-2, entity.map_color,
                          pos_x, pos_y-2, entity.map_color,
-                         Utils::ZOrder::MapEntity)
+                         Utils::ZOrder::HUDOverlay)
       end
 
     end

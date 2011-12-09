@@ -23,10 +23,15 @@ module GameStates
       @bullets = []
       
       # HUD
-      @mini_map = GUI::MiniMap.new(:color => Gosu::Color.argb(0xff000000), 
+      @mini_map = GUI::MiniMap.new(:color => Gosu::Color::BLACK, 
                                    :width => @window.width/10, 
                                    :height => @window.height/10)
 
+      @defense_bar = GUI::Bar.new(:width => 180, 
+                                  :height => 20,
+                                  :outer_color => Gosu::Color::BLACK,
+                                  :left_color => Gosu::Color::RED,
+                                  :right_color => Gosu::Color::GREEN)
       @timer = Utils::Timer.new
       
       @last_frame_ms = Gosu::milliseconds
@@ -83,7 +88,8 @@ module GameStates
     def draw
       @window.images[:background].draw(0, 0, Utils::ZOrder::Background)
       @entities.each { |e| e.draw }
-
+      
+      @defense_bar.draw(@window, (@window.width/2)+220, @window.height-10, :current => @warp.current_defense, :max => @warp.max_defense)
       @mini_map.draw(@window, @window.width-110, @window.height-10, :entities => @entities)
     end
 
