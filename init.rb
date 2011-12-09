@@ -9,7 +9,6 @@ require 'lib/game'
 require 'lib/game_engine'
 require 'lib/sprite'
 require 'lib/utils'
-require 'lib/player'
 
 require 'lib/game_states/game_state'
 require 'lib/game_states/paused'
@@ -26,16 +25,17 @@ require 'lib/behaviors/behavior'
 require 'lib/behaviors/beeline'
 require 'lib/behaviors/hunt' 
 
+require 'lib/physics/dynamic'
+
 require 'lib/entities/entity'
 require 'lib/entities/grunt'
-
-require 'lib/player'
-require 'lib/star'
-require 'lib/debris'
-require 'lib/warp'
-require 'lib/meteor'
-require 'lib/explosion'
-require 'lib/bullet'
+require 'lib/entities/player'
+require 'lib/entities/star'
+require 'lib/entities/debris'
+require 'lib/entities/warp'
+require 'lib/entities/meteor'
+require 'lib/entities/explosion'
+require 'lib/entities/bullet'
 
 
 game = Game.new

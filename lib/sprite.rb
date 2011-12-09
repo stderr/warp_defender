@@ -55,19 +55,16 @@ module Sprite
     @animsingleindex = index
   end
 
-  def update(delta)
-    # delta is the seconds since the last update for timescaling
-  end
-
   def frame_count(name)
     @window.animations[name].size
   end
 
-  def collides_with?(other)
-    dx = other.x - @x
-    dy = other.y - @y
-    dr = other.width/2.0 + @width/2.0
-
-    dx**2 + dy**2 < dr**2
+  def frame_width(name, window=@window)
+    window.animations[name].first.width
   end
+
+  def frame_height(name, window=@window)
+    window.animations[name].first.height
+  end
+
 end

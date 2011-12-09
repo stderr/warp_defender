@@ -6,7 +6,7 @@ module Behaviors
     def initialize(entity)
       super(entity)
       # distance per second to move
-      @velocity = Gosu::random(80, 240)
+      @velocity = Gosu::random(80, 200)
     end
 
     def spawn(width, height)

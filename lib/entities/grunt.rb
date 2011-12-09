@@ -2,15 +2,19 @@ module Entities
 
   class Grunt < Entity
     include Sprite
-    attr_reader :velocity
+    attr_reader :velocity, :target
 
     def initialize(window, target)
-      super(window, target)
-      @behavior = Behaviors::Hunt.new(self)
+      super(:window => window,
+            :width => frame_width(:grunt, window),
+            :height => frame_height(:grunt, window),
+            :z_order => Utils::ZOrder::Player)
 
-      @width = @window.animations[:grunt].first.width
-      @height = @window.animations[:grunt].first.height
-      @z_order = Utils::ZOrder::Player
+      @behavior = Behaviors::Hunt.new(self)
+      @target = target
+
+      @physics = Physics::Dynamic.new(0, 0)
+
 
       animate(:grunt, :loop, 100)
     end
@@ -20,30 +24,33 @@ module Entities
     end
 
     def update(delta)
-      move(delta)
+      aim(delta)
+      @physics.update(self, delta)
     end
 
-    def move(delta)
+    def aim(delta)
       new_angle = @behavior.angle
       if new_angle < 0
       	new_angle = 360 - new_angle.abs
       end
 
-      @velocity = @behavior.velocity
-
-      # not timescaled but this is temporary code
+      # not time scaled but this is temporary code
       if @angle > new_angle
-      	@angle -= 240 * ((340 - @velocity) / 240) * delta
+      	@angle -= 240 * ((340 - @behavior.velocity) / 240) * delta
       elsif @angle < new_angle
-      	@angle += 240 * ((340 - @velocity) / 240) * delta
+      	@angle += 240 * ((340 - @behavior.velocity) / 240) * delta
       end
 
       if @angle < 0
       	@angle = 360 - @angle.abs
       end
 
-      @x += Gosu::offset_x(@angle, @velocity) * delta
-      @y += Gosu::offset_y(@angle, @velocity) * delta
+      @vel_x = Gosu::offset_x(@angle, @behavior.velocity)
+      @vel_y = Gosu::offset_y(@angle, @behavior.velocity)
+    end
+
+    def velocity
+      @behavior.velocity
     end
 
   end
