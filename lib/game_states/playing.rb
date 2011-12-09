@@ -39,9 +39,6 @@ module GameStates
       delta = (frame_ms - @last_frame_ms) / 1000.0
       @last_frame_ms = frame_ms
 
-      puts "x: #{@player.x}"
-      puts "y: #{@player.y}"
-
       if(@timer.time_passed?(2500)) 
         grunt = Entities::Grunt.new(@window, [@warp, @player][rand(2)])
         grunt.spawn(@window.width, @window.height)
