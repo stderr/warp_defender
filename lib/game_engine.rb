@@ -3,7 +3,6 @@ class GameEngine
 
   def initialize(window)
     @config = Configurability::Config.load(File.expand_path(File.dirname(__FILE__) +"/../config/game_data.yml"))
-
     @window = window
     @states = []
   end

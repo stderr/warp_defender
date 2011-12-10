@@ -2,5 +2,5 @@
 audio:
   music: false
   sound: false
-display:
+video:
   fullscreen: false
