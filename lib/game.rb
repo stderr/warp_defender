@@ -46,7 +46,6 @@ class Game < Gosu::Window
   def load_images
     @images[:background] = Gosu::Image.new(self, "media/space.jpg", true)
     @images[:menu_background] = Gosu::Image.new(self, "media/space.jpg", true)
-    @images[:player] = Gosu::Image.new(self, "media/fighter.png", false)
     @images[:unchecked] = Gosu::Image.new(self, "media/unchecked.png", false)
     @images[:checked] = Gosu::Image.new(self, "media/checked.png", false)
   end

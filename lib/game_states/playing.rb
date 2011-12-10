@@ -13,6 +13,7 @@ module GameStates
       @entities << @player
 
       @warp = Entities::Warp.new($window.width/2, $window.height/2)
+      
       @entities << @warp
       
       grunt = Entities::Grunt.new(@warp)
@@ -75,8 +76,8 @@ module GameStates
         if not entity.equal? @warp
           # is_a? is a hack to prevent non-enemy entities being warped
           if entity.is_a? Entities::Grunt
-          	if @warp.collides_with?(entity)
-              @warp.warp(entity)
+            if warp = @entities.detect { |e| e.class == Entities::Warp && entity.collides_with?(e) }
+              warp.warp(entity)
             end
           end
         end
