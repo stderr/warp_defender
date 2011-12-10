@@ -12,11 +12,11 @@ module GameStates
       
       @entities << @player
 
-      @warp = Entities::Warp.new($window.width/2, $window.height/2)
+      warp = Entities::Warp.new($window.width/2, $window.height/2)
       
-      @entities << @warp
+      @entities << warp
       
-      grunt = Entities::Grunt.new(@warp)
+      grunt = Entities::Grunt.new(warp)
       grunt.spawn($window.width, $window.height)
       @entities << grunt
 
@@ -46,7 +46,8 @@ module GameStates
       @last_frame_ms = frame_ms
 
       if(@timer.time_passed?(2500)) 
-        grunt = Entities::Grunt.new([@warp, @player][rand(2)])
+        targets = warps << @player
+        grunt = Entities::Grunt.new(targets[rand(targets.length)])
         grunt.spawn($window.width, $window.height)
         
         @entities << grunt
@@ -73,24 +74,27 @@ module GameStates
       end
 
       @entities.each do |entity|
-        if not entity.equal? @warp
+        if !entity.is_a?(Entities::Warp)
           # is_a? is a hack to prevent non-enemy entities being warped
           if entity.is_a? Entities::Grunt
-            if warp = @entities.detect { |e| e.class == Entities::Warp && entity.collides_with?(e) }
+            if warp = warps.detect { |w| entity.collides_with?(w) }
               warp.warp(entity)
             end
           end
         end
       end
 
-      @game_engine.states.push(GameStates::GameOver.new(@game_engine)) if @warp.current_defense <= 0
+      @game_engine.states.push(GameStates::GameOver.new(@game_engine)) if current_defense <= 0
     end
 
     def draw
       $window.images[:background].draw(0, 0, Utils::ZOrder::Background)
       @entities.each { |e| e.draw }
       
-      @defense_bar.draw(($window.width/2)+220, $window.height-10, :current => @warp.current_defense, :max => @warp.max_defense)
+      @defense_bar.draw(($window.width/2)+220, $window.height-10, 
+                        :current => current_defense,
+                        :max => max_defense)
+
       @mini_map.draw($window.width-110, $window.height-10, :entities => @entities)
     end
 
@@ -106,6 +110,20 @@ module GameStates
          @entities << bullet
          @bullets << bullet
        end
+    end
+    
+    private
+    
+    def warps
+      @entities.select { |e| e.is_a? Entities::Warp }
+    end
+
+    def current_defense
+      warps.map(&:current_defense).inject(0) { |total, d| total += d; total }
+    end
+    
+    def max_defense
+      warps.map(&:max_defense).inject(0) { |total, d| total += d; total }
     end
 
   end
