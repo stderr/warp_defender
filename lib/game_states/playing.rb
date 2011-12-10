@@ -24,13 +24,13 @@ module GameStates
       @bullets = []
       
       # HUD
-      @mini_map = GUI::MiniMap.new(:color => Gosu::Color::BLACK, 
+      @mini_map = GUI::MiniMap.new(:color => Gosu::Color.rgba(0, 0, 0, 160), 
                                    :width => $window.width/10, 
                                    :height => $window.height/10)
 
       @defense_bar = GUI::Bar.new(:width => 180, 
                                   :height => 20,
-                                  :outer_color => Gosu::Color::BLACK,
+                                  :outer_color => Gosu::Color.rgba(0, 0, 0, 160),
                                   :left_color => Gosu::Color::RED,
                                   :right_color => Gosu::Color::GREEN)
       @timer = Utils::Timer.new
