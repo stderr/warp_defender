@@ -10,7 +10,7 @@ module Entities
             :z_order => Utils::ZOrder::Warps)
       
       @max_defense = @current_defense = 10
-      draw_frame(:warp, 0)
+      draw_frame(:warp, 0, @z_order)
       
     end
 
@@ -20,8 +20,8 @@ module Entities
 
     def warp(entity)
       $window.sounds[:warp].play
-      animate(:warp, :once, 100,
-              lambda { self.animate(:warp, :once_reverse, 100) })
+      animate(:warp, :once, 100, @z_order,
+              lambda { self.animate(:warp, :once_reverse, 100, @z_order) })
       entity.kill
       @current_defense -= 1.0
     end

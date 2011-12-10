@@ -15,7 +15,7 @@ module Entities
       @physics = Physics::Dynamic.new(0, 0)
 
 
-      animate(:grunt, :loop, 100)
+      animate(:grunt, :loop, 100, @z_order)
     end
 
     def spawn(width, height)

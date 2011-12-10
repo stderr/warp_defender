@@ -13,7 +13,7 @@ module Entities
       # make bullets frictionless
       @physics = Physics::Dynamic.new(0)
 
-      animate(:bullet, :loop, 100)
+      animate(:bullet, :loop, 100, @z_order)
     end
 
     def update(delta)

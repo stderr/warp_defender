@@ -15,7 +15,7 @@ module Entities
 
       @score = 0
 
-      draw_frame(:player, 0)
+      draw_frame(:player, 0, @z_order)
     end
 
     def turn_left
@@ -28,7 +28,7 @@ module Entities
 
     def engines_on
       @physics.accel = 1300
-      animate(:player, :once, 100)
+      animate(:player, :once, 100, @z_order)
     end
 
     def update(delta)

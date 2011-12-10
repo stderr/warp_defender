@@ -12,11 +12,11 @@ module Entities
       @physics = Physics::Dynamic.new(0.01)
 
       # play forward, then backward, then kill
-      animate(:explosion, :once, 20,
-              lambda { animate(:explosion, :once_reverse, 15,
+      animate(:explosion, :once, 20, @z_order, :default,
+              lambda { animate(:explosion, :once_reverse, 15, @z_order, :default,
                               lambda { kill })})
     end
-    
+
     def update(delta)
       @physics.update(self, delta)
     end

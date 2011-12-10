@@ -21,6 +21,7 @@ module Entities
       @warping = false
     end
 
+
     def move_to(x, y)
       @x, @y = x, y
     end
@@ -31,15 +32,6 @@ module Entities
 
     def move 
       @behavior.move
-    end
-
-    def draw
-    end
-
-    def width
-    end
-
-    def height
     end
 
     def kill
