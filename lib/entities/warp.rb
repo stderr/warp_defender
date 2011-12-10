@@ -11,11 +11,24 @@ module Entities
       
       @max_defense = @current_defense = 10
       draw_frame(:warp, 0)
-      
+      @defense_bar = GUI::Bar.new(:width => @width/2,
+                                  :height => 5,
+                                  :outer_color => Gosu::Color.rgba(0, 0, 0, 160),
+                                  :left_color => Gosu::Color::RED,
+                                  :right_color => Gosu::Color::GREEN)
     end
 
     def update(delta)
       @angle += 360/90*delta
+    end
+
+    def draw
+      super
+      @defense_bar.draw(@x-@width/4, 15 + @y + @height/2, 
+                        :current => @current_defense,
+                        :max => @max_defense,
+                        :z_order => 1)
+      
     end
 
     def warp(entity)

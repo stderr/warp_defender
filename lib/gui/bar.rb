@@ -12,7 +12,7 @@ module GUI
                        x+@options[:width], y, @options[:outer_color],
                        x+@options[:width], y-@options[:height], @options[:outer_color],
                        x, y-@options[:height], @options[:outer_color],
-                       Utils::ZOrder::HUD)
+                       @options[:z_order] || Utils::ZOrder::HUD)
       
       inner_bar(x, y)
     end
@@ -27,7 +27,7 @@ module GUI
                        x+(@options[:width] * (@options[:current] / @options[:max]).to_f)-padding, y-padding, @options[:right_color],
                        x+(@options[:width] * (@options[:current] / @options[:max]).to_f)-padding, (y-@options[:height])+padding, @options[:right_color],
                        x+padding, (y-@options[:height])+padding, @options[:left_color],
-                       Utils::ZOrder::HUDOverlay)
+                       @options[:z_order] || Utils::ZOrder::HUDOverlay)
       
     end
 
