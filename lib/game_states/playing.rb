@@ -4,7 +4,7 @@ module GameStates
     
     def initialize(game_engine)
       super(game_engine)
-
+      
       @entities = []
 
       @player = Entities::Player.new
@@ -13,9 +13,9 @@ module GameStates
       @entities << @player
 
       warp = Entities::Warp.new($window.width/2, $window.height/2)
-      
+
       @entities << warp
-      
+
       grunt = Entities::Grunt.new(warp)
       grunt.spawn($window.width, $window.height)
       @entities << grunt
