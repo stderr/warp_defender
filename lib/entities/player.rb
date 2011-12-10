@@ -5,7 +5,7 @@ module Entities
     include Sprite
 
     def initialize
-      super(:z_order => Utils::ZOrder::Player)
+      super(:z_order => Utils::ZOrder::Player, :scale => 0.25 * 0.75)
 
       @deaths = 0
       @dead = false

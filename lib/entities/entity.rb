@@ -2,7 +2,7 @@ module Entities
 
   class Entity
     attr_accessor :x, :y, :vel_x, :vel_y, :vel_angle, :angle, :width, :height,
-                  :z_order
+                  :z_order, :scale
 
     def initialize(params)
       @x         = params[:x] || 0.0
@@ -14,6 +14,7 @@ module Entities
       @width     = params[:width] || 0
       @height    = params[:height] || 0
       @z_order   = params[:z_order] || 0
+      @scale     = params[:scale] || 1.0
 
       @behavior = Behaviors::Behavior.new(self)
       
@@ -50,7 +51,7 @@ module Entities
     def collides_with?(other)
       dx = other.x - @x
       dy = other.y - @y
-      dr = other.width/2.0 + @width/2.0
+      dr = other.width/2.0*other.scale + @width/2.0*@scale
 
       dx**2 + dy**2 < dr**2
     end

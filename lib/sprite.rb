@@ -38,7 +38,7 @@ module Sprite
         frame = $window.animations[layer[:name]][layer[:singleframe]]
       end
 
-      frame.draw_rot(@x, @y, @z_order, @angle)
+      frame.draw_rot(@x, @y, @z_order, @angle, 0.5, 0.5, @scale, @scale)
     end
 
     finish_callbacks.each { |e| e.call }
