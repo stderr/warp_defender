@@ -4,10 +4,9 @@ module Entities
     include Sprite
     attr_reader :velocity, :target
 
-    def initialize(window, target)
-      super(:window => window,
-            :width => frame_width(:grunt, window),
-            :height => frame_height(:grunt, window),
+    def initialize(target)
+      super(:width => frame_width(:grunt),
+            :height => frame_height(:grunt),
             :z_order => Utils::ZOrder::Player)
 
       @behavior = Behaviors::Hunt.new(self)

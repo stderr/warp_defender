@@ -3,11 +3,10 @@ module Entities
     attr_reader :current_defense, :max_defense
     include Sprite
     
-    def initialize(window, x, y)
-      super(:window => window,
-            :x => x, :y => y,
-            :width => frame_width(:warp, window),
-            :height => frame_height(:warp, window),
+    def initialize(x, y)
+      super(:x => x, :y => y,
+            :width => frame_width(:warp),
+            :height => frame_height(:warp),
             :z_order => Utils::ZOrder::Warps)
       
       @max_defense = @current_defense = 10
@@ -20,7 +19,7 @@ module Entities
     end
 
     def warp(entity)
-      @window.sounds[:warp].play
+      $window.sounds[:warp].play
       animate(:warp, :once, 100,
               lambda { self.animate(:warp, :once_reverse, 100) })
       entity.kill

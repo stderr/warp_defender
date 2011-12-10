@@ -6,9 +6,9 @@ module GUI
       super(options, &on_activate)
     end
 
-    def draw(window, x, y, options = {})
-      super(window, x, y, options)
-      window.draw_quad(x, y, @options[:color],
+    def draw(x, y, options = {})
+      super(x, y, options)
+      $window.draw_quad(x, y, @options[:color],
                        x+@options[:width], y, @options[:color],
                        x+@options[:width], y-@options[:height], @options[:color],
                        x, y-@options[:height], @options[:color],
@@ -20,7 +20,7 @@ module GUI
         pos_x = x+(entity.x/10)
         pos_y = (y - @options[:height]) + (entity.y/10)
 
-        window.draw_quad(pos_x, pos_y, entity.map_color,
+        $window.draw_quad(pos_x, pos_y, entity.map_color,
                          pos_x+2, pos_y, entity.map_color,
                          pos_x+2, pos_y-2, entity.map_color,
                          pos_x, pos_y-2, entity.map_color,

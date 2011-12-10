@@ -2,16 +2,16 @@ module GameStates
 
   class BaseMenu < GameState
     
-    def initialize(window, game_engine)
-      super(window, game_engine)
+    def initialize(game_engine)
+      super(game_engine)
 
       @menu_items = []
       @title = ""
       @selected_item = 0
       @spacing = 40
       
-      @x = @window.width / 2
-      @y = @window.height / 2
+      @x = $window.width / 2
+      @y = $window.height / 2
     end
     
     def button_down(id)
@@ -26,12 +26,12 @@ module GameStates
     end
     
     def draw
-      @window.images[:menu_background].draw(0, 0, 0)
-      @window.fonts[:menu].draw_rel(@title, @x, @y - 40, 0, 0.5, 1, 2, 2)
+      $window.images[:menu_background].draw(0, 0, 0)
+      $window.fonts[:menu].draw_rel(@title, @x, @y - 40, 0, 0.5, 1, 2, 2)
       
       @menu_items.each_index do |i|
           color = (i == @selected_item ?  Gosu::Color::GREEN : Gosu::Color::WHITE)
-          @menu_items[i].draw(@window, @x, @y+i*@spacing, :color => color)
+          @menu_items[i].draw(@x, @y+i*@spacing, :color => color)
       end
     end
   

@@ -5,7 +5,6 @@ module Entities
                   :z_order
 
     def initialize(params)
-      @window    = params[:window] || raise("window parameter is required")
       @x         = params[:x] || 0.0
       @y         = params[:y] || 0.0
       @vel_x     = params[:vel_x] || 0.0
@@ -52,7 +51,7 @@ module Entities
     end
 
     def off_screen?
-      @x > @window.width || @x < 0 || @y < 0 || @y > @window.height 
+      @x > $window.width || @x < 0 || @y < 0 || @y > $window.height 
     end
 
     # will end up in physics component at some point

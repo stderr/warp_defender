@@ -11,12 +11,12 @@ module GUI
       @on_activate = on_activate if block_given?
     end
     
-    def draw(window, x, y, options = {})
+    def draw(x, y, options = {})
       # draw can reset the options instance variable due to 
       # needing window
 
       @options.merge!({
-        :font => window.fonts[:menu]
+        :font => $window.fonts[:menu]
       }).merge!(options)
 
     end

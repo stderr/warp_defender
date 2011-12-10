@@ -2,21 +2,21 @@ module GameStates
 
   class Playing < GameState
     
-    def initialize(window, game_engine)
-      super(window, game_engine)
+    def initialize(game_engine)
+      super(game_engine)
 
       @entities = []
 
-      @player = Entities::Player.new(@window)
-      @player.move_to(@window.width/2, @window.height/2 + 80)
+      @player = Entities::Player.new
+      @player.move_to($window.width/2, $window.height/2 + 80)
       
       @entities << @player
 
-      @warp = Entities::Warp.new(@window, @window.width/2, @window.height/2)
+      @warp = Entities::Warp.new($window.width/2, $window.height/2)
       @entities << @warp
       
-      grunt = Entities::Grunt.new(@window, @warp)
-      grunt.spawn(@window.width, @window.height)
+      grunt = Entities::Grunt.new(@warp)
+      grunt.spawn($window.width, $window.height)
       @entities << grunt
 
       # track the bullets explicitly until we have better collision handling
@@ -24,8 +24,8 @@ module GameStates
       
       # HUD
       @mini_map = GUI::MiniMap.new(:color => Gosu::Color::BLACK, 
-                                   :width => @window.width/10, 
-                                   :height => @window.height/10)
+                                   :width => $window.width/10, 
+                                   :height => $window.height/10)
 
       @defense_bar = GUI::Bar.new(:width => 180, 
                                   :height => 20,
@@ -35,7 +35,7 @@ module GameStates
       @timer = Utils::Timer.new
       
       @last_frame_ms = Gosu::milliseconds
-      @window.music[:theme].play(true)
+      $window.music[:theme].play(true)
     end
 
     def update
@@ -45,8 +45,8 @@ module GameStates
       @last_frame_ms = frame_ms
 
       if(@timer.time_passed?(2500)) 
-        grunt = Entities::Grunt.new(@window, [@warp, @player][rand(2)])
-        grunt.spawn(@window.width, @window.height)
+        grunt = Entities::Grunt.new([@warp, @player][rand(2)])
+        grunt.spawn($window.width, $window.height)
         
         @entities << grunt
       end
@@ -62,11 +62,10 @@ module GameStates
             if bullet.collides_with?(entity)
               bullet.kill
               entity.kill
-              @window.sounds[:explosion].play
-              @entities << Entities::Explosion.new(
-                                @window, entity.x, entity.y, 
-                                entity.vel_x*0.7,
-                                entity.vel_y*0.7)
+              $window.sounds[:explosion].play
+              @entities << Entities::Explosion.new(entity.x, entity.y, 
+                                                   entity.vel_x*0.7,
+                                                   entity.vel_y*0.7)
             end
           end
         end
@@ -83,23 +82,23 @@ module GameStates
         end
       end
 
-      @game_engine.states.push(GameStates::GameOver.new(@window, @game_engine)) if @warp.current_defense <= 0
+      @game_engine.states.push(GameStates::GameOver.new(@game_engine)) if @warp.current_defense <= 0
     end
 
     def draw
-      @window.images[:background].draw(0, 0, Utils::ZOrder::Background)
+      $window.images[:background].draw(0, 0, Utils::ZOrder::Background)
       @entities.each { |e| e.draw }
       
-      @defense_bar.draw(@window, (@window.width/2)+220, @window.height-10, :current => @warp.current_defense, :max => @warp.max_defense)
-      @mini_map.draw(@window, @window.width-110, @window.height-10, :entities => @entities)
+      @defense_bar.draw(($window.width/2)+220, $window.height-10, :current => @warp.current_defense, :max => @warp.max_defense)
+      @mini_map.draw($window.width-110, $window.height-10, :entities => @entities)
     end
 
     def button_down(id)
        case id
        
        when Gosu::KbEscape, Gosu::GpButton9
-         @window.music[:theme].pause
-         @game_engine.states.push(GameStates::Paused.new(@window, @game_engine))
+         $window.music[:theme].pause
+         @game_engine.states.push(GameStates::Paused.new(@game_engine))
        
        when Gosu::KbSpace, Gosu::GpButton2 
          bullet = @player.shoot

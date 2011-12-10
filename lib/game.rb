@@ -6,7 +6,6 @@ class Game < Gosu::Window
     #super(Gosu::screen_width, Gosu::screen_height, true)
     super(1066, 600, false)
     self.caption = 'Warp Defender'
-
     
     @images = {}
     @fonts = {}
@@ -20,9 +19,12 @@ class Game < Gosu::Window
     load_animations
     load_music
 
-    @game_engine = GameEngine.new(self)
+    
+    $window = self
 
-    @game_engine.states.push(GameStates::MainMenu.new(self, @game_engine))
+    @game_engine = GameEngine.new
+
+    @game_engine.states.push(GameStates::MainMenu.new(@game_engine))
   end
 
   def update

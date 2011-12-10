@@ -9,15 +9,15 @@ module GUI
       @checked = @options[:value]
     end
     
-    def draw(window, x, y, options = {})
-      super(window, x, y, options)
+    def draw(x, y, options = {})
+      super(x, y, options)
       
       @options[:font].draw_rel(@options[:text], x, y, 0, 0.5, 1, 1, 1, @options[:color])
 
       if checked
-        window.images[:checked].draw_rot(x+100, y-18, 0, 0)
+        $window.images[:checked].draw_rot(x+100, y-18, 0, 0)
       else
-        window.images[:unchecked].draw_rot(x+100, y-18, 0, 0)
+        $window.images[:unchecked].draw_rot(x+100, y-18, 0, 0)
       end
     end
 

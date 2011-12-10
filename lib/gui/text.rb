@@ -10,8 +10,8 @@ module GUI
       }.merge!(options)
     end
 
-    def draw(window, x, y, options = {})
-      super(window, x, y, options)
+    def draw(x, y, options = {})
+      super(x, y, options)
 
       @options[:font].draw_rel(@options[:text], x, y, 0, 0.5, 1, 1, 1, @options[:color])
     end

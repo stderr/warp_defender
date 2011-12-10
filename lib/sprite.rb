@@ -13,25 +13,25 @@ module Sprite
     when :once
       frame_idx = [transpired_ms / @animinterval, 
                    frame_count(@animname)-1].min
-      frame = @window.animations[@animname][frame_idx]
+      frame = $window.animations[@animname][frame_idx]
       if frame_idx == frame_count(@animname)-1 and @animonfinish
       	@animonfinish.call
       end
     when :once_reverse
       frame_idx = [frame_count(@animname)-1 - transpired_ms / @animinterval, 
                    0].max
-      frame = @window.animations[@animname][frame_idx]
+      frame = $window.animations[@animname][frame_idx]
       if frame_idx == 0 and @animonfinish
       	@animonfinish.call
       end
     when :loop
       frame_idx = transpired_ms / @animinterval % frame_count(@animname)
-      frame = @window.animations[@animname][frame_idx]
+      frame = $window.animations[@animname][frame_idx]
     when :loop_reverse
       frame_idx = frame_count(@animname)-1 - transpired_ms / @animinterval % frame_count(@animname)
-      frame = @window.animations[@animname][frame_idx]
+      frame = $window.animations[@animname][frame_idx]
     when :single
-      frame = @window.animations[@animname][@animsingleindex]
+      frame = $window.animations[@animname][@animsingleindex]
     end
 
     frame.draw_rot(@x, @y, @z_order, @angle)
@@ -56,15 +56,15 @@ module Sprite
   end
 
   def frame_count(name)
-    @window.animations[name].size
+    $window.animations[name].size
   end
 
-  def frame_width(name, window=@window)
-    window.animations[name].first.width
+  def frame_width(name)
+    $window.animations[name].first.width
   end
 
-  def frame_height(name, window=@window)
-    window.animations[name].first.height
+  def frame_height(name)
+    $window.animations[name].first.height
   end
 
 end

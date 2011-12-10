@@ -1,12 +1,12 @@
 module GameStates
   
   class Credits < GameState
-    def initialize(window, game_engine)
-      super(window, game_engine)
+    def initialize(game_engine)
+      super(game_engine)
     end
 
     def button_down(id)
-      @window.close
+      $window.close
     end
 
   end
