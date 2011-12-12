@@ -1,0 +1,23 @@
+name: "It Begins"
+
+description: >
+  The dreaded Enemy has breached a century old blah blah.
+  Blah blah.  Fuck it.  Here we go.
+  
+warps:
+  - position: center
+
+waves:
+  - interval: 2000
+    enemies:
+      grunt: 10
+    max_spawn: 2
+    min_spawn: 1
+
+  - interval: 1500
+    enemies:
+      grunt: 20
+    max_spawn: 3
+    min_spawn: 1
+    
+next_level: level_2.yml

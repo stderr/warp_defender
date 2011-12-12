@@ -9,6 +9,7 @@ require 'lib/game'
 require 'lib/game_engine'
 require 'lib/sprite'
 require 'lib/utils'
+require 'lib/game_level'
 
 # Game states
 require 'lib/game_states/game_state'
@@ -16,6 +17,7 @@ require 'lib/game_states/paused'
 require 'lib/game_states/playing'
 require 'lib/game_states/credits'
 require 'lib/game_states/game_over'
+require 'lib/game_states/load_level'
 
 # Menu states
 require 'lib/game_states/menu/base_menu'
@@ -34,7 +36,7 @@ require 'lib/gui/bar'
 # Behaviors
 require 'lib/behaviors/behavior'
 require 'lib/behaviors/beeline'
-require 'lib/behaviors/hunt' 
+require 'lib/behaviors/hunt'
 
 # Physics
 require 'lib/physics/dynamic'

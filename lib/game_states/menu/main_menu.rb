@@ -7,7 +7,7 @@ module GameStates
 
       @menu_items = [
                      GUI::Text.new(:text => "New") do
-                       @game_engine.states.push(Playing.new(@game_engine))
+                       @game_engine.states.push(LoadLevel.new(@game_engine))
                      end,
 
                      GUI::Text.new(:text => "Options") do

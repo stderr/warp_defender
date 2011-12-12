@@ -12,13 +12,13 @@ module GameStates
       
       @entities << @player
 
-      warp = Entities::Warp.new($window.width/2, $window.height/2)
+      # warp = Entities::Warp.new($window.width/2, $window.height/2)
+      
+      # @entities << warp
 
-      @entities << warp
-
-      grunt = Entities::Grunt.new(warp)
-      grunt.spawn($window.width, $window.height)
-      @entities << grunt
+      # grunt = Entities::Grunt.new(warp)
+      # grunt.spawn($window.width, $window.height)
+      # @entities << grunt
 
       # track the bullets explicitly until we have better collision handling
       @bullets = []
@@ -45,12 +45,13 @@ module GameStates
       delta = (frame_ms - @last_frame_ms) / 1000.0
       @last_frame_ms = frame_ms
 
-      if(@timer.time_passed?(2500)) 
-        targets = warps << @player
-        grunt = Entities::Grunt.new(targets[rand(targets.length)])
-        grunt.spawn($window.width, $window.height)
+      if(@timer.time_passed?(level.interval)) 
+        targets = @game_engine.warps + [@player]
+        @entities += level.spawn(targets)
+        # grunt = Entities::Grunt.new(targets[rand(targets.length)])
+        # grunt.spawn($window.width, $window.height)
         
-        @entities << grunt
+        # @entities << grunt
       end
 
       @entities.reject! { |e| e.dead? }
@@ -77,7 +78,7 @@ module GameStates
         if !entity.is_a?(Entities::Warp)
           # is_a? is a hack to prevent non-enemy entities being warped
           if entity.is_a? Entities::Grunt
-            if warp = warps.detect { |w| entity.collides_with?(w) }
+            if warp = level.warps.detect { |w| entity.collides_with?(w) }
               warp.warp(entity)
             end
           end
@@ -114,16 +115,16 @@ module GameStates
     
     private
     
-    def warps
-      @entities.select { |e| e.is_a? Entities::Warp }
-    end
-
     def current_defense
-      warps.map(&:current_defense).inject(0) { |total, d| total += d; total }
+      level.warps.map(&:current_defense).inject(:+)
     end
     
     def max_defense
-      warps.map(&:max_defense).inject(0) { |total, d| total += d; total }
+      level.warps.map(&:max_defense).inject(:+)
+    end
+
+    def level
+      @game_engine.level
     end
 
   end
