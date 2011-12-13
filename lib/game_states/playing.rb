@@ -88,7 +88,7 @@ module GameStates
                         :current => current_defense,
                         :max => max_defense)
 
-      @mini_map.draw($window.width-110, $window.height-10, :entities => @entities)
+      @mini_map.draw($window.width-110, $window.height, :entities => @entities)
     end
 
     def button_down(id)

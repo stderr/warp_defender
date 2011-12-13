@@ -8,6 +8,7 @@ module GUI
 
     def draw(x, y, options = {})
       super(x, y, options)
+
       $window.draw_quad(x, y, @options[:color],
                        x+@options[:width], y, @options[:color],
                        x+@options[:width], y-@options[:height], @options[:color],
