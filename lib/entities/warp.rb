@@ -45,6 +45,7 @@ module Entities
       #animate(:warp, :once, 100, @z_order,
       #        lambda { self.animate(:warp, :once_reverse, 100, @z_order) })
       entity.kill
+
       @current_defense -= 1.0
     end
     

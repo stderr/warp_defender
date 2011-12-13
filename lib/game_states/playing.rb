@@ -11,16 +11,8 @@ module GameStates
       @player.move_to($window.width/2, $window.height/2 + 80)
       
       @entities << @player
+      @entities += @game_engine.level.warps
 
-      # warp = Entities::Warp.new($window.width/2, $window.height/2)
-      
-      # @entities << warp
-
-      # grunt = Entities::Grunt.new(warp)
-      # grunt.spawn($window.width, $window.height)
-      # @entities << grunt
-
-      # track the bullets explicitly until we have better collision handling
       @bullets = []
       
       # HUD
@@ -46,12 +38,12 @@ module GameStates
       @last_frame_ms = frame_ms
 
       if(@timer.time_passed?(level.interval)) 
-        targets = @game_engine.warps + [@player]
-        @entities += level.spawn(targets)
-        # grunt = Entities::Grunt.new(targets[rand(targets.length)])
-        # grunt.spawn($window.width, $window.height)
-        
-        # @entities << grunt
+        targets = level.warps + [@player]
+
+        new_enemies = level.spawn(targets)
+        new_enemies.each { |e| e.spawn($window.width, $window.height) }
+
+        @entities += new_enemies
       end
 
       @entities.reject! { |e| e.dead? }

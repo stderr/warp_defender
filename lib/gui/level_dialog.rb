@@ -23,26 +23,28 @@ module GUI
                                            0.5, 0.5, 1, 1, Gosu::Color.rgba(255, 255, 255, 200))
 
       line_count = 0
+
       last_line = @description.split.reduce([]) do |line, word|
+
         if $window.fonts[:level_description].text_width(line.join(" ")) > @options[:width] - 100
-          $window.fonts[:level_description].draw_rel(line.join(" "), x, (line_count * 30)+y-(@options[:height]/4), 100,
-                                                     0.5, 0.5, 1, 1, Gosu::Color.rgba(255, 255, 255, 180))
+          draw_line(line.join(" "), x, (line_count * 30) + y - (@options[:height]/4))
           line = [word]
           line_count += 1
         else
           line << word
         end
-
         line
-
       end
-      
-       $window.fonts[:level_description].draw_rel(last_line.join(" "), x, (line_count * 30)+y-(@options[:height]/4), 100,
-                                                     0.5, 0.5, 1, 1, Gosu::Color.rgba(255, 255, 255, 180))
-      
 
+      draw_line(last_line.join(" "), x, (line_count * 30)+y-(@options[:height]/4))
     end
 
+    private
+
+    def draw_line(line, x, y)
+      $window.fonts[:level_description].draw_rel(line, x, y, 100, # <- z-order
+                                                 0.5, 0.5, 1, 1, @options[:font_color])
+    end
     
   end
 

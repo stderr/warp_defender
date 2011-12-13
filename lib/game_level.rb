@@ -1,5 +1,6 @@
 require 'yaml'
 class GameLevel
+  attr_reader :warps
 
   def initialize(file_name)
 
@@ -8,11 +9,7 @@ class GameLevel
     # Required: waves, warps, name, description, next_level
     yaml.each { |k, v| instance_variable_set("@#{k}", v) } 
    
-    @dialog = GUI::LevelDialog.new(:title => @name, :description => @description)
-  end
-  
-  def warps
-    @warps.collect do |warp|
+    @warps = @warps.collect do |warp|
       case warp['position']
       when 'center'
         x, y = [$window.width/2, $window.height/2]
@@ -25,22 +22,34 @@ class GameLevel
       Entities::Warp.new(x, y)
     end
     
+    @dialog = GUI::LevelDialog.new(:title => @name, :description => @description)
+    @intro_length = 3000
   end
   
   def draw_intro
     @dialog.draw($window.width/2, $window.height/2, :width => 600, 
-                 :height => 400, :color => Gosu::Color.rgba(65, 108, 112, 200))
-                 
-    # $window.fonts[:level_title].draw_rel(@name, $window.width/2, $window.height/2, 
-    #                               Utils::ZOrder::HUD, 0.5, 0.5, 1, 1, 
-    #                               Gosu::Color::RED)
-
+                 :height => 400, :color => Gosu::Color.rgba(65, 108, 112, 200),
+                 :font_color => Gosu::Color.rgba(255, 255, 255, 120))
   end
 
-  def intro_finished?
+  def intro_finished?(ms)
+    ms > @intro_length
   end
+  
+  def spawn(targets)
+    to_spawn = []
+    amount = rand(current_wave['max_spawn'].to_i) + current_wave['min_spawn'].to_i
 
-  def spawn
+    amount.times do 
+      if enemy = enemies(targets).shuffle!.pop
+        to_spawn << enemy
+      else
+        next_wave
+        @current_enemies = nil
+      end
+    end
+
+    to_spawn
   end
 
   def current_wave
@@ -48,7 +57,7 @@ class GameLevel
   end
 
   def to_next_wave?
-    @waves[current_wave]['enemies'].inject(0) { |count, (k, v)| count += v; count } <= 0
+    @current_enemies.nil?
   end
   
   def completed?
@@ -61,6 +70,15 @@ class GameLevel
 
   def next_level
     @next_level
+  end
+
+  def enemies(targets)
+
+    @current_enemies ||= current_wave['enemies'].inject([]) do |enemies, (name, count)|
+      count.to_i.times { enemies << Entities.const_get(name.capitalize).new(targets[rand(targets.length)]) }
+      enemies
+    end
+ 
   end
 
   def interval
