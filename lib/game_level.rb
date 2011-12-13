@@ -2,12 +2,13 @@ require 'yaml'
 class GameLevel
 
   def initialize(file_name)
+
     yaml = YAML::load(File.open("data/#{file_name}"))
     
     # Required: waves, warps, name, description, next_level
-    yaml.each { |k, v| instance_variable_set("@#{k}", v) }
-    
-    @intro_fade = 2550
+    yaml.each { |k, v| instance_variable_set("@#{k}", v) } 
+   
+    @dialog = GUI::LevelDialog.new(:title => @name, :description => @description)
   end
   
   def warps
@@ -27,9 +28,13 @@ class GameLevel
   end
   
   def draw_intro
-    $window.fonts[:game].draw_rel(@name, $window.width/2, $window.height/2, 
-                                  Utils::ZOrder::HUD, 0.5, 0.5, 1, 1, 
-                                  Gosu::Color::RED)
+    @dialog.draw($window.width/2, $window.height/2, :width => 600, 
+                 :height => 400, :color => Gosu::Color.rgba(65, 108, 112, 200))
+                 
+    # $window.fonts[:level_title].draw_rel(@name, $window.width/2, $window.height/2, 
+    #                               Utils::ZOrder::HUD, 0.5, 0.5, 1, 1, 
+    #                               Gosu::Color::RED)
+
   end
 
   def intro_finished?

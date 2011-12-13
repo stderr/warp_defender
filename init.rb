@@ -32,6 +32,7 @@ require 'lib/gui/text'
 require 'lib/gui/checkbox'
 require 'lib/gui/mini_map'
 require 'lib/gui/bar'
+require 'lib/gui/level_dialog'
 
 # Behaviors
 require 'lib/behaviors/behavior'
