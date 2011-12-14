@@ -1,0 +1,25 @@
+---
+sprite: warp
+layers:
+  - layer: under-structure
+    file: warp_L1.png
+    scale: 0.1875
+  - layer: glow
+    file: warp_L2.png
+    scale: 0.1875
+  - layer: blue-spiral
+    scale: 0.1875
+    file: warp_L3.png
+  - layer: white-spiral
+    scale: 0.1875
+    file: warp_L4.png
+  - layer: over-structure
+    file: warp_L5.png
+    scale: 0.1875
+states:
+  - state: idle
+    layers:
+      - layer: blue-spiral
+        rotate: 0.25
+      - layer: white-spiral
+        rotate: 0.15

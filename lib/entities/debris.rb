@@ -1,5 +1,5 @@
 class Debris
-  include Sprite
+  include LegacySprite
 
   def initialize(animation)
     @animation = animation

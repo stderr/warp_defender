@@ -1,7 +1,7 @@
 module Entities
 
   class Grunt < Entity
-    include Sprite
+    include LegacySprite
     attr_reader :velocity, :target
 
     def initialize(target)

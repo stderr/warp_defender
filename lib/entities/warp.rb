@@ -1,7 +1,7 @@
 module Entities
   class Warp < Entity
     attr_reader :current_defense, :max_defense
-    include Sprite
+    include LegacySprite
     
     def initialize(x, y)
       super(:x => x, :y => y,

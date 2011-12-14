@@ -1,6 +1,6 @@
 module Entities
   class Bullet < Entity
-    include Sprite
+    include LegacySprite
 
     def initialize(angle, x, y, vel_x, vel_y)
       super(:x => x, :y => y, :angle => angle,

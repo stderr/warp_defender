@@ -42,6 +42,9 @@ require 'lib/behaviors/hunt'
 # Physics
 require 'lib/physics/dynamic'
 
+# Render
+require 'lib/render/sprite'
+
 # Entities
 require 'lib/entities/entity'
 require 'lib/entities/grunt'

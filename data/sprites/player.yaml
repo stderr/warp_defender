@@ -1,0 +1,22 @@
+--- 
+sprite: player
+layers: 
+- layer: ship
+  file: ship.png
+  center_x: 32
+  center_y: 47
+  scale: 0.5
+states: 
+- state: idle
+  layers: 
+  - layer: ship
+    frame: 0
+- state: accelerate
+  layers: 
+  - layer: ship
+    frames: 
+      playback: loop
+      interval: 33
+      start: 0
+      finish: 18
+      restart: 11

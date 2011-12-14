@@ -1,6 +1,6 @@
 module Entities
   class Explosion < Entity
-    include Sprite
+    include LegacySprite
     
     def initialize(x, y, vel_x=0.0, vel_y=0.0)
       super(:x => x, :y => y,

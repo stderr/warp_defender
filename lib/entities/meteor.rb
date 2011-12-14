@@ -1,6 +1,6 @@
 class Meteor
   attr_reader :vel_x, :vel_y
-  include Sprite
+  include LegacySprite
 
   def initialize(animation)
     @animation = animation

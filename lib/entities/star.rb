@@ -1,5 +1,5 @@
 class Star
-  include Sprite
+  include LegacySprite
   
   def initialize(animation)
     @animation = animation

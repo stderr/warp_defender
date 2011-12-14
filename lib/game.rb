@@ -1,6 +1,6 @@
 class Game < Gosu::Window
 
-  attr_accessor :fonts, :images, :animations, :sounds, :music
+  attr_accessor :fonts, :images, :animations, :sounds, :music, :sprite_definitions
 
   def initialize
     #super(Gosu::screen_width, Gosu::screen_height, true)
@@ -17,6 +17,7 @@ class Game < Gosu::Window
     load_fonts
     load_sounds
     load_animations
+    load_sprites
     load_music
 
     
@@ -82,6 +83,15 @@ class Game < Gosu::Window
     @animations[:grunt] = Gosu::Image::load_tiles(self, "media/grunt.png", 23, 28, false)
     @animations[:bullet] = Gosu::Image::load_tiles(self, "media/bullet.png", 11, 13, false)
     @animations[:explosion] = Gosu::Image::load_tiles(self, "media/explosion.png", 32, 32, false)
+    # temporary
+    @animations["ship.png"] = Gosu::Image::load_tiles(self, "media/ship.png", 340, 340, false)
   end
 
+  def load_sprites
+    @sprite_definitions = {}
+    Dir.glob('data/sprites/*.yaml').each do |f|
+      y = YAML::load(File.open(f))
+      @sprite_definitions[y['sprite']] = y
+    end
+  end
 end

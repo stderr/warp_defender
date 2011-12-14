@@ -1,4 +1,4 @@
-module Sprite
+module LegacySprite
 
   def layers
     @layers ||= {}

@@ -2,7 +2,7 @@ module Entities
   class Player < Entity
     attr_reader :score, :dead_x, :dead_y, :deaths
     attr_accessor :dead, :respawn_time
-    include Sprite
+    #include LegacySprite
 
     def initialize
       super(:z_order => Utils::ZOrder::Player, :scale => 0.25 * 0.75)
@@ -12,10 +12,12 @@ module Entities
       @respawn_time = 125
 
       @physics = Physics::Dynamic.new()
+      @render = Render::Sprite.new('player')
 
       @score = 0
 
-      draw_frame(:player, 0, @z_order)
+      @render.state = "idle"
+      #draw_frame(:player, 0, @z_order)
     end
 
     def turn_left
@@ -28,7 +30,8 @@ module Entities
 
     def engines_on
       @physics.accel = 1300
-      animate(:player, :once, 100, @z_order)
+      @render.state = "accelerate"
+      #animate(:player, :once, 100, @z_order)
     end
 
     def update(delta)
@@ -48,6 +51,10 @@ module Entities
       @physics.update(self, delta)
       @x %= $window.width
       @y %= $window.height
+    end
+
+    def draw
+      @render.draw(self, 1)
     end
 
     def shoot
