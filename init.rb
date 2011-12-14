@@ -4,6 +4,9 @@ require 'gosu'
 require 'configurability'
 require 'configurability/config'
 
+# Gosu extensions
+require 'lib/gosu_ext/window'
+
 # Library files
 require 'lib/game'
 require 'lib/game_engine'

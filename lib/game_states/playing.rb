@@ -15,16 +15,18 @@ module GameStates
 
       @bullets = []
       
+
       # HUD
       @mini_map = GUI::MiniMap.new(:color => Gosu::Color.rgba(0, 0, 0, 160), 
-                                   :width => $window.width/10, 
-                                   :height => $window.height/10)
+                                   :width => 190, 
+                                   :height => 100,
+                                   :scale_x => 5,
+                                   :scale_y => 5)
 
-      @defense_bar = GUI::Bar.new(:width => 180, 
-                                  :height => 20,
-                                  :outer_color => Gosu::Color.rgba(0, 0, 0, 160),
-                                  :left_color => Gosu::Color::RED,
-                                  :right_color => Gosu::Color::GREEN)
+      @defense_bar = GUI::Bar.new(:width => 172, 
+                                  :height => 8,
+                                  :left_color => Gosu::Color.rgba(65, 108, 112, 220),
+                                  :right_color => Gosu::Color.rgba(65, 108, 112, 220))
       @timer = Utils::Timer.new
       
       @last_frame_ms = Gosu::milliseconds
@@ -84,11 +86,15 @@ module GameStates
       $window.images[:background].draw(0, 0, Utils::ZOrder::Background)
       @entities.each { |e| e.draw }
       
-      @defense_bar.draw(($window.width/2)+220, $window.height-10, 
+      $window.images[:hud].draw($window.width-$window.images[:hud].width, 
+                                $window.height - $window.images[:hud].height,
+                                Utils::ZOrder::HUD)
+
+      @defense_bar.draw($window.width-381, $window.height-29, 
                         :current => current_defense,
                         :max => max_defense)
 
-      @mini_map.draw($window.width-110, $window.height-10, :entities => @entities)
+      @mini_map.draw($window.width-98, $window.height-53, :entities => @entities)
     end
 
     def button_down(id)

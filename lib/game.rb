@@ -49,6 +49,7 @@ class Game < Gosu::Window
     @images[:menu_background] = Gosu::Image.new(self, "media/space.jpg", true)
     @images[:unchecked] = Gosu::Image.new(self, "media/unchecked.png", false)
     @images[:checked] = Gosu::Image.new(self, "media/checked.png", false)
+    @images[:hud] = Gosu::Image.new(self, "media/hud_bottom_right.png", false)
   end
 
   def load_fonts

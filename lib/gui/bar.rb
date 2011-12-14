@@ -7,13 +7,13 @@ module GUI
 
     def draw(x, y, options = {})
       super(x, y, options)
-
-      $window.draw_quad(x, y, @options[:outer_color],
-                       x+@options[:width], y, @options[:outer_color],
-                       x+@options[:width], y-@options[:height], @options[:outer_color],
-                       x, y-@options[:height], @options[:outer_color],
-                       @options[:z_order] || Utils::ZOrder::HUD)
-      
+      if @options.has_key?(:outer_color)
+        $window.draw_quad(x, y, @options[:outer_color],
+                          x+@options[:width], y, @options[:outer_color],
+                          x+@options[:width], y-@options[:height], @options[:outer_color],
+                          x, y-@options[:height], @options[:outer_color],
+                          @options[:z_order] || Utils::ZOrder::HUD)
+      end
       inner_bar(x, y)
     end
 
