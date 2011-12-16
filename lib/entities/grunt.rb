@@ -52,6 +52,10 @@ module Entities
       @behavior.velocity
     end
 
+    def enemy?
+      true
+    end
+
   end
 
 end
