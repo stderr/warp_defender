@@ -24,6 +24,7 @@ module Entities
     def turn_right; @physics.angular_accel = 1800; end
     def draw; @render.draw(self, 1); end
     def map_color; Gosu::Color::GREEN; end
+    def map_draw?; true; end
 
     def engines_on
       @physics.accel = 1300

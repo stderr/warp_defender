@@ -1,4 +1,5 @@
 require 'yaml'
+
 class Wave
 
   attr_reader :interval, :min_spawn, :max_spawn, :enemies
@@ -31,12 +32,16 @@ end
 class GameLevel
   attr_reader :warps, :current_enemies, :explosions, :player, :bullets
   
-  def self.has_level?(path)
-    File.exists? path
+  def self.level_path(file)
+    "data/levels/#{file}"
+  end
+
+  def self.has_level?(file)
+    File.exists? level_path(file)
   end
 
   def initialize(file_name)
-    yaml = YAML::load(File.open("data/#{file_name}"))
+    yaml = YAML::load(File.open(GameLevel.level_path(file_name)))
     
     @name = yaml['name']
     @description = yaml['description']
@@ -64,15 +69,13 @@ class GameLevel
   def targets; @warps + [@player] end
   def current_defense; @warps.map(&:current_defense).inject(:+); end
   def max_defense; @warps.map(&:max_defense).inject(:+); end
+  def intro_finished?(ms); ms > @intro_length; end
+  def draw; entities.each { |e| e.draw }; end
 
   def draw_intro
     @dialog.draw($window.width/2, $window.height/2, :width => 600, 
                  :height => 400, :color => Gosu::Color.rgba(65, 108, 112, 200),
                  :font_color => Gosu::Color.rgba(255, 255, 255, 120))
-  end
-
-  def intro_finished?(ms)
-    ms > @intro_length
   end
   
   def update(delta)
@@ -92,6 +95,7 @@ class GameLevel
                                                    entity.vel_y*0.7)
         end
       end
+
     end
 
     entities.each do |entity|
@@ -101,10 +105,6 @@ class GameLevel
         end
       end
     end
-  end
-
-  def draw
-    entities.each { |e| e.draw }
   end
 
   def spawn
@@ -128,7 +128,6 @@ class GameLevel
 
   private
 
-  
   def load_player(x = $window.width/2, y = $window.height/2+80)
     @player = Entities::Player.new
     @player.move_to(x, y)

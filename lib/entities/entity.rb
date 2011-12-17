@@ -28,6 +28,7 @@ module Entities
     def dead?; @dead; end
     def map_color; Gosu::Color::RED; end
     def enemy?; false; end
+    def map_draw?; false; end
 
     def move_to(x, y)
       @x, @y = x, y
