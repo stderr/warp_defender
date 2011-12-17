@@ -4,7 +4,7 @@ module LegacySprite
     @layers ||= {}
   end
 
-  def draw
+  def draw(delta)
     finish_callbacks = []
     layers.each do |key, layer|
       if layer[:start] == :unstarted

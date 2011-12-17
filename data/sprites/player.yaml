@@ -3,9 +3,11 @@ sprite: player
 layers: 
 - layer: ship
   file: ship.png
-  center_x: 32
-  center_y: 47
-  scale: 0.5
+  width: 340
+  height: 340
+  center_x: 170
+  center_y: 170
+  scale: 0.1875
 states: 
 - state: idle
   layers: 

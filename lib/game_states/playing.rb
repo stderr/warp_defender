@@ -29,15 +29,17 @@ module GameStates
                                   :right_color => Gosu::Color.rgba(65, 108, 112, 220))
       @timer = Utils::Timer.new
       
-      @last_frame_ms = Gosu::milliseconds
+      @last_update_ms = Gosu::milliseconds
+      @last_draw_ms = Gosu::milliseconds
+
       $window.music[:theme].play(true)
     end
 
     def update
       # frame timescaling
       frame_ms = Gosu::milliseconds
-      delta = (frame_ms - @last_frame_ms) / 1000.0
-      @last_frame_ms = frame_ms
+      delta = (frame_ms - @last_update_ms) / 1000.0
+      @last_update_ms = frame_ms
 
       if(@timer.time_passed?(level.interval)) 
         targets = level.warps + [@player]
@@ -83,8 +85,13 @@ module GameStates
     end
 
     def draw
+      # frame timescaling
+      frame_ms = Gosu::milliseconds
+      delta = (frame_ms - @last_draw_ms) / 1000.0
+      @last_draw_ms = frame_ms
+
       $window.images[:background].draw(0, 0, Utils::ZOrder::Background)
-      @entities.each { |e| e.draw }
+      @entities.each { |e| e.draw(delta) }
       
       $window.images[:hud].draw($window.width-$window.images[:hud].width, 
                                 $window.height - $window.images[:hud].height,

@@ -5,7 +5,7 @@ module Entities
     #include LegacySprite
 
     def initialize
-      super(:z_order => Utils::ZOrder::Player, :scale => 0.25 * 0.75)
+      super(:z_order => Utils::ZOrder::Player)
 
       @deaths = 0
       @dead = false
@@ -13,11 +13,9 @@ module Entities
 
       @physics = Physics::Dynamic.new()
       @render = Render::Sprite.new('player')
+      @render.state = "idle"
 
       @score = 0
-
-      @render.state = "idle"
-      #draw_frame(:player, 0, @z_order)
     end
 
     def turn_left
@@ -31,7 +29,6 @@ module Entities
     def engines_on
       @physics.accel = 1300
       @render.state = "accelerate"
-      #animate(:player, :once, 100, @z_order)
     end
 
     def update(delta)
@@ -45,6 +42,8 @@ module Entities
 
       if $window.button_down?(Gosu::KbUp) || $window.button_down?(Gosu::GpUp)
         engines_on
+      else
+        @render.state = "idle"
       end
 
 
@@ -53,8 +52,8 @@ module Entities
       @y %= $window.height
     end
 
-    def draw
-      @render.draw(self, 1)
+    def draw(delta)
+      @render.draw(self, delta)
     end
 
     def shoot

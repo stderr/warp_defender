@@ -1,25 +1,50 @@
 ---
 sprite: warp
 layers:
-  - layer: under-structure
-    file: warp_L1.png
-    scale: 0.1875
-  - layer: glow
-    file: warp_L2.png
-    scale: 0.1875
-  - layer: blue-spiral
-    scale: 0.1875
-    file: warp_L3.png
-  - layer: white-spiral
-    scale: 0.1875
-    file: warp_L4.png
-  - layer: over-structure
-    file: warp_L5.png
-    scale: 0.1875
+- layer: under-structure
+  file: warp_L1.png
+  width: 340
+  height: 340
+  scale: 0.5
+- layer: glow
+  file: warp_L2.png
+  width: 340
+  height: 340
+  scale: 0.5
+- layer: blue-spiral
+  file: warp_L3.png
+  width: 340
+  height: 340
+  scale: 0.5
+- layer: white-spiral
+  file: warp_L4.png
+  width: 340
+  height: 340
+  scale: 0.5
+- layer: over-structure
+  file: warp_L5.png
+  width: 340
+  height: 340
+  scale: 0.5
 states:
-  - state: idle
-    layers:
-      - layer: blue-spiral
-        rotate: 0.25
-      - layer: white-spiral
-        rotate: 0.15
+- state: idle
+  layers:
+  - layer: blue-spiral
+    rotate: 30
+  - layer: white-spiral
+    rotate: -60
+- state: warp
+  layers:
+  - layer: blue-spiral
+    rotate: 360
+  - layer: white-spiral
+    rotate: -720
+  - layer: glow
+    animations:
+    - easing: linear
+      period: 500
+      scale: 1
+    - easing: linear
+      delay: 1000
+      period: 500
+      scale: 0.5
