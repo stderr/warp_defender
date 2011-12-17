@@ -31,7 +31,6 @@ module GameStates
       @last_frame_ms = frame_ms
 
       if(@timer.time_passed?(level.interval))
-        puts level.interval
         level.spawn
         level.next_wave if level.to_next_wave?
       end

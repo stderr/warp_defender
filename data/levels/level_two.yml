@@ -1,4 +1,4 @@
-name: "It Begins"
+name: "Second Level"
 
 description: >
   The dreaded Enemy has breached a century old blah blah.
@@ -9,16 +9,16 @@ warps:
   - position: center
 
 waves:
-  - interval: 2000
+  - interval: 5000
     enemies:
-      grunt: 2
-    max_spawn: 2
-    min_spawn: 1
+      grunt: 3330
+    max_spawn: 6
+    min_spawn: 4
 
   - interval: 1500
     enemies:
-      grunt: 3
+      grunt: 20
     max_spawn: 3
     min_spawn: 1
 
-next_level: level_two.yml
+next_level: level_2.yml

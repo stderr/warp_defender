@@ -12,6 +12,10 @@ class GameEngine
   def button_up(id); @states.last.button_up(id); end
 
   def update
+    if @level.current_defense <= 0
+      @states.push(GameStates::GameOver.new(self))
+    end
+
     if playing? && @level.completed?
       if GameLevel.has_level?(@level.next_level)
         @states.reject! { |state| state.is_a? GameStates::Playing }
@@ -19,7 +23,7 @@ class GameEngine
         @level = GameLevel.new(@level.next_level)
         @states.push(GameStates::LoadLevel.new(self))
       else
-        @states.push(GameStates::GameOver.new(self))
+        @states.push(GameStates::Completed.new(self))
       end
     end
     
