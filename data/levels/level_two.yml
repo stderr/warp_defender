@@ -11,7 +11,7 @@ warps:
 waves:
   - interval: 5000
     enemies:
-      grunt: 3330
+      grunt: 10
     max_spawn: 6
     min_spawn: 4
 

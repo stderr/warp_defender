@@ -14,8 +14,8 @@ class Wave
   
   end
 
-  def completed?
-    @enemies.empty?
+  def completed?(drawn_enemies) 
+    @enemies.empty? && drawn_enemies.empty?
   end
 
   private
@@ -61,8 +61,8 @@ class GameLevel
   end
   
   def current_wave; @waves[@current_wave]; end
-  def to_next_wave?; current_wave.enemies.empty? && @current_enemies.empty?; end
-  def completed?; @waves.last == current_wave && current_wave.completed?; end
+  def completed?; @waves.last == current_wave && current_wave.completed?(@current_enemies); end
+  def to_next_wave?; current_wave.completed?(@current_enemies); end
   def next_wave; @current_wave += 1; end
   def next_level; @next_level; end
   def interval; current_wave.interval.to_i end
@@ -79,6 +79,7 @@ class GameLevel
   end
   
   def update(delta)
+
     @bullets.reject! { |b| b.dead? } # remove once bullets aren't special
     @current_enemies.reject! { |e| e.dead? }
 
@@ -95,7 +96,6 @@ class GameLevel
                                                    entity.vel_y*0.7)
         end
       end
-
     end
 
     entities.each do |entity|
@@ -105,21 +105,19 @@ class GameLevel
         end
       end
     end
+
   end
 
   def spawn
-    to_spawn = []
     amount = rand(current_wave.max_spawn.to_i) + current_wave.min_spawn.to_i
     
     amount.times do
-      unless current_wave.completed?
+      unless current_wave.enemies.empty?
         enemy = current_wave.enemies.shuffle!.pop.new(targets[rand(targets.length)])
         enemy.spawn($window.width, $window.height)
         @current_enemies << enemy
       end
     end
-    
-    to_spawn
   end
 
   def entities
