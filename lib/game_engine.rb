@@ -8,7 +8,14 @@ class GameEngine
   end
 
   def update
-    @level = GameLevel.new(@level.next_level) if @level.completed?
+    if @level.completed?
+      if GameLevel.has_level?(@level.next_level)
+        @level = GameLevel.new(@level.next_level)
+      else
+        @states.push(GameStates::GameOver.new(self))
+      end
+    end
+
     @states.last.update
   end
 

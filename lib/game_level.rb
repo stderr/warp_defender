@@ -1,31 +1,70 @@
 require 'yaml'
+class Wave
+
+  attr_reader :interval, :min_spawn, :max_spawn, :enemies
+
+  def initialize(config)
+    @max_spawn = config['max_spawn']
+    @min_spawn = config['min_spawn']
+    @interval = config['interval']
+    
+    
+    load_enemies(config['enemies'])
+  
+  end
+
+  def completed?
+    @enemies.empty?
+  end
+
+  private
+
+  def load_enemies(enemies)
+    @enemies = enemies.inject([]) do |enemies, (name, count)|
+      count.to_i.times { enemies << Entities.const_get(name.capitalize) }
+      enemies
+    end
+  end
+
+end
+
 class GameLevel
-  attr_reader :warps
+  attr_reader :warps, :current_enemies, :explosions, :player, :bullets
+  
+  def self.has_level?(path)
+    File.exists? path
+  end
 
   def initialize(file_name)
-
     yaml = YAML::load(File.open("data/#{file_name}"))
     
-    # Required: waves, warps, name, description, next_level
-    yaml.each { |k, v| instance_variable_set("@#{k}", v) } 
-   
-    @warps = @warps.collect do |warp|
-      case warp['position']
-      when 'center'
-        x, y = [$window.width/2, $window.height/2]
-      when 'random'
-        x, y = [rand($window.width), rand($window.height)]
-      else
-        x, y =  warp['position'].split(",").map(&:strip)
-      end  
+    @name = yaml['name']
+    @description = yaml['description']
+    @next_level = yaml['next_level']
 
-      Entities::Warp.new(x, y)
-    end
+    @current_enemies = []
+    @explosions = []
+    @bullets = []
+
+    load_player
+    load_waves(yaml['waves'])
+    load_warps(yaml['warps'])
     
     @dialog = GUI::LevelDialog.new(:title => @name, :description => @description)
+    
     @intro_length = 3000
   end
   
+  def current_wave; @waves[@current_wave]; end
+  def to_next_wave?; current_wave.enemies.empty? && @current_enemies.empty?; end
+  def completed?; @waves.last == current_wave && current_wave.completed?; end
+  def next_wave; @current_wave += 1; end
+  def next_level; @next_level; end
+  def interval; current_wave.interval.to_i end
+  def targets; @warps + [@player] end
+  def current_defense; @warps.map(&:current_defense).inject(:+); end
+  def max_defense; @warps.map(&:max_defense).inject(:+); end
+
   def draw_intro
     @dialog.draw($window.width/2, $window.height/2, :width => 600, 
                  :height => 400, :color => Gosu::Color.rgba(65, 108, 112, 200),
@@ -36,53 +75,87 @@ class GameLevel
     ms > @intro_length
   end
   
-  def spawn(targets)
-    to_spawn = []
-    amount = rand(current_wave['max_spawn'].to_i) + current_wave['min_spawn'].to_i
+  def update(delta)
+    @bullets.reject! { |b| b.dead? } # remove once bullets aren't special
+    @current_enemies.reject! { |e| e.dead? }
 
-    amount.times do 
-      if enemy = enemies(targets).shuffle!.pop
-        to_spawn << enemy
-      else
-        next_wave
-        @current_enemies = nil
+    entities.each { |e| e.update(delta) }
+
+    @bullets.each do |bullet|
+      entities.each do |entity|
+        if entity.enemy? && bullet.collides_with?(entity)
+            bullet.kill
+            entity.kill
+            $window.sounds[:explosion].play
+            @explosions << Entities::Explosion.new(entity.x, entity.y,
+                                                   entity.vel_x*0.7,
+                                                   entity.vel_y*0.7)
+        end
       end
     end
 
+    entities.each do |entity|
+      if entity.enemy?
+        if warp = @warps.detect { |w| entity.collides_with?(w) }
+          warp.warp(entity)
+        end
+      end
+    end
+  end
+
+  def draw(delta)
+    entities.each { |e| e.draw(delta) }
+  end
+
+  def spawn
+    to_spawn = []
+    amount = rand(current_wave.max_spawn.to_i) + current_wave.min_spawn.to_i
+    
+    amount.times do
+      unless current_wave.completed?
+        enemy = current_wave.enemies.shuffle!.pop.new(targets[rand(targets.length)])
+        enemy.spawn($window.width, $window.height)
+        @current_enemies << enemy
+      end
+    end
+    
     to_spawn
   end
 
-  def current_wave
-    @waves.first
+  def entities
+    [@player] + @warps + @current_enemies + @bullets + @explosions
   end
 
-  def to_next_wave?
-    @current_enemies.nil?
-  end
+  private
+
   
-  def completed?
-    @waves.empty?
+  def load_player(x = $window.width/2, y = $window.height/2+80)
+    @player = Entities::Player.new
+    @player.move_to(x, y)
   end
 
-  def next_wave
-    @waves.shift
-  end
-
-  def next_level
-    @next_level
-  end
-
-  def enemies(targets)
-
-    @current_enemies ||= current_wave['enemies'].inject([]) do |enemies, (name, count)|
-      count.to_i.times { enemies << Entities.const_get(name.capitalize).new(targets[rand(targets.length)]) }
-      enemies
+  def load_warps(warps)
+    @warps = warps.collect do |warp|
+      case warp['position']
+      when 'center'
+        x, y = [$window.width/2, $window.height/2]
+      when 'random'
+        x, y = [rand($window.width), rand($window.height)]
+      else
+        x, y =  warp['position'].split(",").map(&:strip)
+      end  
+      
+      Entities::Warp.new(x, y)
     end
- 
   end
 
-  def interval
-    current_wave["interval"].to_i
+  def load_waves(waves)
+    @current_wave = 0
+    @waves = waves.inject([]) do |waves, config|   
+      waves << Wave.new(config)
+      waves
+    end
   end
+
 
 end

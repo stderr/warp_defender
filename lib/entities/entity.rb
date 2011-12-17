@@ -22,25 +22,15 @@ module Entities
       @warping = false
     end
 
+    def spawn(width, height); @behavior.spawn(width, height); end
+    def move; @behavior.move; end
+    def kill; @dead = true; end
+    def dead?; @dead; end
+    def map_color; Gosu::Color::RED; end
+    def enemy?; false; end
 
     def move_to(x, y)
       @x, @y = x, y
-    end
-
-    def spawn(width, height)
-      @behavior.spawn(width, height)
-    end
-
-    def move 
-      @behavior.move
-    end
-
-    def kill
-      @dead = true
-    end
-
-    def dead?
-      @dead
     end
 
     def off_screen?
@@ -54,10 +44,6 @@ module Entities
       dr = other.width/2.0*other.scale + @width/2.0*@scale
 
       dx**2 + dy**2 < dr**2
-    end
-
-    def map_color
-      Gosu::Color::RED
     end
 
   end

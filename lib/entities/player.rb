@@ -18,13 +18,10 @@ module Entities
       @score = 0
     end
 
-    def turn_left
-      @physics.angular_accel = -1800
-    end
-
-    def turn_right
-      @physics.angular_accel = 1800
-    end
+    def turn_left; @physics.angular_accel = -1800; end
+    def turn_right; @physics.angular_accel = 1800; end
+    def draw; @render.draw(self, 1); end
+    def map_color; Gosu::Color::GREEN; end
 
     def engines_on
       @physics.accel = 1300
@@ -46,7 +43,6 @@ module Entities
         @render.state = "idle"
       end
 
-
       @physics.update(self, delta)
       @x %= $window.width
       @y %= $window.height
@@ -59,26 +55,6 @@ module Entities
     def shoot
       $window.sounds[:laser].play
       Entities::Bullet.new(@angle, @x, @y, @vel_x, @vel_y)
-    end
-
-    def die!
-      puts "You died!."
-    end
-
-    def check_meteors(meteors)
-      meteors.each do |meteor|
-        if Gosu::distance(@x, @y, meteor.x, meteor.y) < 30
-          $window.sounds[:meteor].play
-          @dead = true
-          @dead_x = @x
-          @dead_y = @y
-          @deaths += 1
-        end
-      end
-    end
-
-    def map_color
-      Gosu::Color::GREEN
     end
 
   end
