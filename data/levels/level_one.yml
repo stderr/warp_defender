@@ -1,0 +1,24 @@
+name: "It Begins"
+
+description: >
+  The dreaded Enemy has breached a century old blah blah.
+  Blah blah.  Fuck it.  Here we go.
+  And here's another line, a longer one this time, to test the boundaries of the dialog.
+
+warps:
+  - position: center
+
+waves:
+  - interval: 2000
+    enemies:
+      grunt: 2
+    max_spawn: 2
+    min_spawn: 1
+
+  - interval: 1500
+    enemies:
+      grunt: 3
+    max_spawn: 3
+    min_spawn: 1
+
+next_level: level_two.yml

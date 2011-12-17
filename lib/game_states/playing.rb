@@ -32,14 +32,12 @@ module GameStates
       delta = (frame_ms - @last_update_ms) / 1000.0
       @last_update_ms = frame_ms
 
-      if(@timer.time_passed?(level.interval)) 
+      if(@timer.time_passed?(level.interval))
         level.spawn
         level.next_wave if level.to_next_wave?
       end
 
       level.update(delta)
-      
-      @game_engine.states.push(GameStates::GameOver.new(@game_engine)) if level.current_defense <= 0
     end
 
     def draw

@@ -14,7 +14,7 @@ module GUI
                         @options[:color], Utils::ZOrder::HUD)
 
       @options[:entities].each do |entity|
-        next if entity.is_a?(Entities::Bullet) || entity.off_screen?
+        next if !entity.map_draw? || entity.off_screen?
         
         # Compensate for rectangle drawing from center
         pos_x = (x-@options[:width]/2) + ((entity.x * @options[:width]) / $window.width) 

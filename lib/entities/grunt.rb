@@ -18,9 +18,11 @@ module Entities
       animate(:grunt, :loop, 100, @z_order)
     end
 
-    def spawn(width, height)
-      super(width, height)
-    end
+    def velocity; @behavior.velocity; end
+    def enemy?; true; end
+    def map_draw?; true; end
+    def spawn(width, height); super(width, height); end
+
 
     def update(delta)
       aim(delta)
@@ -46,14 +48,6 @@ module Entities
 
       @vel_x = Gosu::offset_x(@angle, @behavior.velocity)
       @vel_y = Gosu::offset_y(@angle, @behavior.velocity)
-    end
-
-    def velocity
-      @behavior.velocity
-    end
-
-    def enemy?
-      true
     end
 
   end

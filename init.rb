@@ -10,9 +10,12 @@ require 'lib/gosu_ext/window'
 # Library files
 require 'lib/game'
 require 'lib/game_engine'
-require 'lib/sprite'
 require 'lib/utils'
 require 'lib/game_level'
+
+# Mixins
+require 'lib/mixins/sprite'
+require 'lib/mixins/mappable'
 
 # Game states
 require 'lib/game_states/game_state'

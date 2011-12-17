@@ -17,9 +17,12 @@ module Entities
       @defense_bar = GUI::Bar.new(:width => @width/2,
                                   :height => 5,
                                   :outer_color => Gosu::Color.rgba(0, 0, 0, 160),
-                                  :left_color => Gosu::Color::RED,
-                                  :right_color => Gosu::Color::GREEN)
+                                  :left_color => Gosu::Color.rgba(65, 108, 112, 220),
+                                  :right_color => Gosu::Color.rgba(65, 108, 112, 220))
     end
+    
+    def map_color; Gosu::Color::BLUE; end
+    def map_draw?; true; end
 
     def update(delta)
       #@angle += 360/90*delta
@@ -44,10 +47,6 @@ module Entities
       end
 
       @current_defense -= 1.0
-    end
-    
-    def map_color
-      Gosu::Color::BLUE
     end
 
   end
