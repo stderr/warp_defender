@@ -30,21 +30,35 @@ states:
 - state: idle
   layers:
   - layer: blue-spiral
-    rotate: 30
+    rotation_rate: 30
   - layer: white-spiral
-    rotate: -60
+    rotation_rate: -60
 - state: warp
   layers:
   - layer: blue-spiral
-    rotate: 360
+    animations:
+    - easing: sine out
+      period: 500
+      rotation_rate: 360
+    - easing: sine in
+      period: 500
+      delay: 500
+      rotation_rate: 30
   - layer: white-spiral
-    rotate: -720
+    animations:
+    - easing: sine out
+      period: 500
+      rotation_rate: -720
+    - easing: sine in
+      period: 500
+      delay: 500
+      rotation_rate: -60
   - layer: glow
     animations:
-    - easing: linear
+    - easing: sine out
       period: 500
       scale: 1
-    - easing: linear
-      delay: 1000
+    - easing: sine in
+      delay: 500
       period: 500
       scale: 0.5

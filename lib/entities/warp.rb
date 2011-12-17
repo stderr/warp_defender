@@ -38,10 +38,10 @@ module Entities
 
     def warp(entity)
       $window.sounds[:warp].play
-      #animate(:warp, :once, 100, @z_order,
-      #        lambda { self.animate(:warp, :once_reverse, 100, @z_order) })
       entity.kill
-      @render.state = "warp"
+      if @render.state != "warp" or @render.animations_finished?
+        @render.state = "warp"
+      end
 
       @current_defense -= 1.0
     end

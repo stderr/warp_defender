@@ -47,6 +47,7 @@ require 'lib/physics/dynamic'
 
 # Render
 require 'lib/render/sprite'
+require 'lib/render/ease'
 
 # Entities
 require 'lib/entities/entity'
