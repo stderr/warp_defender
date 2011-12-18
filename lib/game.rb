@@ -1,12 +1,12 @@
 class Game < Gosu::Window
 
-  attr_accessor :fonts, :images, :animations, :sounds, :music, :sprite_definitions
+  attr_accessor :fonts, :images, :animations, :sounds, :music, :sprite_definitions, :native_width, :native_height
 
   def initialize
     #super(Gosu::screen_width, Gosu::screen_height, true)
     super(1066, 600, false)
     self.caption = 'Warp Defender'
-    
+
     @images = {}
     @fonts = {}
     @sounds = {}
@@ -23,6 +23,13 @@ class Game < Gosu::Window
     
     $window = self
 
+    # use 1080p for the "native" size; that is, the size at which the display
+    # won't be scaled (bigger screens scale up, smaller screens scale down so
+    # the same content is visible regardless of screen size)
+    @native_width = 1920
+    @native_height = 1080
+    
+
     @game_engine = GameEngine.new
 
     @game_engine.states.push(GameStates::MainMenu.new(@game_engine))
@@ -32,8 +39,15 @@ class Game < Gosu::Window
     @game_engine.update
   end
 
+  def screen_scale
+    [$window.width / @native_width.to_f,
+     $window.height / @native_height.to_f].min
+  end
+
   def draw
-    @game_engine.draw
+    $window.scale(screen_scale, screen_scale, 0, 0) do ||
+      @game_engine.draw
+    end
   end
 
   def button_down(id)

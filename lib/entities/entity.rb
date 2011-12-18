@@ -35,7 +35,7 @@ module Entities
     end
 
     def off_screen?
-      @x > $window.width || @x < 0 || @y < 0 || @y > $window.height 
+      @x > $window.native_width || @x < 0 || @y < 0 || @y > $window.native_height 
     end
 
     # will end up in physics component at some point

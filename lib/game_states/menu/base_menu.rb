@@ -10,8 +10,8 @@ module GameStates
       @selected_item = 0
       @spacing = 40
       
-      @x = $window.width / 2
-      @y = $window.height / 2
+      @x = $window.native_width / 2
+      @y = $window.native_height / 2
     end
     
     def button_down(id)
@@ -26,7 +26,9 @@ module GameStates
     end
     
     def draw
-      $window.images[:menu_background].draw(0, 0, 0)
+      $window.images[:menu_background].draw(0, 0, 0,
+                                            1/$window.screen_scale,
+                                            1/$window.screen_scale)
       $window.fonts[:menu].draw_rel(@title, @x, @y - 40, 0, 0.5, 1, 2, 2)
       
       @menu_items.each_index do |i|

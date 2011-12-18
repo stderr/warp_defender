@@ -46,19 +46,21 @@ module GameStates
       delta = (frame_ms - @last_draw_ms) / 1000.0
       @last_draw_ms = frame_ms
 
-      $window.images[:background].draw(0, 0, Utils::ZOrder::Background)
+      $window.images[:background].draw(0, 0, Utils::ZOrder::Background,
+                                       1/$window.screen_scale,
+                                       1/$window.screen_scale)
       
       level.draw(delta)
 
-      $window.images[:hud].draw($window.width-$window.images[:hud].width, 
-                                $window.height - $window.images[:hud].height,
+      $window.images[:hud].draw($window.native_width-$window.images[:hud].width, 
+                                $window.native_height - $window.images[:hud].height,
                                 Utils::ZOrder::HUD)
 
-      @defense_bar.draw($window.width-381, $window.height-29, 
+      @defense_bar.draw($window.native_width-381, $window.native_height-29, 
                         :current => level.current_defense,
                         :max => level.max_defense)
 
-      @mini_map.draw($window.width-98, $window.height-53, :entities => level.entities)
+      @mini_map.draw($window.native_width-98, $window.native_height-53, :entities => level.entities)
     end
 
     def button_down(id)

@@ -17,8 +17,8 @@ module GUI
         next if !entity.map_draw? || entity.off_screen?
         
         # Compensate for rectangle drawing from center
-        pos_x = (x-@options[:width]/2) + ((entity.x * @options[:width]) / $window.width) 
-        pos_y = (y-@options[:height]/2) + ((entity.y * @options[:height]) / $window.height)
+        pos_x = (x-@options[:width]/2) + ((entity.x * @options[:width]) / $window.native_width) 
+        pos_y = (y-@options[:height]/2) + ((entity.y * @options[:height]) / $window.native_height)
 
         $window.draw_rect(pos_x, pos_y, 5, 5, entity.map_color, Utils::ZOrder::HUDOverlay)
       end

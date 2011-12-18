@@ -11,7 +11,9 @@ module GUI
 
     def draw(x, y, options = {})
       super(x, y, options)
-      $window.images[:background].draw(0, 0, Utils::ZOrder::Background)
+      $window.images[:background].draw(0, 0, Utils::ZOrder::Background,
+                                       1/$window.screen_scale,
+                                       1/$window.screen_scale)
 
       # border
       $window.draw_rect(x, y, 
