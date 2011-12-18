@@ -26,7 +26,9 @@ module Entities
 
     def engines_on
       @physics.accel = 1300
-      @render.state = "accelerate"
+      if @render.state != "accelerate"
+        @render.state = "accelerate"
+      end
     end
 
     def update(delta)
