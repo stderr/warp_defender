@@ -23,7 +23,7 @@ class GameEngine
         @level = GameLevel.new(@level.next_level)
         @states.push(GameStates::LoadLevel.new(self))
       else
-        @states.push(GameStates::Completed.new(self))
+        @states.push(GameStates::GameCompleted.new(self))
       end
     end
     

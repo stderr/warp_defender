@@ -30,14 +30,14 @@ class Wave
 end
 
 class GameLevel
-  attr_reader :warps, :current_enemies, :explosions, :player, :bullets
+  attr_reader :warps, :current_enemies, :explosions, :player, :bullets, :next_level
   
   def self.level_path(file)
     "data/levels/#{file}"
   end
 
-  def self.has_level?(file)
-    File.exists? level_path(file)
+  def self.has_level?(level)
+    !level.empty? && File.exists?(level_path(level))
   end
 
   def initialize(file_name)
@@ -45,7 +45,7 @@ class GameLevel
     
     @name = yaml['name']
     @description = yaml['description']
-    @next_level = yaml['next_level']
+    @next_level = yaml['next_level'] || ""
 
     @current_enemies = []
     @explosions = []
@@ -64,7 +64,6 @@ class GameLevel
   def completed?; @waves.last == current_wave && current_wave.completed?(@current_enemies); end
   def to_next_wave?; current_wave.completed?(@current_enemies); end
   def next_wave; @current_wave += 1; end
-  def next_level; @next_level; end
   def interval; current_wave.interval.to_i end
   def targets; @warps + [@player] end
   def current_defense; @warps.map(&:current_defense).inject(:+); end

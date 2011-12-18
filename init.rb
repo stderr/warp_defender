@@ -24,6 +24,8 @@ require 'lib/game_states/playing'
 require 'lib/game_states/credits'
 require 'lib/game_states/game_over'
 require 'lib/game_states/load_level'
+require 'lib/game_states/game_completed'
+require 'lib/game_states/level_completed'
 
 # Menu states
 require 'lib/game_states/menu/base_menu'
