@@ -47,8 +47,8 @@ module Entities
       end
 
       @physics.update(self, delta)
-      @x %= $window.native_width
-      @y %= $window.native_height
+      @x = [[0, @x].max, $window.native_width].min
+      @y = [[0, @y].max, $window.native_height].min
     end
 
     def draw(delta)

@@ -8,6 +8,7 @@ require 'configurability/config'
 require 'lib/gosu_ext/window'
 
 # Library files
+require 'lib/camera'
 require 'lib/game'
 require 'lib/game_engine'
 require 'lib/utils'

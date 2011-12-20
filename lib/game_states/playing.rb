@@ -46,10 +46,21 @@ module GameStates
       delta = (frame_ms - @last_draw_ms) / 1000.0
       @last_draw_ms = frame_ms
 
-      $window.images[:background].draw(0, 0, Utils::ZOrder::Background,
-                                       1/$window.screen_scale,
-                                       1/$window.screen_scale)
-      
+      bg = $window.images[:background]
+      # hack to show some background motion (should probably be moved to
+      # GameLevel)
+      bg_extra_width = bg.width * 0.4
+      bg_extra_height = bg.height * 0.4
+      pct_across_x = level.camera.x / $window.native_width.to_f
+      pct_across_y = level.camera.y / $window.native_height.to_f
+      bg_x = 0 - bg_extra_width * pct_across_x
+      bg_y = 0 - bg_extra_height * pct_across_y
+      bg.draw(bg_x, bg_y,
+              Utils::ZOrder::Background,
+              1/$window.screen_scale * 1,
+              1/$window.screen_scale * 1)
+
+
       level.draw(delta)
 
       $window.images[:hud].draw($window.native_width-$window.images[:hud].width, 

@@ -30,7 +30,7 @@ class Wave
 end
 
 class GameLevel
-  attr_reader :warps, :current_enemies, :explosions, :player, :bullets, :next_level
+  attr_reader :warps, :current_enemies, :explosions, :player, :bullets, :next_level, :camera
   
   def self.level_path(file)
     "data/levels/#{file}"
@@ -51,13 +51,15 @@ class GameLevel
     @explosions = []
     @bullets = []
 
-    load_player
+    load_player($window.native_width/2, $window.native_height/2+275)
     load_waves(yaml['waves'])
     load_warps(yaml['warps'])
     
     @dialog = GUI::LevelDialog.new(:title => @name, :description => @description)
     
     @intro_length = 3000
+
+    @camera = Camera.new(warps[0], 3)
   end
   
   def current_wave; @waves[@current_wave]; end
@@ -69,7 +71,32 @@ class GameLevel
   def current_defense; @warps.map(&:current_defense).inject(:+); end
   def max_defense; @warps.map(&:max_defense).inject(:+); end
   def intro_finished?(ms); ms > @intro_length; end
-  def draw(delta); entities.each { |e| e.draw(delta) }; end
+  def draw(delta)
+    # hack.  We need a starting() method or something
+    if @camera.target != @player
+      @camera.smooth_retarget(player, 1.5, "expo out", 3000, 2000)
+    end
+
+    @camera.draw do ||
+      # temporarily draw the level extents
+      border_color = Gosu::Color.rgba(65, 108, 112, 200)
+      $window.draw_line(0, 0, border_color,
+                        $window.native_width, 0, border_color,
+                        Utils::ZOrder::HUD)
+      $window.draw_line($window.native_width, 1, border_color,
+                        $window.native_width, $window.native_height, border_color,
+                        Utils::ZOrder::HUD)
+      $window.draw_line($window.native_width-1, $window.native_height, border_color,
+                        0, $window.native_height, border_color,
+                        Utils::ZOrder::HUD)
+      $window.draw_line(0, $window.native_height-1, border_color,
+                        0, -1, border_color,
+                        Utils::ZOrder::HUD)
+
+
+      entities.each { |e| e.draw(delta) }
+    end
+  end
 
   def draw_intro
     @dialog.draw($window.native_width/2, $window.native_height/2, :width => 600, 
@@ -78,7 +105,7 @@ class GameLevel
   end
   
   def update(delta)
-
+    @camera.update(delta)
     @bullets.reject! { |b| b.dead? } # remove once bullets aren't special
     @current_enemies.reject! { |e| e.dead? }
 
@@ -125,7 +152,7 @@ class GameLevel
 
   private
 
-  def load_player(x = $window.native_width/2, y = $window.native_height/2+80)
+  def load_player(x = $window.native_width/2, y = $window.native_height/2)
     @player = Entities::Player.new
     @player.move_to(x, y)
   end
