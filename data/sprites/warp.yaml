@@ -1,5 +1,8 @@
 ---
 sprite: warp
+bounds:
+- shape: circle
+  diameter: 400
 layers:
 - layer: under-structure
   file: warp_L1.png

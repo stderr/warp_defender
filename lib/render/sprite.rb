@@ -7,6 +7,8 @@ module Render
       config = $window.sprite_definitions[sprite]
       @name = config['sprite']
 
+      @bounds = config['bounds']
+
       @layers = { }
       config['layers'].each do |l|
         @layers[l["layer"]] = l.reject { |k, v| k == "layer" }
