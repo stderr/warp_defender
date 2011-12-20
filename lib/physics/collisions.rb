@@ -5,6 +5,12 @@ module Physics
     end
   end
 
+  class Circle
+    def collides?(other)
+      other.collides?(self)
+    end
+  end
+
   def circle_circle_collides?(entity_one, entity_two)
       dx = entity_one.x - entity_two.x
       dy = entity_one.y - entity_two.y
