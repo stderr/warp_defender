@@ -12,13 +12,13 @@ module GUI
     def draw(x, y, options = {})
       super(x, y, options)
       
+      opt_x = [(x + (@options[:font].text_width(@options[:text]) / 2) + 80), x + 230].max
+
       @options[:font].draw_rel(@options[:text], x, y, 0, 0.5, 1, 1, 1, @options[:color])
 
-      if checked
-        $window.images[:checked].draw_rot(x+100, y-18, 0, 0)
-      else
-        $window.images[:unchecked].draw_rot(x+100, y-18, 0, 0)
-      end
+      opt_text = checked ? "Yes" : "No"
+      
+      @options[:font].draw_rel(opt_text, opt_x, y, 0, 0.0, 1, 1, 1, @options[:color])
     end
 
   end

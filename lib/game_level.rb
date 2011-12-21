@@ -99,8 +99,8 @@ class GameLevel
   end
 
   def draw_intro
-    @dialog.draw($window.native_width/2, $window.native_height/2, :width => 600, 
-                 :height => 400, :color => Gosu::Color.rgba(65, 108, 112, 200),
+    @dialog.draw($window.native_width/2, $window.native_height/2, :width => 1200, 
+                 :height => 800, :color => Gosu::Color.rgba(65, 108, 112, 200),
                  :font_color => Gosu::Color.rgba(255, 255, 255, 120))
   end
   

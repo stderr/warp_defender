@@ -18,7 +18,7 @@ module GUI
       # border
       $window.draw_rect(x, y, 
                         @options[:width] + 2, 
-                        @options[:height] + 2, 
+                        @options[:height] + 4, 
                         @options[:color], 
                         Utils::ZOrder::HUD)
       # inner box
@@ -35,7 +35,7 @@ module GUI
 
       last_line = @description.split.reduce([]) do |line, word|
 
-        if $window.fonts[:level_description].text_width(line.join(" ")) > @options[:width] - 100
+        if $window.fonts[:level_description].text_width(line.join(" ")) > @options[:width] - 140
           draw_line(line.join(" "), x, (line_count * 30) + y - (@options[:height]/4))
           line = [word]
           line_count += 1

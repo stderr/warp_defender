@@ -22,6 +22,8 @@ module GameStates
     def button_up(id)
     end
 
+    def before_transition
+    end
   end
 
 end

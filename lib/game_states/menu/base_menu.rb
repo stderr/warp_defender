@@ -8,7 +8,7 @@ module GameStates
       @menu_items = []
       @title = ""
       @selected_item = 0
-      @spacing = 40
+      @spacing = 80
       
       @x = $window.native_width / 2
       @y = $window.native_height / 2
@@ -29,10 +29,11 @@ module GameStates
       $window.images[:menu_background].draw(0, 0, 0,
                                             1/$window.screen_scale,
                                             1/$window.screen_scale)
-      $window.fonts[:menu].draw_rel(@title, @x, @y - 40, 0, 0.5, 1, 2, 2)
+      $window.fonts[:menu].draw_rel(@title, @x, @y - @spacing, 0, 0.5, 1, 2, 2)
       
       @menu_items.each_index do |i|
           color = (i == @selected_item ?  Gosu::Color::GREEN : Gosu::Color::WHITE)
+
           @menu_items[i].draw(@x, @y+i*@spacing, :color => color)
       end
     end
