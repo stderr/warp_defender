@@ -45,9 +45,7 @@ class Game < Gosu::Window
   end
 
   def draw
-    $window.scale(screen_scale, screen_scale, 0, 0) do ||
-      @game_engine.draw
-    end
+    $window.scale(screen_scale, screen_scale, 0, 0) { @game_engine.draw }
   end
 
   def button_down(id)

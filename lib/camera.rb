@@ -53,10 +53,8 @@ class Camera
 
   def draw(&drawing_code)
     $window.translate(-@x + $window.native_width/2,
-                      -@y + $window.native_height/2) do ||
-      $window.scale(@zoom, @zoom, @x, @y) do ||
-        yield
-      end
+                      -@y + $window.native_height/2) do
+      $window.scale(@zoom, @zoom, @x, @y) { yield }
     end
   end
 end

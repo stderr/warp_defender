@@ -170,7 +170,7 @@ module Render
       # now draw
       @layers.each do |name, layer|
         frame = $window.animations[layer['file']][layer[:frame]]
-        $window.rotate(entity.angle, entity.x, entity.y) do ||
+        $window.rotate(entity.angle, entity.x, entity.y) do
           frame.draw_rot(entity.x,
                          entity.y,
                          entity.z_order,

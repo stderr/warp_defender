@@ -77,7 +77,7 @@ class GameLevel
       @camera.smooth_retarget(player, 1.5, "expo out", 3000, 2000)
     end
 
-    @camera.draw do ||
+    @camera.draw do
       # temporarily draw the level extents
       border_color = Gosu::Color.rgba(65, 108, 112, 200)
       $window.draw_line(0, 0, border_color,
