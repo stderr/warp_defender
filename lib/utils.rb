@@ -1,6 +1,8 @@
 module Utils
   module ZOrder
-    Background, UI, Debris, Meteors, Warps, Player, Explosion, Stars, HUD, HUDOverlay, PauseOverlay = *0..10 
+    Background, UI, Debris, Meteors, Warps, 
+    Player, Explosion, Stars, HUD, HUDOverlay, 
+    Infinity = *0..99
   end
 
   class Timer

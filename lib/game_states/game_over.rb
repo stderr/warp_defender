@@ -12,16 +12,8 @@ module GameStates
     def draw
       @play_state.draw
       color = Gosu::Color.from_ahsv(200, 0, 0, 0)
-      pos_x = $window.native_width/2
-      pos_y = $window.native_height/2
       
-      $window.draw_rect(pos_x, pos_y, 
-                        $window.native_width, $window.native_height, 
-                        color, Utils::ZOrder::PauseOverlay)
-      
-      $window.fonts[:menu].draw_rel("Game Over", pos_x, pos_y, 
-                                    Utils::ZOrder::PauseOverlay, 
-                                    0.5, 1, 2, 2, Gosu::Color::RED)
+      overlay(color, "You Lose!")
     end
 
     def button_down(id)

@@ -22,8 +22,20 @@ module GameStates
     def button_up(id)
     end
 
-    def before_transition
+    private
+
+    def overlay(color, message = "")
+      pos_x = $window.native_width / 2
+      pos_y = $window.native_height / 2
+
+      $window.draw_rect(pos_x, pos_y,
+                        $window.native_width, $window.native_height,
+                        color, Utils::ZOrder::Infinity)
+
+      $window.fonts[:menu].draw_rel(message, pos_x, pos_y - 40, Utils::ZOrder::Infinity,
+                                    0.5, 1, 2, 2, Gosu::Color::WHITE)
     end
+
   end
 
 end
