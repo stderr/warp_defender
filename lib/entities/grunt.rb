@@ -12,7 +12,7 @@ module Entities
       @behavior = Behaviors::Hunt.new(self)
       @target = target
 
-      @physics = Physics::Dynamic.new(0, 0)
+      @physics = Physics::Dynamic.new(:friction => 0, :angular_friction => 0)
 
 
       animate(:grunt, :loop, 100, @z_order)

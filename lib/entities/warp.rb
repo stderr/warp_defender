@@ -11,14 +11,17 @@ module Entities
       
       @max_defense = @current_defense = 10
 
-      @render = Render::Sprite.new('warp')
+      sprite_def = $window.sprite_definitions['warp']
+      @render = Render::Sprite.new(sprite_def)
       @render.state = "idle"
+      @physics = Physics::Static.new(:sprite => sprite_def)
 
       @defense_bar = GUI::Bar.new(:width => @width/2,
                                   :height => 5,
                                   :outer_color => Gosu::Color.rgba(0, 0, 0, 160),
                                   :left_color => Gosu::Color.rgba(65, 108, 112, 220),
                                   :right_color => Gosu::Color.rgba(65, 108, 112, 220))
+
     end
     
     def map_color; Gosu::Color::BLUE; end

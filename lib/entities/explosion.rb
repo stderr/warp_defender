@@ -9,7 +9,7 @@ module Entities
             :height => frame_height(:explosion),
             :z_order => Utils::ZOrder::Explosion)
       
-      @physics = Physics::Dynamic.new(0.01)
+      @physics = Physics::Dynamic.new(:friction => 0.01)
 
       # play forward, then backward, then kill
       animate(:explosion, :once, 20, @z_order, :default,

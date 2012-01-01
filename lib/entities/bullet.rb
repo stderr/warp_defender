@@ -11,7 +11,7 @@ module Entities
             :z_order => Utils::ZOrder::Player)
 
       # make bullets frictionless
-      @physics = Physics::Dynamic.new(0)
+      @physics = Physics::Dynamic.new(:friction => 0)
 
       animate(:bullet, :loop, 100, @z_order)
     end

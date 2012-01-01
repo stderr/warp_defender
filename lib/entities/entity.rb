@@ -43,7 +43,7 @@ module Entities
       dx = other.x - @x
       dy = other.y - @y
       dr = other.width/2.0*other.scale + @width/2.0*@scale
-
+    
       dx**2 + dy**2 < dr**2
     end
 

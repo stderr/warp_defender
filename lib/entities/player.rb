@@ -11,9 +11,10 @@ module Entities
       @dead = false
       @respawn_time = 125
 
-      @physics = Physics::Dynamic.new()
-      @render = Render::Sprite.new('player')
+      sprite_def = $window.sprite_definitions['player']
+      @render = Render::Sprite.new(sprite_def)
       @render.state = "idle"
+      @physics = Physics::Dynamic.new(:sprite => sprite_def)
 
       @score = 0
     end

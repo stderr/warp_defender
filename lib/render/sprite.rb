@@ -3,11 +3,8 @@ module Render
   class Sprite
     attr_reader :state
 
-    def initialize(sprite)
-      config = $window.sprite_definitions[sprite]
+    def initialize(config)
       @name = config['sprite']
-
-      @bounds = config['bounds']
 
       @layers = { }
       config['layers'].each do |l|
