@@ -1,0 +1,28 @@
+--- 
+sprite: explosion
+bounds:
+- shape: circle
+  radius: 16
+layers: 
+- layer: explosion
+  file: explosion.png
+  width: 32
+  height: 32
+  scale: 1
+states: 
+- state: explode
+  layers: 
+  - layer: explosion
+    frames: 
+      playback: once
+      interval: 22
+      start: 0
+      finish: 15
+- state: implode
+  layers: 
+  - layer: explosion
+    frames: 
+      playback: once
+      interval: 22
+      start: 15
+      finish: 0

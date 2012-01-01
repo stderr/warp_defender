@@ -1,0 +1,20 @@
+--- 
+sprite: bullet
+bounds:
+- shape: circle
+  radius: 5
+layers: 
+- layer: bullet
+  file: bullet.png
+  width: 11
+  height: 13
+  scale: 1
+states: 
+- state: idle
+  layers: 
+  - layer: bullet
+    frames: 
+      playback: loop
+      interval: 100
+      start: 0
+      finish: 9

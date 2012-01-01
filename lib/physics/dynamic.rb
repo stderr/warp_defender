@@ -1,10 +1,11 @@
 module Physics
 
   class Dynamic
-    attr_accessor :accel, :angular_accel, :friction
+    attr_accessor :accel, :angular_accel, :friction, :bounds
+    include Collision
 
     def initialize(params)
-      @bounds = Physics.create_bounds(params[:sprite])
+      create_bounds(params[:sprite])
       @accel = 0.0
       @angular_accel = 0.0
       @friction = params[:friction] || 0.03
@@ -31,15 +32,6 @@ module Physics
       # now reset acceleration (they are single use)
       @accel = 0.0
       @angular_accel = 0.0
-
-      if @bounds
-      	@bounds.x = entity.x
-      	@bounds.y = entity.y
-      end
-    end
-
-    def collides_with?(other)
-      @bounds.collides_with?(other.bounds)
     end
 
   end

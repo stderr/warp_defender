@@ -1,0 +1,20 @@
+--- 
+sprite: grunt
+bounds:
+- shape: circle
+  radius: 11
+layers: 
+- layer: ship
+  file: grunt.png
+  width: 23
+  height: 28
+  scale: 1
+states: 
+- state: idle
+  layers: 
+  - layer: ship
+    frames: 
+      playback: loop
+      interval: 100
+      start: 0
+      finish: 2

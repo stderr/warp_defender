@@ -2,26 +2,22 @@ module Entities
   class Player < Entity
     attr_reader :score, :dead_x, :dead_y, :deaths
     attr_accessor :dead, :respawn_time
-    #include LegacySprite
 
     def initialize
-      super(:z_order => Utils::ZOrder::Player)
+      super(:z_order => Utils::ZOrder::Player,
+            :sprite => 'player',
+            :physics => :dynamic)
 
       @deaths = 0
       @dead = false
       @respawn_time = 125
 
-      sprite_def = $window.sprite_definitions['player']
-      @render = Render::Sprite.new(sprite_def)
       @render.state = "idle"
-      @physics = Physics::Dynamic.new(:sprite => sprite_def)
-
       @score = 0
     end
 
     def turn_left; @physics.angular_accel = -1800; end
     def turn_right; @physics.angular_accel = 1800; end
-    def draw; @render.draw(self, 1); end
     def map_color; Gosu::Color::GREEN; end
     def map_draw?; true; end
 
@@ -50,10 +46,6 @@ module Entities
       @physics.update(self, delta)
       @x = [[0, @x].max, $window.native_width].min
       @y = [[0, @y].max, $window.native_height].min
-    end
-
-    def draw(delta)
-      @render.draw(self, delta)
     end
 
     def shoot

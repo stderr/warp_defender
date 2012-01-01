@@ -2,7 +2,7 @@
 sprite: warp
 bounds:
 - shape: circle
-  radius: 400
+  radius: 50
 layers:
 - layer: under-structure
   file: warp_L1.png

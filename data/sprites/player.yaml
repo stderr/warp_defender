@@ -8,6 +8,9 @@ layers:
   center_x: 170
   center_y: 170
   scale: 0.1875
+bounds:
+- shape: circle
+  radius: 100
 states: 
 - state: idle
   layers: 

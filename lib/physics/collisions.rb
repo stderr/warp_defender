@@ -1,96 +1,100 @@
-module Physics
+module Collision
 
-  def Physics.create_bounds(sprite_definition)
-    if not sprite_definition; return nil; end
-    bounds = sprite_definition.fetch('bounds', [{}])[0]
-    if not bounds.has_key?("shape"); return nil; end
+  attr_accessor :collision_shape
 
-    case bounds["shape"]
+  def create_bounds(sprite)
+    config = $window.sprites[sprite]
+    if not config or not config['bounds']
+    	@collision_shape = nil
+    	return
+    end
+
+    config['bounds'][0].each do |k,v|
+      instance_variable_set("@collision_#{k}", v)
+      self.class.send(:define_method, "collision_#{k}".to_sym) do
+        instance_variable_get("@collision_#{k}")
+      end
+    end
+  end
+
+  def width
+    case @collision_shape
     when "circle"
-      return Circle.new(0, 0, bounds["radius"])
+    	return @collision_radius*2
     when "rectangle"
-      return Rectangle.new(0, 0, bounds["width"], bounds["height"])
+      return @collision_width
     end
+
+    return 0
   end
 
-
-  class Circle
-    attr_accessor :x, :y, :radius
-
-    def initialize(x, y, radius)
-      @x = x
-      @y = y
-      @radius = radius
+  def height
+    case @collision_shape
+    when "circle"
+    	return @collision_radius*2
+    when "rectangle"
+      return @collision_height
     end
 
-    def width; radius*2; end
-    def height; radius*2; end
-
-    def collides_with?(other)
-      self.send("collides_with_#{other.class.name}?".to_sym, other)
-    end
-
-    define_method("collides_with_Physics::Circle?".to_sym) do |other|
-      dx = self.x - other.x
-      dy = self.y - other.y
-      dr = (self.width/2.0*self.scale + other.width/2.0*other.scale)
-
-      dx**2 + dy**2 < dr**2
-    end
-
-    define_method("collides_with_Physics::Rectangle?".to_sym) do |other|
-      # only working with axis-aligned rectangles currently
-      circ_dist_x = (self.x - other.x).abs
-      circ_dist_y = (self.y - other.y).abs
-
-      if circ_dist_x > (other.width/2 + @radius); return false; end
-      if circ_dist_y > (other.height/2 + @radius); return false; end
-
-      if circ_dist_x <= other.width/2; return true; end
-      if circ_dist_y <= other.height/2; return true; end
-
-      ((circ_dist_x - other.width/2)**2 +
-       (circ_dist_y - other.height/2)**2) <= @radius**2
-    end
-
-    def method_missing(method, *args)
-      throw "missing collision detection for #{args[0].class.name} in #{self.class.name}"
-    end
+    return 0
   end
 
-  class Rectangle
-    attr_accessor :x, :y, :width, :height
-
-    # x and y are the center point
-    def initialize(x, y, width, height)
-      @x = x
-      @y = y
-      @width = width
-      @height = height
+  def collides_with?(entity, other)
+    if not @collision_shape or not other.physics.collision_shape
+    	return false
     end
 
-    def top; @y - @height/2; end
-    def left; @x - @width/2; end
-    def bottom; @y + @height/2; end
-    def right; @x + @width/2; end
-
-    def collides_with?(other)
-      self.send("collides_with_#{other.class.name}?".to_sym, other)
+    # ugly but we don't have complicated enough shapes to justify running a
+    # visitor pattern
+    shapes = [@collision_shape, other.physics.collision_shape]
+    if shapes == ["circle", "circle"]
+    	return circle_intersects_circle(entity, other)
+    elsif shapes == ["rectangle", "rectangle"]
+      return rectangle_intersects_rectangle(entity, other)
+    elsif shapes == ["circle", "rectangle"]
+      return circle_intersects_rectangle(entity, other)
+    elsif shapes == ["rectangle", "circle"]
+      return circle_intersects_rectangle(other, entity)
     end
 
-    define_method("collides_with_Physics::Circle?".to_sym) do |other|
-      # just use Circle's version
-      other.collides?(self)
-    end
-
-    define_method("collides_with_Physics::Rectangle?".to_sym) do |other|
-      # only working with axis-aligned rectangles currently
-      not (other.right < left or other.left > right or 
-			     other.bottom < top or other.top > bottom)
-    end
-
-    def method_missing(method, *args)
-      throw "missing collision detection for #{args[0].class.name} in #{self.class.name}"
-    end
+    throw "unrecognized shapes for collision detection"
   end
+
+  def circle_intersects_circle(one, two)
+    dx = one.x - two.x
+    dy = one.y - two.y
+    dr = one.physics.collision_radius + two.physics.collision_radius
+
+    dx**2 + dy**2 < dr**2
+  end
+
+  def circle_intersects_rectangle(one, two)
+    # only working with axis-aligned rectangles currently
+    circ_dist_x = (one.x - two.x).abs
+    circ_dist_y = (one.y - two.y).abs
+
+    if circ_dist_x > (two.physics.collision_width/2 + one.physics.collision_radius)
+    	return false
+    end
+    if circ_dist_y > (two.physics.collision_height/2 + one.physics.collision_radius)
+    	return false
+    end
+
+    if circ_dist_x <= two.physics.collision_width/2
+    	return true
+    end
+    if circ_dist_y <= two.physics.collision_height/2
+    	return true
+    end
+
+    ((circ_dist_x - two.physics.collision_width/2)**2 +
+      (circ_dist_y - two.physics.collision_height/2)**2) <= one.physics.collision_radius**2
+  end
+
+  def rectangle_intersects_rectangle(one, two)
+    # only working with axis-aligned rectangles currently
+    not (two.x + two.physics.collision_width/2 < one.x or two.x > one.x + one.physics.collision_width/2 or 
+          two.y + two.physics.collision_height/2 < one.y or two.y > one.y + two.physics.collision_height/2)
+  end
+
 end

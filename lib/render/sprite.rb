@@ -3,7 +3,8 @@ module Render
   class Sprite
     attr_reader :state
 
-    def initialize(config)
+    def initialize(sprite)
+      config = $window.sprites[sprite]
       @name = config['sprite']
 
       @layers = { }
@@ -36,9 +37,15 @@ module Render
           elsif layer.has_key?("frames")
             frames = layer["frames"]
             @states[name][layer_name][:interval] = frames["interval"]
-            initial_frames = (frames["start"]   .. frames["finish"]).to_a
-            # is this || [] right?
-            restart_frames = (frames["restart"] .. frames["finish"]).to_a || []
+            if frames["start"] < frames["finish"]
+              initial_frames = (frames["start"]   .. frames["finish"]).to_a
+            else
+              initial_frames = (frames["finish"]   .. frames["start"]).to_a.reverse
+            end
+            restart_frames = []
+            if frames.has_key? "restart"
+            	restart_frames = (frames["restart"] .. frames["finish"]).to_a
+            end
             case frames["playback"]
             when "loop"
               @states[name][layer_name][:frames] = Enumerator.new do |y|
@@ -48,6 +55,8 @@ module Render
                 loop do
                   if i < initial.length
                     y << initial[i]
+                  elsif restart.length == 0
+                    y << initial[i%initial.length]
                   else
                     y << restart[(i-initial.length)%restart.length]
                   end
@@ -117,6 +126,13 @@ module Render
             end
           end
         end
+
+        frame_idx = transpired_ms / layer.fetch(:interval, 1)
+        if layer[:frames].kind_of?(Array)
+          if frame_idx <= layer[:frames].length-1
+          	return false
+          end
+        end
       end
       return true
     end
@@ -165,7 +181,6 @@ module Render
       end
 
 
-
       # now draw
       @layers.each do |name, layer|
         frame = $window.animations[layer['file']][layer[:frame]]
@@ -177,6 +192,20 @@ module Render
                          0.5, 0.5,
                          layer[:scale], layer[:scale])
         end
+      end
+    end
+
+    def max_width
+      @layers.max_by do |name, layer|
+        frame = $window.animations[layer['file']][layer[:frame]]
+        frame.width * layer[:scale]
+      end
+    end
+
+    def max_height
+      @layers.max_by do |name, layer|
+        frame = $window.animations[layer['file']][layer[:frame]]
+        frame.height * layer[:scale]
       end
     end
   end

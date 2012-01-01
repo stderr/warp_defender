@@ -1,8 +1,7 @@
 module Entities
 
   class Entity
-    attr_accessor :x, :y, :vel_x, :vel_y, :vel_angle, :angle, :width, :height,
-                  :z_order, :scale
+    attr_accessor :x, :y, :vel_x, :vel_y, :vel_angle, :angle, :z_order, :physics
 
     def initialize(params)
       @x         = params[:x] || 0.0
@@ -11,12 +10,24 @@ module Entities
       @vel_y     = params[:vel_y] || 0.0
       @vel_angle = params[:vel_angle] || 0.0
       @angle     = params[:angle] || 0.0
-      @width     = params[:width] || 0
-      @height    = params[:height] || 0
       @z_order   = params[:z_order] || 0
-      @scale     = params[:scale] || 1.0
+      @sprite    = params[:sprite]
+      physics    = params[:physics] || :static
+      friction   = params[:friction] || 0.03
+      afriction  = params[:angular_friction] || 0.1
 
       @behavior = Behaviors::Behavior.new(self)
+
+      @render = Render::Sprite.new(@sprite)
+
+      case physics
+      when :dynamic
+        @physics = Physics::Dynamic.new(:sprite => @sprite,
+                                        :friction => friction,
+                                        :angular_friction => afriction)
+      when :static
+        @physics = Physics::Static.new(:sprite => @sprite)
+      end
       
       @dead = false
       @warping = false
@@ -30,6 +41,13 @@ module Entities
     def enemy?; false; end
     def map_draw?; false; end
 
+    def width; @physics.width; end
+    def height; @physics.height; end
+
+    def draw(delta)
+      @render.draw(self, delta)
+    end
+
     def move_to(x, y)
       @x, @y = x, y
     end
@@ -38,13 +56,10 @@ module Entities
       @x > $window.native_width || @x < 0 || @y < 0 || @y > $window.native_height 
     end
 
-    # will end up in physics component at some point
     def collides_with?(other)
-      dx = other.x - @x
-      dy = other.y - @y
-      dr = other.width/2.0*other.scale + @width/2.0*@scale
-    
-      dx**2 + dy**2 < dr**2
+      if not @physics or not other.physics; return false; end
+
+      @physics.collides_with?(self, other)
     end
 
   end

@@ -1,6 +1,6 @@
 class Game < Gosu::Window
 
-  attr_accessor :fonts, :images, :animations, :sounds, :music, :sprite_definitions, :native_width, :native_height
+  attr_accessor :fonts, :images, :animations, :sounds, :music, :sprites, :native_width, :native_height
 
   def initialize
     #super(Gosu::screen_width, Gosu::screen_height, true)
@@ -16,7 +16,6 @@ class Game < Gosu::Window
     load_images
     load_fonts
     load_sounds
-    load_animations
     load_sprites
     load_music
 
@@ -84,34 +83,22 @@ class Game < Gosu::Window
     @music[:theme] = Gosu::Song.new(self, "media/theme.ogg")
   end
 
-  def load_animations
-    @animations[:debris] = Gosu::Image::load_tiles(self, "media/debris.png", 50, 40, false)
-    @animations[:warp_1] = Gosu::Image::load_tiles(self, "media/warp_L1.png", 340, 340, false)
-    @animations[:warp_2] = Gosu::Image::load_tiles(self, "media/warp_L2.png", 340, 340, false)
-    @animations[:warp_3] = Gosu::Image::load_tiles(self, "media/warp_L3.png", 340, 340, false)
-    @animations[:warp_4] = Gosu::Image::load_tiles(self, "media/warp_L4.png", 340, 340, false)
-    @animations[:warp_5] = Gosu::Image::load_tiles(self, "media/warp_L5.png", 340, 340, false)
-    @animations[:meteor] = Gosu::Image::load_tiles(self, "media/meteor.png", 72, 72, false)
-    @animations[:player] = Gosu::Image::load_tiles(self, "media/ship.png", 340, 340, false)
-    @animations[:grunt] = Gosu::Image::load_tiles(self, "media/grunt.png", 23, 28, false)
-    @animations[:bullet] = Gosu::Image::load_tiles(self, "media/bullet.png", 11, 13, false)
-    @animations[:explosion] = Gosu::Image::load_tiles(self, "media/explosion.png", 32, 32, false)
-
-
-    # temporary
-    @animations["ship.png"] = Gosu::Image::load_tiles(self, "media/ship.png", 340, 340, false)
-    @animations["warp_L1.png"] = Gosu::Image::load_tiles(self, "media/warp_L1.png", 340, 340, false)
-    @animations["warp_L2.png"] = Gosu::Image::load_tiles(self, "media/warp_L2.png", 340, 340, false)
-    @animations["warp_L3.png"] = Gosu::Image::load_tiles(self, "media/warp_L3.png", 340, 340, false)
-    @animations["warp_L4.png"] = Gosu::Image::load_tiles(self, "media/warp_L4.png", 340, 340, false)
-    @animations["warp_L5.png"] = Gosu::Image::load_tiles(self, "media/warp_L5.png", 340, 340, false)
-  end
-
   def load_sprites
-    @sprite_definitions = {}
+    @sprites = {}
+    @animations = {}
     Dir.glob('data/sprites/*.yaml').each do |f|
       y = YAML::load(File.open(f))
-      @sprite_definitions[y['sprite']] = y
+      @sprites[y['sprite']] = y
+
+      # load any referenced files
+      y['layers'].each do |layer|
+        @animations[layer['file']] = Gosu::Image::load_tiles(self,
+                                                         "media/#{layer['file']}",
+                                                         layer['width'],
+                                                         layer['height'],
+                                                         false)
+      end
     end
+
   end
 end

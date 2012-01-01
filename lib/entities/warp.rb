@@ -1,22 +1,17 @@
 module Entities
   class Warp < Entity
     attr_reader :current_defense, :max_defense
-    #include LegacySprite
     
     def initialize(x, y)
       super(:x => x, :y => y,
-            :width => 340 * 0.5,
-            :height => 340 * 0.5,
-            :z_order => Utils::ZOrder::Warps)
+            :z_order => Utils::ZOrder::Warps,
+            :sprite => "warp")
       
       @max_defense = @current_defense = 10
 
-      sprite_def = $window.sprite_definitions['warp']
-      @render = Render::Sprite.new(sprite_def)
       @render.state = "idle"
-      @physics = Physics::Static.new(:sprite => sprite_def)
 
-      @defense_bar = GUI::Bar.new(:width => @width/2,
+      @defense_bar = GUI::Bar.new(:width => width/2,
                                   :height => 5,
                                   :outer_color => Gosu::Color.rgba(0, 0, 0, 160),
                                   :left_color => Gosu::Color.rgba(65, 108, 112, 220),
@@ -33,9 +28,9 @@ module Entities
 
     def draw(delta)
       @render.draw(self, delta)
-      @defense_bar.draw(@x-@width*@scale/4,
-                        15 + @y + @height*@scale/2, 
-                        :width => @width*@scale/2,
+      @defense_bar.draw(@x-width/4,
+                        15 + @y + height/2, 
+                        :width => width/2,
                         :current => @current_defense,
                         :max => @max_defense,
                         :z_order => 1)

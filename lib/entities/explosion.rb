@@ -1,24 +1,29 @@
 module Entities
   class Explosion < Entity
-    include LegacySprite
     
     def initialize(x, y, vel_x=0.0, vel_y=0.0)
       super(:x => x, :y => y,
             :vel_x => vel_x, :vel_y => vel_y,
-            :width => frame_width(:explosion),
-            :height => frame_height(:explosion),
-            :z_order => Utils::ZOrder::Explosion)
+            :z_order => Utils::ZOrder::Explosion,
+            :sprite => "explosion",
+            :physics => :dynamic)
       
-      @physics = Physics::Dynamic.new(:friction => 0.01)
-
-      # play forward, then backward, then kill
-      animate(:explosion, :once, 20, @z_order, :default,
-              lambda { animate(:explosion, :once_reverse, 15, @z_order, :default,
-                              lambda { kill })})
+      #@physics = Physics::Dynamic.new(:friction => 0.01)
+      @render.state = "explode"
     end
 
     def update(delta)
       @physics.update(self, delta)
+    end
+
+    def draw(delta)
+      if @render.state == "explode" and @render.animations_finished?
+      	@render.state = "implode"
+      elsif @render.state == "implode" and @render.animations_finished?
+        kill
+        return
+      end
+      @render.draw(self, delta)
     end
 
   end

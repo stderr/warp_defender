@@ -1,21 +1,19 @@
 module Entities
 
   class Grunt < Entity
-    include LegacySprite
     attr_reader :velocity, :target
 
     def initialize(target)
-      super(:width => frame_width(:grunt),
-            :height => frame_height(:grunt),
-            :z_order => Utils::ZOrder::Player)
+      super(:z_order => Utils::ZOrder::Player,
+            :sprite => "grunt",
+            :physics => :dynamic)
 
       @behavior = Behaviors::Hunt.new(self)
       @target = target
 
-      @physics = Physics::Dynamic.new(:friction => 0, :angular_friction => 0)
-
-
-      animate(:grunt, :loop, 100, @z_order)
+      @render.state = "idle"
+      #@physics = Physics::Dynamic.new(:sprite => sprite_def,
+      #                                :friction => 0, :angular_friction => 0)
     end
 
     def velocity; @behavior.velocity; end
