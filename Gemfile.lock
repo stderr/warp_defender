@@ -2,10 +2,10 @@ GEM
   remote: http://rubygems.org/
   specs:
     archive-tar-minitar (0.5.2)
-    columnize (0.3.5)
+    columnize (0.3.6)
     configurability (1.0.8)
-    gosu (0.7.40)
-    gosu (0.7.40-x86-mingw32)
+    gosu (0.7.41)
+    gosu (0.7.41-x86-mingw32)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
     require_all (1.2.1)
