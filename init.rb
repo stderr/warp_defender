@@ -3,11 +3,9 @@ $:.unshift File.expand_path(File.dirname(__FILE__))
 require 'gosu'
 require 'configurability'
 require 'configurability/config'
+require 'require_all'
 
-# Load all files in lib/
-Dir[File.join(File.dirname(__FILE__), "lib") + "/*.rb"].each do |file|
-  require file
-end
+require_all File.join(File.dirname(__FILE__), "lib")
 
 game = Game.new
 game.show

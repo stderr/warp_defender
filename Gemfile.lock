@@ -8,6 +8,7 @@ GEM
     gosu (0.7.40-x86-mingw32)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
+    require_all (1.2.1)
     ruby-debug-base19 (0.11.25)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -26,4 +27,5 @@ PLATFORMS
 DEPENDENCIES
   configurability
   gosu (~> 0.7.40)
+  require_all
   ruby-debug19
