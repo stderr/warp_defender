@@ -32,7 +32,7 @@ class Game < Gosu::Window
 
     @game_engine = GameEngine.new
 
-    @game_engine.states.push(GameStates::MainMenu.new(@game_engine))
+    @game_engine.start!
   end
 
   def update
