@@ -15,13 +15,13 @@ module GameStates
     end
     
     def button_down(id)
+      @menu_items[@selected_item].input(id)
+
       case id
       when Gosu::KbDown, Gosu::GpDown
         @selected_item = [(@selected_item + 1), @menu_items.index(@menu_items.last)].min
       when Gosu::KbUp, Gosu::GpUp
         @selected_item = [(@selected_item - 1), 0].max
-      when Gosu::KbReturn, Gosu::GpButton2
-        @menu_items[@selected_item].activate
       end
     end
     

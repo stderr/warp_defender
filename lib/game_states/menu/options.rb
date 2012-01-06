@@ -6,19 +6,27 @@ module GameStates
 
       @menu_items = [
                      GUI::Text.new(:text => "Controls") do
-                       @game_engine.states.push(Controls.new(@game_engine))
+                       press_enter do
+                         game_engine.load_state! GameStates::Controls
+                       end
                      end,
                      
                      GUI::Text.new(:text => "Audio") do
-                       @game_engine.states.push(Audio.new(@game_engine))
+                       press_enter do
+                         game_engine.load_state! GameStates::Audio
+                       end
                      end,
                      
                      GUI::Text.new(:text => "Display") do
-                       @game_engine.states.push(Display.new(@game_engine))
+                       press_enter do
+                         game_engine.load_state! GameStates::Display
+                       end
                      end,
                      
                      GUI::Text.new(:text => "Back") do
-                       leave
+                       press_enter do
+                         game_engine.clear_state!(Options)
+                       end
                      end
                     ]
 

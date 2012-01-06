@@ -53,6 +53,11 @@ class GameEngine
     @state_manager.add(GameStates::Playing.new(self))
   end
   
+  # simplify eventually
+  def load_state!(state)
+    @state_manager.add(state.new(self))
+  end
+
   def button_down(id)
     current_state.button_down(id)
   end
