@@ -7,9 +7,9 @@ module GameStates
                      GUI::Checkbox.new(:text => "Music", :value => @game_engine.config.audio.music || false ) do
                        press_enter do
                          $window.sounds[:click].play
-                         element.checked = !element.checked
+                         base_object.checked = !base_object.checked
 
-                         game_engine.config.audio.music = element.checked
+                         game_engine.config.audio.music = base_object.checked
                          game_engine.config.write
                        end
                      end,
@@ -17,9 +17,9 @@ module GameStates
                      GUI::Checkbox.new(:text => "Sound", :value => @game_engine.config.audio.sound || false) do 
                        press_enter do
                          $window.sounds[:click].play
-                         element.checked = !element.checked
+                         base_object.checked = !base_object.checked
                          
-                         game_engine.config.audio.sound = element.checked
+                         game_engine.config.audio.sound = base_object.checked
                          game_engine.config.write
                        end
                      end,
