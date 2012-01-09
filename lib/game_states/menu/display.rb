@@ -8,9 +8,9 @@ module GameStates
                      GUI::Checkbox.new(:text => "Fullscreen", :value => @game_engine.config.video.fullscreen || false) do 
                        press_enter do
                          $window.sounds[:click].play
-                         base_object.checked = !base_object.checked
+                         sink.checked = !sink.checked
                          
-                         game_engine.config.video.fullscreen = base_object.checked
+                         game_engine.config.video.fullscreen = sink.checked
                          game_engine.config.write
                        end
                      end,

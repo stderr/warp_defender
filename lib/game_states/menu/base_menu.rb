@@ -1,7 +1,11 @@
 module GameStates
 
   class BaseMenu < GameState
-    
+    include Input::Handler
+
+    attr_accessor :selected_item
+    attr_reader :menu_items
+
     def initialize(game_engine)
       super(game_engine)
 
@@ -12,17 +16,23 @@ module GameStates
       
       @x = $window.native_width / 2
       @y = $window.native_height / 2
+
+      controls do
+        press_arrow(:down) do
+          sink.selected_item = [(sink.selected_item + 1), 
+                                sink.menu_items.index(sink.menu_items.last)].min
+        end
+
+        press_arrow(:up) do
+          sink.selected_item = [(sink.selected_item - 1), 0].max
+        end
+      end
+
     end
     
     def button_down(id)
-      @menu_items[@selected_item].input(id)
-
-      case id
-      when Gosu::KbDown, Gosu::GpDown
-        @selected_item = [(@selected_item + 1), @menu_items.index(@menu_items.last)].min
-      when Gosu::KbUp, Gosu::GpUp
-        @selected_item = [(@selected_item - 1), 0].max
-      end
+      dispatch_input(id)
+      @menu_items[@selected_item].dispatch_input(id)
     end
     
     def draw
@@ -37,7 +47,7 @@ module GameStates
           @menu_items[i].draw(@x, @y+i*@spacing, :color => color)
       end
     end
-  
+
   end
 
 end

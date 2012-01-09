@@ -29,7 +29,11 @@ module Input
       press(Gosu::KbReturn, &block)
     end
 
-    def base_object
+    def press_arrow(direction, &block)
+      press(Gosu.const_get("Kb#{direction.to_s.capitalize}"), &block)
+    end
+
+    def sink
       @base_object
     end
       

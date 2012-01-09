@@ -20,9 +20,6 @@ module GUI
 
     end
     
-    def input(id)
-      dispatch_input(id)
-    end
   end
 
 end
