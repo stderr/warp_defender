@@ -4,11 +4,10 @@ module GameStates
 
     def initialize(game_engine)
       super(game_engine)
-      @play_state = @game_engine.states.reverse.detect { |state| state.class == Playing }
     end
 
     def draw
-      @play_state.draw
+      @game_engine.play_state.draw
       color = Gosu::Color.from_ahsv(200, 0, 0, 0)
 
       overlay(color, "Paused")
@@ -18,7 +17,8 @@ module GameStates
       case id
       when Gosu::KbEscape, Gosu::GpButton9
         $window.music[:theme].play(true)
-        leave
+        @game_engine.unpause!
+
       when Gosu::KbQ
         # temporary until we have a menu in the pause screen
         Process.exit

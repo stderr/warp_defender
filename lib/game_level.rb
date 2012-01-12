@@ -61,16 +61,17 @@ class GameLevel
 
     @camera = Camera.new(warps[0], 3)
   end
-  
-  def current_wave; @waves[@current_wave]; end
+
   def completed?; @waves.last == current_wave && current_wave.completed?(@current_enemies); end
-  def to_next_wave?; current_wave.completed?(@current_enemies); end
-  def next_wave; @current_wave += 1; end
+  def current_defense; @warps.map(&:current_defense).inject(:+); end  
+  def current_wave; @waves[@current_wave]; end
   def interval; current_wave.interval.to_i end
-  def targets; @warps + [@player] end
-  def current_defense; @warps.map(&:current_defense).inject(:+); end
-  def max_defense; @warps.map(&:max_defense).inject(:+); end
   def intro_finished?(ms); ms > @intro_length; end
+  def max_defense; @warps.map(&:max_defense).inject(:+); end
+  def next_wave; @current_wave += 1; end
+  def targets; @warps + [@player] end
+  def to_next_wave?; current_wave.completed?(@current_enemies); end
+
   def draw(delta)
     # hack.  We need a starting() method or something
     if @camera.target != @player

@@ -8,10 +8,10 @@
 
 * cd to the repo directory
 
-### Now, at the command line, run the following commands:
+### Now, at the command line, run the rake setup task:
 
-     $ gem install bundler
+     $ rake setup
 
-     $ bundle install
+### To start the game, merely run the init.rb script:
 
      $ ruby init.rb

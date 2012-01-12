@@ -75,12 +75,11 @@ module GameStates
     end
 
     def button_down(id)
-       case id
-       
+       case id       
        when Gosu::KbEscape, Gosu::GpButton9
          $window.music[:theme].pause
-         @game_engine.states.push(GameStates::Paused.new(@game_engine))
-       
+         @game_engine.pause!
+
        when Gosu::KbSpace, Gosu::GpButton2 
          bullet = level.player.shoot
          level.bullets << bullet
