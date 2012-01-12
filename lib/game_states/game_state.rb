@@ -13,7 +13,7 @@ module GameStates
     end
 
     def leave
-      @game_engine.states.reject! { |state| state.class == self.class }
+      @game_engine.clear_state!(self.class)
     end
 
     def button_down(id)

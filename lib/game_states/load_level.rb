@@ -17,8 +17,7 @@ module GameStates
 
     def update
       if @level.intro_finished?(Gosu::milliseconds - @intro_start)
-        @game_engine.states.pop
-        @game_engine.states.push(GameStates::Playing.new(@game_engine))
+        @game_engine.start_playing!
       end
     end
 

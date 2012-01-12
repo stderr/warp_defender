@@ -31,7 +31,7 @@ class Game < Gosu::Window
 
     @game_engine = GameEngine.new
 
-    @game_engine.states.push(GameStates::MainMenu.new(@game_engine))
+    @game_engine.start!
   end
 
   def update
@@ -56,31 +56,31 @@ class Game < Gosu::Window
   end
 
   def load_images
-    @images[:background] = Gosu::Image.new(self, "media/space.jpg", true)
-    @images[:menu_background] = Gosu::Image.new(self, "media/space.jpg", true)
-    @images[:unchecked] = Gosu::Image.new(self, "media/unchecked.png", false)
-    @images[:checked] = Gosu::Image.new(self, "media/checked.png", false)
-    @images[:hud] = Gosu::Image.new(self, "media/hud_bottom_right.png", false)
+    @images[:background] = Gosu::Image.new(self, "media/images/space.jpg", true)
+    @images[:menu_background] = Gosu::Image.new(self, "media/images/space.jpg", true)
+    @images[:unchecked] = Gosu::Image.new(self, "media/images/unchecked.png", false)
+    @images[:checked] = Gosu::Image.new(self, "media/images/checked.png", false)
+    @images[:hud] = Gosu::Image.new(self, "media/images/hud_bottom_right.png", false)
   end
 
   def load_fonts
-    @fonts[:menu] = Gosu::Font.new(self, 'media/font.ttf', 60)
-    @fonts[:level_title] = Gosu::Font.new(self, 'media/font.ttf', 80)
+    @fonts[:menu] = Gosu::Font.new(self, 'media/fonts/font.ttf', 60)
+    @fonts[:level_title] = Gosu::Font.new(self, 'media/fonts/font.ttf', 80)
     @fonts[:level_description] = Gosu::Font.new(self, 'media/small_font.ttf', 36)
   end
 
   def load_sounds
-    @sounds[:beep] = Gosu::Sample.new(self, "media/beep.wav")
-    @sounds[:applause] = Gosu::Sample.new(self, "media/applause.wav")
-    @sounds[:warp] = Gosu::Sample.new(self, "media/warp.wav")
-    @sounds[:meteor] = Gosu::Sample.new(self, "media/meteor.wav")
-    @sounds[:laser] = Gosu::Sample.new(self, "media/laser_sound.wav")
-    @sounds[:explosion] = Gosu::Sample.new(self, "media/explosion.wav")
-    @sounds[:click] = Gosu::Sample.new(self, "media/click.wav")
+    @sounds[:beep] = Gosu::Sample.new(self, "media/sounds/beep.wav")
+    @sounds[:applause] = Gosu::Sample.new(self, "media/sounds/applause.wav")
+    @sounds[:warp] = Gosu::Sample.new(self, "media/sounds/warp.wav")
+    @sounds[:meteor] = Gosu::Sample.new(self, "media/sounds/meteor.wav")
+    @sounds[:laser] = Gosu::Sample.new(self, "media/sounds/laser_sound.wav")
+    @sounds[:explosion] = Gosu::Sample.new(self, "media/sounds/explosion.wav")
+    @sounds[:click] = Gosu::Sample.new(self, "media/sounds/click.wav")
   end
 
   def load_music
-    @music[:theme] = Gosu::Song.new(self, "media/theme.ogg")
+    @music[:theme] = Gosu::Song.new(self, "media/music/theme.ogg")
   end
 
   def load_sprites

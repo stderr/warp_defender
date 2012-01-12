@@ -7,15 +7,21 @@ module GameStates
 
       @menu_items = [
                      GUI::Text.new(:text => "New") do
-                       @game_engine.states.push(LoadLevel.new(@game_engine))
+                       press_enter do
+                         game_engine.load_level!
+                       end
                      end,
 
                      GUI::Text.new(:text => "Options") do
-                       @game_engine.states.push(Options.new(@game_engine))
+                       press_enter do 
+                         game_engine.load_state! GameStates::Options
+                       end
                      end,
 
                      GUI::Text.new(:text => "Quit") do
-                       Process.exit
+                       press_enter do
+                         Process.exit
+                       end
                      end
                     ] 
 
