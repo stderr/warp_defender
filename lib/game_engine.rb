@@ -6,6 +6,9 @@ class GameEngine
     @state_manager = GameStates::StateManager.new
 
     @level = GameLevel.new("level_one.yml")
+    @frame_counter = 0
+    @frame_block_start = Gosu::milliseconds
+    @fps = nil
   end
 
   def current_state
@@ -68,9 +71,21 @@ class GameEngine
   
   def draw
     current_state.draw
+
+    if @fps
+      $window.fonts[:level_description].draw("fps: %d" % @fps, 5, 5, 0, 1, 1, Gosu::Color.rgb(255, 255, 255))
+    end
   end
 
   def update
+    @frame_counter += 1
+    # average fps over a 1 second period
+    if Gosu::milliseconds - @frame_block_start > 1000
+    	@fps = @frame_counter.to_f / ((Gosu::milliseconds - @frame_block_start) / 1000.0)
+    	@frame_counter = 0
+    	@frame_block_start = Gosu::milliseconds
+    end
+
     if @level.current_defense <= 0
       @state_manager.add(GameStates::GameOver.new(self))
     end
