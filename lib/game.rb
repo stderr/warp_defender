@@ -93,7 +93,7 @@ class Game < Gosu::Window
       # load any referenced files
       y['layers'].each do |layer|
         @animations[layer['file']] = Gosu::Image::load_tiles(self,
-                                                         "media/#{layer['file']}",
+                                                         "media/images/#{layer['file']}",
                                                          layer['width'],
                                                          layer['height'],
                                                          false)
