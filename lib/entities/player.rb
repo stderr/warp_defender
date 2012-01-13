@@ -1,5 +1,7 @@
 module Entities
   class Player < Entity
+    include Input::Handler
+
     attr_reader :score, :dead_x, :dead_y, :deaths
     attr_accessor :dead, :respawn_time
 
@@ -14,6 +16,25 @@ module Entities
 
       @render.state = "idle"
       @score = 0
+
+      controls do
+        hold_left do
+          sink.turn_left
+        end
+
+        hold_right do
+          sink.turn_right
+        end
+
+        hold_up do
+          sink.engines_on
+        end
+        
+        default(:hold) do
+          sink.idle
+        end
+      end
+
     end
 
     def turn_left; @physics.angular_accel = -1800; end
@@ -28,20 +49,12 @@ module Entities
       end
     end
 
+    def idle
+      @render.state = "idle"
+    end
+
     def update(delta)
-      if $window.button_down?(Gosu::KbLeft) || $window.button_down?(Gosu::GpLeft)
-        turn_left
-      end
-
-      if $window.button_down?(Gosu::KbRight) || $window.button_down?(Gosu::GpRight)
-        turn_right
-      end
-
-      if $window.button_down?(Gosu::KbUp) || $window.button_down?(Gosu::GpUp)
-        engines_on
-      else
-        @render.state = "idle"
-      end
+      dispatch_constant_input
 
       @physics.update(self, delta)
       @x = [[0, @x].max, $window.native_width].min

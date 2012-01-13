@@ -1,12 +1,17 @@
 module GameStates
 
   class GameState
- 
+    include Input::Handler
+
     def initialize(game_engine)
       @game_engine = game_engine
+    
+      controls do 
+      end
     end
 
     def update
+ 
     end
     
     def draw
@@ -17,9 +22,11 @@ module GameStates
     end
 
     def button_down(id)
+      dispatch_input(id)
     end
 
     def button_up(id)
+      dispatch_input(id, :release)
     end
 
     private

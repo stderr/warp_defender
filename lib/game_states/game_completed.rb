@@ -4,6 +4,13 @@ module GameStates
 
     def initialize(game_engine)
       super(game_engine)
+      
+      controls do 
+        press(Gosu::KbQ) do
+          Process.exit
+        end
+      end
+
     end
 
     def draw
@@ -14,10 +21,7 @@ module GameStates
     end
 
     def button_down(id)
-      case id
-      when Gosu::KbQ
-        Process.exit
-      end
+      super(id)
     end
   end
 

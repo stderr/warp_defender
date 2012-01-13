@@ -4,6 +4,17 @@ module GameStates
 
     def initialize(game_engine)
       super(game_engine)
+
+      controls do
+        press(Gosu::KbEscape) do
+          $window.music[:theme].play(true)
+          game_engine.unpause!
+        end
+
+        press(Gosu::KbQ) do
+          Process.exit
+        end
+      end
     end
 
     def draw
@@ -14,15 +25,7 @@ module GameStates
     end
 
     def button_down(id)
-      case id
-      when Gosu::KbEscape, Gosu::GpButton9
-        $window.music[:theme].play(true)
-        @game_engine.unpause!
-
-      when Gosu::KbQ
-        # temporary until we have a menu in the pause screen
-        Process.exit
-      end
+      super(id)
     end
   end
 

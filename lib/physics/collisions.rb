@@ -5,8 +5,8 @@ module Collision
   def create_bounds(sprite)
     config = $window.sprites[sprite]
     if not config or not config['bounds']
-    	@collision_shape = nil
-    	return
+      @collision_shape = nil
+      return
     end
 
     config['bounds'][0].each do |k,v|
@@ -20,7 +20,7 @@ module Collision
   def width
     case @collision_shape
     when "circle"
-    	return @collision_radius*2
+      return @collision_radius*2
     when "rectangle"
       return @collision_width
     end
@@ -31,7 +31,7 @@ module Collision
   def height
     case @collision_shape
     when "circle"
-    	return @collision_radius*2
+      return @collision_radius*2
     when "rectangle"
       return @collision_height
     end
@@ -41,14 +41,14 @@ module Collision
 
   def collides_with?(entity, other)
     if not @collision_shape or not other.physics.collision_shape
-    	return false
+      return false
     end
 
     # ugly but we don't have complicated enough shapes to justify running a
     # visitor pattern
     shapes = [@collision_shape, other.physics.collision_shape]
     if shapes == ["circle", "circle"]
-    	return circle_intersects_circle(entity, other)
+      return circle_intersects_circle(entity, other)
     elsif shapes == ["rectangle", "rectangle"]
       return rectangle_intersects_rectangle(entity, other)
     elsif shapes == ["circle", "rectangle"]
@@ -74,27 +74,27 @@ module Collision
     circ_dist_y = (one.y - two.y).abs
 
     if circ_dist_x > (two.physics.collision_width/2 + one.physics.collision_radius)
-    	return false
+      return false
     end
     if circ_dist_y > (two.physics.collision_height/2 + one.physics.collision_radius)
-    	return false
+      return false
     end
 
     if circ_dist_x <= two.physics.collision_width/2
-    	return true
+      return true
     end
     if circ_dist_y <= two.physics.collision_height/2
-    	return true
+      return true
     end
 
     ((circ_dist_x - two.physics.collision_width/2)**2 +
-      (circ_dist_y - two.physics.collision_height/2)**2) <= one.physics.collision_radius**2
+     (circ_dist_y - two.physics.collision_height/2)**2) <= one.physics.collision_radius**2
   end
 
   def rectangle_intersects_rectangle(one, two)
     # only working with axis-aligned rectangles currently
-    not (two.x + two.physics.collision_width/2 < one.x or two.x > one.x + one.physics.collision_width/2 or 
-          two.y + two.physics.collision_height/2 < one.y or two.y > one.y + two.physics.collision_height/2)
+    not (two.x + two.physics.collision_width/2 < one.x or two.x > one.x + one.physics.collision_width/2 or
+         two.y + two.physics.collision_height/2 < one.y or two.y > one.y + two.physics.collision_height/2)
   end
 
 end
