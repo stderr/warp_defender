@@ -6,6 +6,18 @@ module GameStates
       super(game_engine)
       
       $window.music[:theme].stop
+
+      controls do 
+        press_quit do
+          Process.exit
+        end
+        
+        default(:press) do
+          game_engine.menu!
+        end
+
+      end
+
     end
 
     def draw
@@ -16,14 +28,7 @@ module GameStates
     end
 
     def button_down(id)
-      case id 
-      when Gosu::KbQ
-        Process.exit
-      else
-        @game_engine.menu!
-        @game_engine.clear_playing!
-      end
-
+      super(id)
     end
 
   end

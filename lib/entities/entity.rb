@@ -1,6 +1,8 @@
 module Entities
 
   class Entity
+    include Input::Handler
+
     attr_accessor :x, :y, :vel_x, :vel_y, :vel_angle, :angle, :z_order, :physics
 
     def initialize(params)
@@ -31,6 +33,8 @@ module Entities
       
       @dead = false
       @warping = false
+
+      controls
     end
 
     def spawn(width, height); @behavior.spawn(width, height); end

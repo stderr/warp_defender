@@ -1,7 +1,5 @@
 module Entities
   class Player < Entity
-    include Input::Handler
-
     attr_reader :score, :dead_x, :dead_y, :deaths
     attr_accessor :dead, :respawn_time
 
