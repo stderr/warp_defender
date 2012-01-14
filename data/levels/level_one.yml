@@ -11,14 +11,14 @@ warps:
 waves:
   - interval: 2000
     enemies:
-      grunt: 50
-    max_spawn: 10
-    min_spawn: 5
+      grunt: 15
+    max_spawn: 3
+    min_spawn: 1
 
   - interval: 1500
     enemies:
-      grunt: 100
-    max_spawn: 20
-    min_spawn: 25
+      grunt: 24
+    max_spawn: 4
+    min_spawn: 2
 
 next_level: level_two.yml

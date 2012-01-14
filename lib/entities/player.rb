@@ -18,6 +18,7 @@ module Entities
       @weapons = []
       @weapons << Weapons::RocketLauncher.new(self)
       @weapons << Weapons::Blaster.new(self)
+      @weapons << Weapons::MineLayer.new(self)
 
       @current_weapon = 0
 
