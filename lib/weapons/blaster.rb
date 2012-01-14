@@ -10,7 +10,7 @@ module Weapons
     end
 
     def fire_rate
-      500
+      200
     end
 
     def velocity_x
