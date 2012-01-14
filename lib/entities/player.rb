@@ -1,6 +1,6 @@
 module Entities
   class Player < Entity
-    attr_reader :score, :dead_x, :dead_y, :deaths
+    attr_reader :score, :dead_x, :dead_y, :deaths, :weapon
     attr_accessor :dead, :respawn_time
 
     def initialize
@@ -14,6 +14,8 @@ module Entities
 
       @render.state = "idle"
       @score = 0
+
+      @weapon = Weapons::Blaster.new(self)
 
       controls do
         hold_left do
@@ -65,8 +67,9 @@ module Entities
     end
 
     def shoot
-      $window.sounds[:laser].play
-      Entities::Bullet.new(@angle, @x, @y, @vel_x, @vel_y)
+      @weapon.shoot
+      # $window.sounds[:laser].play
+      # Entities::Bullet.new(@angle, @x, @y, @vel_x, @vel_y)
     end
 
   end
