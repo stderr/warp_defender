@@ -1,6 +1,6 @@
 module Entities
   class Player < Entity
-    attr_reader :score, :dead_x, :dead_y, :deaths, :weapon
+    attr_reader :score, :dead_x, :dead_y, :deaths, :weapons
     attr_accessor :dead, :respawn_time
 
     def initialize

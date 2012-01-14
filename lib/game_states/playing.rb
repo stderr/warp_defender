@@ -18,6 +18,9 @@ module GameStates
                                   :left_color => Gosu::Color.rgba(65, 108, 112, 220),
                                   :right_color => Gosu::Color.rgba(65, 108, 112, 220))
 
+      @weapon_display = GUI::WeaponDisplay.new(:width => 300,
+                                               :height => 100,
+                                               :weapons => level.player.weapons)
       @timer = Utils::Timer.new
 
       @last_update_ms = Gosu::milliseconds
@@ -81,6 +84,8 @@ module GameStates
                         :max => level.max_defense)
 
       @mini_map.draw($window.native_width-98, $window.native_height-53, :entities => level.entities)
+
+      @weapon_display.draw(50, $window.native_height-50, :active => level.player.weapon.class)
     end
 
     def level

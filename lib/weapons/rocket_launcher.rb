@@ -21,5 +21,12 @@ module Weapons
       Gosu::offset_y(@owner.angle, 300.00)
     end
 
+    class << self
+
+      def icon
+        @icon ||= Gosu::Image.new($window, "media/icons/rocket_icon.png", false)
+      end
+
+    end
   end
 end
