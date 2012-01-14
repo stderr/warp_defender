@@ -89,6 +89,7 @@ module GameStates
 
     def button_down(id)
       super(id)
+      level.player.dispatch_input(id)
     end
 
   end
