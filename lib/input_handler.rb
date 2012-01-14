@@ -12,7 +12,7 @@ module Input
     end
 
     def dispatch_constant_input
-      @context.dispatch_hold
+      @context.hold_dispatch
     end
 
     def dispatch_input(key_id, context = :press)
@@ -37,19 +37,27 @@ module Input
     end
 
     def press(key_id, context = :press, &block)
-      @inputs[context][key_id] = block
+      add_input(key_id, :press, &block)
+    end
+
+    def hold(key_id, &block)
+      add_input(key_id, :hold, &block)
+    end
+
+    def release(key_id, &block)
+      add_input(key_id, :release, &block)
     end
 
     def hold_left(&block)
-      press(Gosu::KbLeft, :hold, &block)
+      hold(Gosu::KbLeft,  &block)
     end
 
     def hold_right(&block)
-      press(Gosu::KbRight, :hold, &block)
+      hold(Gosu::KbRight, &block)
     end
 
     def hold_up(&block)
-      press(Gosu::KbUp, :hold, &block)
+      hold(Gosu::KbUp, &block)
     end
 
     def press_enter(&block)
@@ -68,15 +76,11 @@ module Input
       @inputs[context][DEFAULT] = block
     end
 
-    def default?(context)
-      @inputs[context].key?(DEFAULT)
-    end
-
     def sink
       @base_object
     end
       
-    def dispatch_hold
+    def hold_dispatch
       return @inputs[:hold][DEFAULT].call unless !default?(:hold) || @inputs[:hold].any? { |k,v| $window.button_down?(k) } 
 
       @inputs[:hold].each do |key, callback|
@@ -90,7 +94,17 @@ module Input
 
       @inputs[context][key_id].call
     end
-    
+
+    private
+
+    def default?(context)
+      @inputs[context].key?(DEFAULT)
+    end
+
+    def add_input(key_id, context, &block)
+      @inputs[context][key_id] = block
+    end
+
   end
 
 end
