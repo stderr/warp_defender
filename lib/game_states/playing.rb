@@ -30,11 +30,6 @@ module GameStates
           $window.music[:theme].pause
           game_engine.pause!
         end
-
-        hold(Gosu::KbSpace) do
-          bullet = sink.level.player.shoot
-          sink.level.bullets << bullet
-        end
       end
     end
 

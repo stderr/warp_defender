@@ -27,6 +27,11 @@ module Entities
         hold_up do
           sink.engines_on
         end
+
+        hold(Gosu::KbSpace) do
+          bullet = sink.shoot
+          $window.game_engine.level.bullets << bullet
+        end
         
         default(:hold) do
           sink.idle

@@ -22,7 +22,7 @@ module Entities
 
       # die after 2 seconds
       if Gosu::milliseconds - @creation_time > 2000
-      	kill
+        kill
       end
     end
 

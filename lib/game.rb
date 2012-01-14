@@ -1,6 +1,6 @@
 class Game < Gosu::Window
 
-  attr_accessor :fonts, :images, :animations, :sounds, :music, :sprites, :native_width, :native_height
+  attr_accessor :fonts, :images, :animations, :sounds, :music, :sprites, :native_width, :native_height, :game_engine
 
   def initialize
     #super(Gosu::screen_width, Gosu::screen_height, true)
