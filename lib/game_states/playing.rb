@@ -31,7 +31,7 @@ module GameStates
           game_engine.pause!
         end
 
-        press(Gosu::KbSpace) do
+        hold(Gosu::KbSpace) do
           bullet = sink.level.player.shoot
           sink.level.bullets << bullet
         end
@@ -39,6 +39,8 @@ module GameStates
     end
 
     def update
+      super
+
       # frame timescaling
       frame_ms = Gosu::milliseconds
       delta = (frame_ms - @last_update_ms) / 1000.0

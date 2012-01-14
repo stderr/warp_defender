@@ -11,7 +11,7 @@ module GameStates
     end
 
     def update
- 
+      dispatch_constant_input
     end
     
     def draw
