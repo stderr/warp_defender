@@ -31,8 +31,10 @@ module Entities
         end
 
         hold(Gosu::KbSpace) do
-          bullet = sink.shoot
-          $window.game_engine.level.bullets << bullet
+          if sink.weapon.can_fire?
+            bullet = sink.shoot
+            $window.game_engine.level.bullets << bullet
+          end
         end
         
         default(:hold) do
