@@ -15,7 +15,7 @@ module Entities
       @render.state = "idle"
       @score = 0
 
-      @weapon = Weapons::Blaster.new(self)
+      @weapon = Weapons::RocketLauncher.new(self)
 
       controls do
         hold_left do

@@ -75,6 +75,7 @@ class Game < Gosu::Window
     @sounds[:warp] = Gosu::Sample.new(self, "media/sounds/warp.wav")
     @sounds[:meteor] = Gosu::Sample.new(self, "media/sounds/meteor.wav")
     @sounds[:laser] = Gosu::Sample.new(self, "media/sounds/laser_sound.wav")
+    @sounds[:rlaunch] = Gosu::Sample.new(self, "media/sounds/rlaunch.wav")
     @sounds[:explosion] = Gosu::Sample.new(self, "media/sounds/explosion.wav")
     @sounds[:click] = Gosu::Sample.new(self, "media/sounds/click.wav")
   end

@@ -1,0 +1,21 @@
+--- 
+sprite: rocket
+bounds:
+- shape: circle
+  radius: 25
+layers: 
+- layer: rocket
+  file: rocket.png
+  width: 23
+  height: 97
+  scale: 1
+states: 
+- state: idle
+  layers: 
+  - layer: rocket
+    frames: 
+      playback: loop
+      interval: 100
+      start: 0
+      finish: 11
+      restart: 6
