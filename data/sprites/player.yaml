@@ -5,8 +5,6 @@ layers:
   file: ship.png
   width: 340
   height: 340
-  center_x: 170
-  center_y: 170
   scale: 0.1875
 bounds:
 - shape: circle

@@ -8,6 +8,7 @@ layers:
   file: rocket.png
   width: 23
   height: 97
+  offset_y: -28
   scale: 1
 states: 
 - state: idle

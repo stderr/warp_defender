@@ -24,6 +24,10 @@ module Entities
       def update(delta)
         super(delta)
 
+        if @target and @target.dead?
+          @target = nil
+        end
+
         # look for a target in range
         if not @target
           closest = nil
@@ -41,21 +45,6 @@ module Entities
           end
         elsif
           @angle = @behavior.angle
-          # new_angle = @behavior.angle
-          # if new_angle < 0
-          #   new_angle = 360 - new_angle.abs
-          # end
-
-          # # not time scaled but this is temporary code
-          # if @angle > new_angle
-          #   @angle -= 240 * ((340 - 300) / 240) * delta
-          # elsif @angle < new_angle
-          #   @angle += 240 * ((340 - 300) / 240) * delta
-          # end
-
-          # if @angle < 0
-          #   @angle = 360 - @angle.abs
-          # end
 
           @vel_x = Gosu::offset_x(@angle, 300)
           @vel_y = Gosu::offset_y(@angle, 300)
