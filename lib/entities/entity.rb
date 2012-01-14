@@ -35,6 +35,8 @@ module Entities
       @warping = false
 
       controls
+
+      @creation_time = Gosu::milliseconds
     end
 
     def spawn(width, height); @behavior.spawn(width, height); end

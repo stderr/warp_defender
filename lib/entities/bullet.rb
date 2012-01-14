@@ -19,6 +19,11 @@ module Entities
 
     def update(delta)
       @physics.update(self, delta)
+
+      # die after 2 seconds
+      if Gosu::milliseconds - @creation_time > 2000
+      	kill
+      end
     end
 
   end
