@@ -4,12 +4,9 @@ module Entities
     class Mine < Projectile
       def initialize(angle, x, y, vel_x, vel_y)
         super(:x => x, :y => y, :angle => angle,
-              :vel_x => 0,
-              :vel_y => 0,
               :z_order => Utils::ZOrder::Player,
               :sprite => "mine",
-              :physics => :static,
-              :friction => 0)
+              :physics => :static)
         @render.state = "idle"
       end
 
