@@ -25,3 +25,7 @@ states:
       start: 0
       finish: 18
       restart: 11
+hotspots:
+- hotspot: Blaster
+  x: 170
+  y: 170
