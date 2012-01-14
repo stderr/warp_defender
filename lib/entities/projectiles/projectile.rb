@@ -6,6 +6,7 @@ module Entities
       def initialize(options)
         super(options)
 
+        @behavior = Behaviors::Hunt.new(self)
         @render.state = "idle"
       end
 

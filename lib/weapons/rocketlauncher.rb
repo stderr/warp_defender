@@ -14,11 +14,11 @@ module Weapons
     end
 
     def velocity_x
-      Gosu::offset_x(@owner.angle, 200.00)
+      Gosu::offset_x(@owner.angle, 300.00)
     end
 
     def velocity_y
-      Gosu::offset_y(@owner.angle, 200.00)
+      Gosu::offset_y(@owner.angle, 300.00)
     end
 
   end

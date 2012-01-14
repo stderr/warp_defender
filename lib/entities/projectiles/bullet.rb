@@ -10,6 +10,7 @@ module Entities
               :sprite => "bullet",
               :physics => :dynamic,
               :friction => 0)
+        @render.state = "idle"
       end
 
       def lifetime
