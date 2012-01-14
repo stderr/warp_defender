@@ -15,7 +15,11 @@ module Entities
       @render.state = "idle"
       @score = 0
 
-      @weapon = Weapons::RocketLauncher.new(self)
+      @weapons = []
+      @weapons << Weapons::RocketLauncher.new(self)
+      @weapons << Weapons::Blaster.new(self)
+
+      @current_weapon = 0
 
       controls do
         hold_left do
@@ -37,6 +41,10 @@ module Entities
           end
         end
         
+        press(Gosu::KbC) do
+          sink.cycle_weapon
+        end
+
         default(:hold) do
           sink.idle
         end
@@ -48,6 +56,15 @@ module Entities
     def turn_right; @physics.angular_accel = 1800; end
     def map_color; Gosu::Color::GREEN; end
     def map_draw?; true; end
+
+    def weapon
+      @weapons[@current_weapon]
+    end
+
+    def cycle_weapon
+      @current_weapon += 1
+      @current_weapon = 0 if @current_weapon > (@weapons.size - 1)
+    end
 
     def engines_on
       @physics.accel = 1300
@@ -69,7 +86,7 @@ module Entities
     end
 
     def shoot
-      @weapon.shoot
+      weapon.shoot
       # $window.sounds[:laser].play
       # Entities::Bullet.new(@angle, @x, @y, @vel_x, @vel_y)
     end
