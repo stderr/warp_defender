@@ -1,0 +1,20 @@
+---
+sprite: mine
+bounds:
+- shape: circle
+  radius: 16
+layers:
+- layer: mine
+  file: mine.png
+  width: 16
+  height: 20
+  scale: 1
+states:
+- state: idle
+  layers:
+  - layer: mine
+    frames:
+      playback: loop
+      interval: 200
+      start: 0
+      finish: 2

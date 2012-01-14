@@ -1,8 +1,8 @@
 module Weapons
-  class Blaster < Weapon
 
+  class MineLayer < Weapon
     def projectile
-      Entities::Projectiles::Bullet
+      Entities::Projectiles::Mine
     end
 
     def sound
@@ -10,23 +10,25 @@ module Weapons
     end
 
     def fire_rate
-      500
+      4000
     end
-
+    
     def velocity_x
-      Gosu::offset_x(@owner.angle, 800.00)
+      0
     end
 
     def velocity_y
-      Gosu::offset_y(@owner.angle, 800.00)
+      0
     end
 
     class << self
 
       def icon
-        @icon ||= Gosu::Image.new($window, "media/icons/blaster_icon.png", false)
+        @icon ||= Gosu::Image.new($window, "media/icons/mine_icon.png", false)
       end
 
     end
+
   end
+
 end
