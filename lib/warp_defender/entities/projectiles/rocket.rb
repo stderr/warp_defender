@@ -12,7 +12,7 @@ module Entities
               :physics => :dynamic,
               :friction => 0)
         @render.state = "idle"
-        @behavior = Behaviors::Hunt.new(self)
+        @behavior = Behaviors::Homing.new(self)
         @target = nil
         @detection_range = 500
       end
@@ -43,7 +43,7 @@ module Entities
               @target = closest
             end
           end
-        elsif
+        else
           @angle = @behavior.angle
 
           @vel_x = Gosu::offset_x(@angle, 300)
