@@ -2,7 +2,7 @@ class GameEngine
   attr_accessor :config, :level
 
   def initialize
-    @config = Configurability::Config.load(File.expand_path(File.dirname(__FILE__) +"/../config/game_data.yml"))
+    @config = Configurability::Config.load(File.expand_path(File.dirname(__FILE__) +"/../../config/game_data.yml"))
     @state_manager = GameStates::StateManager.new
 
     @level = GameLevel.new("level_one.yml")

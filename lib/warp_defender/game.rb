@@ -1,3 +1,12 @@
+$:.unshift File.expand_path(File.dirname(__FILE__))
+# Global gems
+require 'gosu'
+require 'configurability'
+require 'configurability/config'
+require 'require_all'
+
+require_all File.join(File.dirname(__FILE__))
+
 class Game < Gosu::Window
 
   attr_accessor :fonts, :images, :animations, :sounds, :music, :sprites, :native_width, :native_height, :game_engine
@@ -34,6 +43,14 @@ class Game < Gosu::Window
     @game_engine.start!
   end
 
+  def self.run
+    new.show
+  end
+
+  def media_path(path)
+    File.join("media/", path)
+  end
+
   def update
     @game_engine.update
   end
@@ -56,32 +73,32 @@ class Game < Gosu::Window
   end
 
   def load_images
-    @images[:background] = Gosu::Image.new(self, "media/images/space.jpg", true)
-    @images[:menu_background] = Gosu::Image.new(self, "media/images/space.jpg", true)
-    @images[:unchecked] = Gosu::Image.new(self, "media/images/unchecked.png", false)
-    @images[:checked] = Gosu::Image.new(self, "media/images/checked.png", false)
-    @images[:hud] = Gosu::Image.new(self, "media/images/hud_bottom_right.png", false)
+    @images[:background] = Gosu::Image.new(self, media_path("images/space.jpg"), true)
+    @images[:menu_background] = Gosu::Image.new(self, media_path("images/space.jpg"), true)
+    @images[:unchecked] = Gosu::Image.new(self, media_path("images/unchecked.png"), false)
+    @images[:checked] = Gosu::Image.new(self, media_path("images/checked.png"), false)
+    @images[:hud] = Gosu::Image.new(self, media_path("images/hud_bottom_right.png"), false)
   end
 
   def load_fonts
-    @fonts[:menu] = Gosu::Font.new(self, 'media/fonts/space.ttf', 60)
-    @fonts[:level_title] = Gosu::Font.new(self, 'media/fonts/space.ttf', 80)
-    @fonts[:level_description] = Gosu::Font.new(self, 'droid_sans_mono.ttf', 24)
+    @fonts[:menu] = Gosu::Font.new(self, media_path("fonts/space.ttf"), 60)
+    @fonts[:level_title] = Gosu::Font.new(self, media_path("fonts/space.ttf"), 80)
+    @fonts[:level_description] = Gosu::Font.new(self, media_path("fonts/droid_sans_mono.ttf"), 24)
   end
 
   def load_sounds
-    @sounds[:beep] = Gosu::Sample.new(self, "media/sounds/beep.wav")
-    @sounds[:applause] = Gosu::Sample.new(self, "media/sounds/applause.wav")
-    @sounds[:warp] = Gosu::Sample.new(self, "media/sounds/warp.wav")
-    @sounds[:meteor] = Gosu::Sample.new(self, "media/sounds/meteor.wav")
-    @sounds[:laser] = Gosu::Sample.new(self, "media/sounds/laser_sound.wav")
-    @sounds[:rlaunch] = Gosu::Sample.new(self, "media/sounds/rlaunch.wav")
-    @sounds[:explosion] = Gosu::Sample.new(self, "media/sounds/explosion.wav")
-    @sounds[:click] = Gosu::Sample.new(self, "media/sounds/click.wav")
+    @sounds[:beep] = Gosu::Sample.new(self, media_path("sounds/beep.wav"))
+    @sounds[:applause] = Gosu::Sample.new(self, media_path("sounds/applause.wav"))
+    @sounds[:warp] = Gosu::Sample.new(self, media_path("sounds/warp.wav"))
+    @sounds[:meteor] = Gosu::Sample.new(self, media_path("sounds/meteor.wav"))
+    @sounds[:laser] = Gosu::Sample.new(self, media_path("sounds/laser_sound.wav"))
+    @sounds[:rlaunch] = Gosu::Sample.new(self, media_path("sounds/rlaunch.wav"))
+    @sounds[:explosion] = Gosu::Sample.new(self, media_path("sounds/explosion.wav"))
+    @sounds[:click] = Gosu::Sample.new(self, media_path("sounds/click.wav"))
   end
 
   def load_music
-    @music[:theme] = Gosu::Song.new(self, "media/music/theme.ogg")
+    @music[:theme] = Gosu::Song.new(self, media_path("music/theme.ogg"))
   end
 
   def load_sprites
@@ -94,7 +111,7 @@ class Game < Gosu::Window
       # load any referenced files
       y['layers'].each do |layer|
         @animations[layer['file']] = Gosu::Image::load_tiles(self,
-                                                         "media/images/#{layer['file']}",
+                                                         media_path("images/#{layer['file']}"),
                                                          layer['width'],
                                                          layer['height'],
                                                          false)

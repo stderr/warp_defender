@@ -12,6 +12,6 @@
 
      $ rake setup
 
-### To start the game, merely run the init.rb script:
+### To start the game, merely run the executable script:
 
-     $ ruby init.rb
+     $ ruby bin/warp_defender.rbw
