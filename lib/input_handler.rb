@@ -1,7 +1,7 @@
 module Input
 
   # The Handler is included in the object you want to have input handling context
-  # dispatch_context_input is for #update loops, whereas dispatch_input is for the button_down / button_up callbacks
+  # dispatch_constantt_input is for #update loops, whereas dispatch_input is for the button_down / button_up callbacks
 
   module Handler
 
