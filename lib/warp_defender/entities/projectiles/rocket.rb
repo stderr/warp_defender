@@ -12,7 +12,7 @@ module Entities
               :physics => :dynamic,
               :friction => 0)
         @render.state = "idle"
-        @behavior = Behaviors::Homing.new(self)
+        @behavior = Behaviors::Hunt.new(self, :turn_radius => 3.0)
         @target = nil
         @detection_range = 500
       end

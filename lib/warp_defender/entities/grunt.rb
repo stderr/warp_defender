@@ -8,7 +8,7 @@ module Entities
             :sprite => "grunt",
             :physics => :dynamic)
 
-      @behavior = Behaviors::Hunt.new(self)
+      @behavior = Behaviors::Hunt.new(self, :turn_radius => 10.0)
       @target = target
 
       @render.state = "idle"
