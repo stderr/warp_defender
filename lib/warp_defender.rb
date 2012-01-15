@@ -4,6 +4,4 @@ module WarpDefender
   VERSION = "0.5.0"
 end
 
-game = Game.new
-game.show
 
