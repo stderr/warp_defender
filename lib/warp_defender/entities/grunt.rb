@@ -8,7 +8,7 @@ module Entities
             :sprite => "grunt",
             :physics => :dynamic)
 
-      @behavior = Behaviors::Hunt.new(self, :turn_radius => 10.0)
+      @behavior = Behaviors::Hunt.new(self, :turn_radius => 5.0)
       @target = target
 
       @render.state = "idle"
@@ -28,22 +28,7 @@ module Entities
     end
 
     def aim(delta)
-      new_angle = @behavior.angle
-      if new_angle < 0
-      	new_angle = 360 - new_angle.abs
-      end
-
-      # not time scaled but this is temporary code
-      if @angle > new_angle
-      	@angle -= 240 * ((340 - @behavior.velocity) / 240) * delta
-      elsif @angle < new_angle
-      	@angle += 240 * ((340 - @behavior.velocity) / 240) * delta
-      end
-
-      if @angle < 0
-      	@angle = 360 - @angle.abs
-      end
-
+      @angle = @behavior.angle
       @vel_x = Gosu::offset_x(@angle, @behavior.velocity)
       @vel_y = Gosu::offset_y(@angle, @behavior.velocity)
     end
