@@ -1,0 +1,20 @@
+--- 
+sprite: blast
+bounds:
+- shape: circle
+  radius: 60
+layers: 
+- layer: explosion
+  file: blue-explosion.png
+  width: 120
+  height: 120
+  scale: 1.2
+states: 
+- state: explode
+  layers: 
+  - layer: explosion
+    frames: 
+      playback: once
+      interval: 50
+      start: 0
+      finish: 11

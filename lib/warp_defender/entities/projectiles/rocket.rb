@@ -21,6 +21,12 @@ module Entities
         4000
       end
 
+      def kill
+        super()
+        blast = Entities::Blast.new(@x, @y, @vel_x*0.7, @vel_y*0.7)
+        $window.game_engine.level.bullets << blast
+      end
+
       def update(delta)
         super(delta)
 
