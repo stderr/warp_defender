@@ -9,10 +9,10 @@ warps:
   - position: center
 
 waves:
-  - interval: 3000
+  - interval: 1500
     enemies:
-      grunt: 15
-    max_spawn: 1
+      grunt: 3
+    max_spawn: 3
     min_spawn: 1
 
   - interval: 1500

@@ -83,7 +83,7 @@ class Game < Gosu::Window
   def load_fonts
     @fonts[:menu] = Gosu::Font.new(self, media_path("fonts/space.ttf"), 60)
     @fonts[:level_title] = Gosu::Font.new(self, media_path("fonts/space.ttf"), 80)
-    @fonts[:level_description] = Gosu::Font.new(self, media_path("fonts/droid_sans_mono.ttf"), 24)
+    @fonts[:level_description] = Gosu::Font.new(self, media_path("fonts/droid_sans_mono.ttf"), 36)
   end
 
   def load_sounds

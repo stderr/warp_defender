@@ -137,7 +137,6 @@ class GameLevel
 
   def spawn
     amount = rand(current_wave.max_spawn.to_i) + current_wave.min_spawn.to_i
-    
     amount.times do
       unless current_wave.enemies.empty?
         enemy = current_wave.enemies.shuffle!.pop.new(targets[rand(targets.length)])
