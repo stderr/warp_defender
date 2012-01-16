@@ -50,6 +50,7 @@ class GameLevel
     @current_enemies = []
     @explosions = []
     @bullets = []
+    @resource_effects = []
 
     load_player($window.native_width/2, $window.native_height/2+275)
     load_waves(yaml['waves'])
@@ -94,7 +95,7 @@ class GameLevel
                         0, -1, border_color,
                         Utils::ZOrder::HUD)
 
-
+      @resource_effects.each { |r| r.draw }
       entities.each { |e| e.draw(delta) }
     end
   end
@@ -107,14 +108,23 @@ class GameLevel
   
   def update(delta)
     @camera.update(delta)
+
+    @current_enemies.each do |enemy| 
+    end
+    
+
+    @resource_effects.reject! { |r| r.finished? }
     @bullets.reject! { |b| b.dead? } # remove once bullets aren't special
     @current_enemies.reject! { |e| e.dead? }
 
     entities.each { |e| e.update(delta) }
+    @resource_effects.each { |r| r.update(delta) }
 
     @bullets.each do |bullet|
       entities.each do |entity|
         if entity.enemy? && bullet.collides_with?(entity)
+          @resource_effects << Effects::ResourceEffect.new("+1 Batteries!", entity.x, entity.y) 
+
             bullet.kill
             entity.kill
             $window.sounds[:explosion].play
